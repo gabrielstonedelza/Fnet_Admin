@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:fnet_admin/controllers/logincontroller.dart';
+import 'package:fnet_admin/screens/requestdeposits/allpendingrequest.dart';
 import 'package:fnet_admin/static/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'customers/allcustomers.dart';
 import 'loginview.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   final LoginController controller = Get.find();
   final storage = GetStorage();
   late String uToken = "";
+  late String username = "";
   late Timer _timer;
   bool isLoading = true;
 
@@ -29,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     storage.remove("username");
 
     Get.offAll(() => const LoginView());
-    const logoutUrl = "https://www.fnetagents.xyz/auth/token/logout";
+    const logoutUrl = "https://www.fnetghana.xyz/auth/token/logout";
     final myLink = Uri.parse(logoutUrl);
     http.Response response = await http.post(myLink, headers: {
       'Accept': 'application/json',
@@ -51,6 +54,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if (storage.read("token") != null) {
+      uToken = storage.read("token");
+    }
+    if (storage.read("username") != null) {
+      setState(() {
+        username = storage.read("username");
+      });
+    }
   }
 
   @override
@@ -105,11 +116,7 @@ class _HomePageState extends State<HomePage> {
                 leading: Image.asset("assets/images/customer-loyalty.png",width:30,height: 30,),
                 title: const Text('points'),
               ),
-              ListTile(
-                onTap: () {},
-                leading: Image.asset("assets/images/money.png",width:30,height: 30,),
-                title: const Text('Payments'),
-              ),
+
               ListTile(
                 onTap: () {},
                 leading: const Icon(Icons.phone),
@@ -175,7 +182,7 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(controller.agentUsername),
+          title: Text(username),
           leading: IconButton(
             onPressed: _handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
@@ -192,7 +199,130 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        body: Container(),
+        body: ListView(
+          children: [
+            const SizedBox(height: 20,),
+            Row(
+              children: [
+                Expanded(child: GestureDetector(
+                  onTap: (){
+                    Get.to(() => const AllPendingDepositRequests());
+                  },
+                  child:  menuWidget(title: 'Request', imagePath: 'assets/images/request-for-proposal.png',),
+                )),
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child: menuWidget(title: 'Add Accounts', imagePath: 'assets/images/saving.png',),
+                )),
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child:  menuWidget(title: 'Payments', imagePath: 'assets/images/cashless-payment.png',),
+                )),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child:  menuWidget(title: 'Account', imagePath: 'assets/images/data-analysis.png',),
+                )),
+                Expanded(child: GestureDetector(
+                  onTap: (){
+                    Get.to(() => const AllCustomers());
+                  },
+                  child: menuWidget(title: 'Customers', imagePath: 'assets/images/rating.png',),
+                )),
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child:  menuWidget(title: 'Users', imagePath: 'assets/images/group.png',),
+                )),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child:  menuWidget(title: 'SMS', imagePath: 'assets/images/sms.png',),
+                )),
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child: menuWidget(title: 'Cus Requests', imagePath: 'assets/images/rating.png',),
+                )),
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child:  menuWidget(title: 'Services', imagePath: 'assets/images/commission (1).png',),
+                )),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child:  menuWidget(title: 'Balance', imagePath: 'assets/images/balance.png',),
+                )),
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child: menuWidget(title: 'Birthdays', imagePath: 'assets/images/cake.png',),
+                )),
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child:  menuWidget(title: 'Register', imagePath: 'assets/images/man.png',),
+                )),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child:  menuWidget(title: 'Link Bank', imagePath: 'assets/images/bank-account.png',),
+                )),
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child: menuWidget(title: 'Bank Accounts', imagePath: 'assets/images/bank.png',),
+                )),
+                // Expanded(child: GestureDetector(
+                //   onTap: (){},
+                //   // child:  menuWidget(title: '', imagePath: '',),
+                // )),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -200,5 +330,24 @@ class _HomePageState extends State<HomePage> {
     // NOTICE: Manage Advanced Drawer state through the Controller.
     // _advancedDrawerController.value = AdvancedDrawerValue.visible();
     _advancedDrawerController.showDrawer();
+  }
+}
+
+class menuWidget extends StatelessWidget {
+  String title;
+  String imagePath;
+  menuWidget({
+    super.key,required this.title,required this.imagePath
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Image.asset(imagePath,width: 70,height: 70,),
+        const SizedBox(height: 10,),
+        Text(title,style: const TextStyle(fontWeight: FontWeight.bold),)
+      ],
+    );
   }
 }

@@ -41,7 +41,7 @@ dependencies:
   sim_data_plus: ^0.1.4
   ussd_service:
   get:
-
+  age_calculator:
   rxdart:
 
   modal_bottom_sheet:

@@ -6,8 +6,15 @@ import 'package:fnet_admin/static/app_colors.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:telephony/telephony.dart';
 
+import 'controllers/bankaccountscontroller.dart';
+import 'controllers/birthdaycontroller.dart';
+import 'controllers/customerscontroller.dart';
 import 'controllers/logincontroller.dart';
 import 'package:get/get.dart';
+import 'controllers/notificationcontroller.dart';
+import 'controllers/paymentscontroller.dart';
+import 'controllers/requestcontroller.dart';
+import 'controllers/userscontroller.dart';
 
 
 onBackgroundMessage(SmsMessage message) {
@@ -20,6 +27,12 @@ void main() async{
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await GetStorage.init();
   Get.put(LoginController());
+  Get.put(BankAccountsController());
+  Get.put(NotificationController());
+  Get.put(RequestController());
+  Get.put(CustomersController());
+  Get.put(UsersController());
+  Get.put(PaymentController());
   runApp(const MyApp());
 }
 
