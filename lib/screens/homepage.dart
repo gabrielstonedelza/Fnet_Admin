@@ -308,19 +308,22 @@ class _HomePageState extends State<HomePage> {
                   onTap: (){},
                   child: menuWidget(title: 'Bank Accounts', imagePath: 'assets/images/bank.png',),
                 )),
-                // Expanded(child: GestureDetector(
-                //   onTap: (){},
-                //   // child:  menuWidget(title: '', imagePath: '',),
-                // )),
+                Expanded(child: GestureDetector(
+                  onTap: (){},
+                  child:  const Column(
+                    children: [
+                      // Image.asset(imagePath,width: 70,height: 70,),
+                      // const SizedBox(height: 10,),
+                      // Text(title,style: const TextStyle(fontWeight: FontWeight.bold),)
+                    ],
+                  )
+                )),
               ],
             ),
             const SizedBox(
-              height: 20,
+              height: 40,
             ),
-            const Divider(),
-            const SizedBox(
-              height: 20,
-            ),
+
           ],
         ),
       ),
