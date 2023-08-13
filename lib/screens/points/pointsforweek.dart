@@ -23,8 +23,8 @@ class _PointsForWeekState extends State<PointsForWeek> {
   var items;
 
   Future<void> getAllAccountsWithPointsForWeek() async {
-    const profileLink = "https://fnetghana.xyz/get_account_number_points_week/";
-    var link = Uri.parse(profileLink);
+    const myLink = "https://fnetghana.xyz/get_account_number_points_week/";
+    var link = Uri.parse(myLink);
     http.Response response = await http.get(link, headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "Authorization": "Token $uToken"
@@ -33,6 +33,7 @@ class _PointsForWeekState extends State<PointsForWeek> {
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
       pointsForToday.assignAll(jsonData);
+      // print(pointsForToday);
       setState(() {
         isLoading = false;
       });
@@ -76,7 +77,18 @@ class _PointsForWeekState extends State<PointsForWeek> {
                     RowWidget(items: items, title: 'Bank: ', itemTitle: 'bank',),
                     RowWidget(items: items, title: 'Acc No: ', itemTitle: 'account_number',),
                     RowWidget(items: items, title: 'Acc Name: ', itemTitle: 'account_name',),
-                    RowWidget(items: items, title: 'Points: ', itemTitle: 'points',),
+                    Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 8),
+                          child: Text("Points: ",style: TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Text(items['points'].toString(),style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
+                        ),
+                      ],
+                    ),
                     Row(
                       children: [
                         const Padding(

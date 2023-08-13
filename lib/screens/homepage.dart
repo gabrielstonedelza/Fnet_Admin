@@ -12,6 +12,7 @@ import 'package:fnet_admin/controllers/logincontroller.dart';
 import 'package:fnet_admin/screens/payments/allpendingpayments.dart';
 import 'package:fnet_admin/screens/points/points.dart';
 import 'package:fnet_admin/screens/registeruser.dart';
+import 'package:fnet_admin/screens/reports/reportsummary.dart';
 import 'package:fnet_admin/screens/requestdeposits/allpendingrequest.dart';
 import 'package:fnet_admin/screens/sms/selectsms.dart';
 import 'package:fnet_admin/static/app_colors.dart';
@@ -19,6 +20,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:ussd_advanced/ussd_advanced.dart';
 import '../sendsms.dart';
 import 'agents/allusers.dart';
 import 'bankaccounts/getaccountsandpull.dart';
@@ -523,6 +525,10 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<void>openDialer() async {
+    await UssdAdvanced.multisessionUssd(code: "*171#", subscriptionId: 1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AdvancedDrawer(
@@ -579,7 +585,9 @@ class _HomePageState extends State<HomePage> {
               ),
 
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  openDialer();
+                },
                 leading: const Icon(Icons.phone),
                 title: const Text('Dialer'),
               ),
@@ -594,7 +602,9 @@ class _HomePageState extends State<HomePage> {
               //   title: const Text('Earnings'),
               // ),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => const AllReportSummary());
+                },
                 leading: Image.asset("assets/images/notebook.png",width:30,height: 30,),
                 title: const Text('Reports'),
               ),

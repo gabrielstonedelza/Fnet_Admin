@@ -78,7 +78,18 @@ class _PointsForMonthState extends State<PointsForMonth> {
                     RowWidget(items: items, title: 'Bank: ', itemTitle: 'bank',),
                     RowWidget(items: items, title: 'Acc No: ', itemTitle: 'account_number',),
                     RowWidget(items: items, title: 'Acc Name: ', itemTitle: 'account_name',),
-                    RowWidget(items: items, title: 'Points: ', itemTitle: 'points',),
+                    Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 8),
+                          child: Text("Points: ",style: TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Text(items['points'].toString(),style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
+                        ),
+                      ],
+                    ),
                     Row(
                       children: [
                         const Padding(
@@ -128,9 +139,11 @@ class RowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: Text(title,style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(title,style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 18.0,bottom: 8),
