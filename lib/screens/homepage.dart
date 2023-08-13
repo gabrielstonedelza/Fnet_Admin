@@ -1,15 +1,34 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:badges/badges.dart' as badge;
+import 'package:badges/badges.dart';
+import 'package:device_apps/device_apps.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_sms_inbox/flutter_sms_inbox.dart' as mySms;
+import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 import 'package:fnet_admin/controllers/logincontroller.dart';
+import 'package:fnet_admin/screens/payments/allpendingpayments.dart';
+import 'package:fnet_admin/screens/points/points.dart';
+import 'package:fnet_admin/screens/registeruser.dart';
 import 'package:fnet_admin/screens/requestdeposits/allpendingrequest.dart';
+import 'package:fnet_admin/screens/sms/selectsms.dart';
 import 'package:fnet_admin/static/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import '../sendsms.dart';
+import 'agents/allusers.dart';
+import 'bankaccounts/getaccountsandpull.dart';
+import 'bankaccounts/getaccountsandpush.dart';
+import 'bankaccounts/mybankaccounts.dart';
+import 'bankaccounts/registerbankaccounts.dart';
+import 'birthdays.dart';
 import 'customers/allcustomers.dart';
 import 'loginview.dart';
+import 'package:age_calculator/age_calculator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,8 +43,358 @@ class _HomePageState extends State<HomePage> {
   final storage = GetStorage();
   late String uToken = "";
   late String username = "";
-  late Timer _timer;
   bool isLoading = true;
+  late List yourNotifications = [];
+  late List notRead = [];
+  late List triggered = [];
+  late List unreadNotifications = [];
+  late List triggeredNotifications = [];
+  late List allNotifications = [];
+  late List allNots = [];
+  late List allCustomers = [];
+  late Timer _timer;
+  bool hasAlreadySent = false;
+  late List sentBirthdays = [];
+  String smsSent = "No";
+  late List hasBirthDayInFive = [];
+  late List hasBirthDayToday = [];
+  late List todaysBirthdayPhones = [];
+  bool hasbdinfive = false;
+  bool hasbdintoday = false;
+  late int sentCount = 1;
+  bool isFetching = true;
+  late DateDuration duration;
+  final SendSmsController sendSms = SendSmsController();
+
+  Future<void> fetchAllInstalled() async {
+    List<Application> apps = await DeviceApps.getInstalledApplications(
+        onlyAppsWithLaunchIntent: true, includeSystemApps: true,includeAppIcons: false);
+    // if (kDebugMode) {
+    //   print(apps);
+    // }
+  }
+
+  void showInstalled() {
+    showMaterialModalBottomSheet(
+      context: context,
+      builder: (context) => Card(
+        elevation: 12,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(10),
+                topLeft: Radius.circular(10))),
+        child: SizedBox(
+          height: 450,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Center(
+                  child: Text("Continue with mtn's financial services",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold))),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment:
+                MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // openOwnerFinancialServicesPushToBank();
+                      // openFinancialServices();
+                      // openMyFinancialServices();
+                      Get.to(() => const GetMyAccountsAndPush());
+                      // Get.back();
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/momo.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text("Push USSD",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      DeviceApps.openApp('com.mtn.agentapp');
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/momo.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text("MTN App",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // openFinancialServicesPullFromBank();
+                      // openFinancialServicesPullFromBank();
+                      Get.to(() => const GetMyAccountsAndPull());
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/momo.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text("Pull USSD",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Divider(),
+              const SizedBox(
+                height: 10,
+              ),
+              const Center(
+                  child: Text("Continue with apps",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold))),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment:
+                MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () async{
+                      DeviceApps.openApp('com.ecobank.xpresspoint');
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/xpresspoint.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text("Express Point",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async{
+                      DeviceApps.openApp('sg.android.fidelity');
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/fidelity-card.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text("Fidelity Bank",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async{
+                      DeviceApps.openApp('calbank.com.ams');
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/calbank.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text("Cal Bank",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              const Divider(),
+              const SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment:
+                MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () async{
+                      DeviceApps.openApp('accessmob.accessbank.com.accessghana');
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/accessbank.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text("Access Bank",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async{
+                      DeviceApps.openApp('com.m2i.gtexpressbyod');
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/gtbank.jpg",
+                          width: 50,
+                          height: 50,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text("GT Bank",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async{
+                      DeviceApps.openApp('firstmob.firstbank.com.fbnsubsidiary');
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/full-branch.jpg",
+                          width: 50,
+                          height: 50,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text("FBN Bank",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void>getAllTriggeredNotifications() async {
+    const url = "https://fnetghana.xyz/get_triggered_notifications/";
+    var myLink = Uri.parse(url);
+    final response =
+    await http.get(myLink, headers: {"Authorization": "Token $uToken"});
+    if (response.statusCode == 200) {
+      final codeUnits = response.body.codeUnits;
+      var jsonData = const Utf8Decoder().convert(codeUnits);
+      triggeredNotifications = json.decode(jsonData);
+      triggered.assignAll(triggeredNotifications);
+    }
+  }
+
+  Future<void>getAllUnReadNotifications() async {
+    const url = "https://fnetghana.xyz/get_user_notifications/";
+    var myLink = Uri.parse(url);
+    final response =
+    await http.get(myLink, headers: {"Authorization": "Token $uToken"});
+    if (response.statusCode == 200) {
+      final codeUnits = response.body.codeUnits;
+      var jsonData = const Utf8Decoder().convert(codeUnits);
+      yourNotifications = json.decode(jsonData);
+      notRead.assignAll(yourNotifications);
+      // setState(() {
+      //   isLoading = false;
+      // });
+    }
+    else{
+      if (kDebugMode) {
+        print(response.body);
+      }
+    }
+  }
+
+  Future<void>getAllNotifications() async {
+    const url = "https://fnetghana.xyz/get_all_user_notifications/";
+    var myLink = Uri.parse(url);
+    final response =
+    await http.get(myLink, headers: {"Authorization": "Token $uToken"});
+    if (response.statusCode == 200) {
+      final codeUnits = response.body.codeUnits;
+      var jsonData = const Utf8Decoder().convert(codeUnits);
+      allNotifications = json.decode(jsonData);
+      allNots.assignAll(allNotifications);
+      // setState(() {
+      //   isLoading = false;
+      // });
+    }
+    else{
+      if (kDebugMode) {
+        print(response.body);
+      }
+    }
+
+  }
+
+  Future<void>unTriggerNotifications(int id) async {
+    final requestUrl = "https://fnetghana.xyz/read_notification/$id/";
+    final myLink = Uri.parse(requestUrl);
+    final response = await http.put(myLink, headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      'Accept': 'application/json',
+      "Authorization": "Token $uToken"
+    }, body: {
+      "notification_trigger": "Not Triggered",
+    });
+    if (response.statusCode == 200) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   logoutUser() async {
     storage.remove("token");
@@ -49,6 +418,83 @@ class _HomePageState extends State<HomePage> {
       Get.offAll(() => const LoginView());
     }
   }
+  Future<void> fetchCustomersWithBirthDays() async {
+    const url = "https://www.fnetghana.xyz/all_customers/";
+    var myLink = Uri.parse(url);
+    final response = await http.get(myLink, headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    });
+
+    if (response.statusCode == 200) {
+      final codeUnits = response.body.codeUnits;
+      var jsonData = const Utf8Decoder().convert(codeUnits);
+      allCustomers = json.decode(jsonData);
+      for (var i in allCustomers) {
+        DateTime birthday = DateTime.parse(i['date_of_birth']);
+        duration = AgeCalculator.timeToNextBirthday(birthday);
+        if (duration.months == 0 && duration.days == 5) {
+          hasBirthDayInFive.add(i['name']);
+          hasbdinfive = true;
+          if (storage.read("birthdaySent") != null &&
+              storage.read("birthdaySent") == "Yes") {
+            storage.remove("birthdaySent");
+            storage.write("birthdaySent", smsSent);
+          }
+        }
+        if (duration.months == 0 &&
+            duration.days == 0 &&
+            storage.read("birthdaySent") != null &&
+            storage.read('birthdaySent') == "No") {
+          if (duration.months == 0 && duration.days == 0) {
+            hasbdintoday = true;
+            hasBirthDayToday.add(i['name']);
+            todaysBirthdayPhones.add(i['phone']);
+            for (var b in todaysBirthdayPhones) {
+              String birthdayNum = b;
+              birthdayNum = birthdayNum.replaceFirst("0", '+233');
+              sendSms.sendMySms(birthdayNum, "FNET",
+                  "Hello, FNET ENTERPRISE is wishing you a happy birthday,may God grant all your heart desires,thank you.");
+              sendSms.sendMySms(birthdayNum, "FNET",
+                  "Download customer app from https://play.google.com/store/apps/details?id=com.fnettransaction.fnet_customer");
+              sentBirthdays.add(b);
+              smsSent = "Yes";
+              storage.write("birthdaySent", smsSent);
+            }
+          }
+        }
+      }
+    }
+
+  }
+  SmsQuery query = SmsQuery();
+  late List mySmss = [];
+
+  fetchInbox()async {
+    List<mySms.SmsMessage> messages = await query.getAllSms;
+    for (var message in messages) {
+      if(message.address == "MobileMoney") {
+        if(!mySmss.contains(message.body)){
+          mySmss.add(message.body);
+        }
+      }
+    }
+  }
+  Future checkMtnBalance() async {
+    fetchInbox();
+    Get.defaultDialog(
+        content: Column(
+          children: [
+            Text(mySmss.first)
+          ],
+        ),
+        confirm: TextButton(
+          onPressed: (){
+            Get.back();
+          },
+          child: const Text("OK",style:TextStyle(fontWeight:FontWeight.bold)),
+        )
+    );
+  }
 
   @override
   void initState() {
@@ -62,6 +508,19 @@ class _HomePageState extends State<HomePage> {
         username = storage.read("username");
       });
     }
+    fetchAllInstalled();
+    getAllTriggeredNotifications();
+    getAllUnReadNotifications();
+    fetchCustomersWithBirthDays();
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      getAllTriggeredNotifications();
+      getAllUnReadNotifications();
+    });
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      for (var e in triggered) {
+        unTriggerNotifications(e["id"]);
+      }
+    });
   }
 
   @override
@@ -112,7 +571,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => const Points());
+                },
                 leading: Image.asset("assets/images/customer-loyalty.png",width:30,height: 30,),
                 title: const Text('points'),
               ),
@@ -122,16 +583,16 @@ class _HomePageState extends State<HomePage> {
                 leading: const Icon(Icons.phone),
                 title: const Text('Dialer'),
               ),
-              ListTile(
-                onTap: () {},
-                leading: Image.asset("assets/images/refer.png",width:30,height: 30,),
-                title: const Text('Referrals'),
-              ),
-              ListTile(
-                onTap: () {},
-                leading: Image.asset("assets/images/earning.png",width:30,height: 30,),
-                title: const Text('Earnings'),
-              ),
+              // ListTile(
+              //   onTap: () {},
+              //   leading: Image.asset("assets/images/refer.png",width:30,height: 30,),
+              //   title: const Text('Referrals'),
+              // ),
+              // ListTile(
+              //   onTap: () {},
+              //   leading: Image.asset("assets/images/earning.png",width:30,height: 30,),
+              //   title: const Text('Earnings'),
+              // ),
               ListTile(
                 onTap: () {},
                 leading: Image.asset("assets/images/notebook.png",width:30,height: 30,),
@@ -208,15 +669,19 @@ class _HomePageState extends State<HomePage> {
                   onTap: (){
                     Get.to(() => const AllPendingDepositRequests());
                   },
-                  child:  menuWidget(title: 'Request', imagePath: 'assets/images/request-for-proposal.png',),
+                  child:  menuWidget(title: 'Requests', imagePath: 'assets/images/request-for-proposal.png',),
                 )),
                 Expanded(child: GestureDetector(
-                  onTap: (){},
-                  child: menuWidget(title: 'Add Accounts', imagePath: 'assets/images/saving.png',),
-                )),
-                Expanded(child: GestureDetector(
-                  onTap: (){},
+                  onTap: (){
+                    Get.to(() => const AllPendingPayments());
+                  },
                   child:  menuWidget(title: 'Payments', imagePath: 'assets/images/cashless-payment.png',),
+                )),
+                Expanded(child: GestureDetector(
+                  onTap: (){
+                    Get.to(() => const AllCustomers());
+                  },
+                  child: menuWidget(title: 'Customers', imagePath: 'assets/images/rating.png',),
                 )),
               ],
             ),
@@ -230,17 +695,21 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 Expanded(child: GestureDetector(
-                  onTap: (){},
-                  child:  menuWidget(title: 'Account', imagePath: 'assets/images/data-analysis.png',),
+                  onTap: (){
+                    Get.to(() => const AddToMyAccount());
+                  },
+                  child:  menuWidget(title: 'Link Bank', imagePath: 'assets/images/bank-account.png',),
                 )),
                 Expanded(child: GestureDetector(
                   onTap: (){
-                    Get.to(() => const AllCustomers());
+                    Get.to(() => const MyBankAccounts());
                   },
-                  child: menuWidget(title: 'Customers', imagePath: 'assets/images/rating.png',),
+                  child: menuWidget(title: 'Bank Accounts', imagePath: 'assets/images/bank.png',),
                 )),
                 Expanded(child: GestureDetector(
-                  onTap: (){},
+                  onTap: (){
+                    Get.to(() => const MyAgents());
+                  },
                   child:  menuWidget(title: 'Users', imagePath: 'assets/images/group.png',),
                 )),
               ],
@@ -255,15 +724,21 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 Expanded(child: GestureDetector(
-                  onTap: (){},
+                  onTap: (){
+                    Get.to(() => const SelectSms());
+                  },
                   child:  menuWidget(title: 'SMS', imagePath: 'assets/images/sms.png',),
                 )),
                 Expanded(child: GestureDetector(
-                  onTap: (){},
-                  child: menuWidget(title: 'Cus Requests', imagePath: 'assets/images/rating.png',),
+                  onTap: (){
+                    Get.to(() => const AddNewUser());
+                  },
+                  child:  menuWidget(title: 'Register', imagePath: 'assets/images/man.png',),
                 )),
                 Expanded(child: GestureDetector(
-                  onTap: (){},
+                  onTap: (){
+                    showInstalled();
+                  },
                   child:  menuWidget(title: 'Services', imagePath: 'assets/images/commission (1).png',),
                 )),
               ],
@@ -278,52 +753,57 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 Expanded(child: GestureDetector(
-                  onTap: (){},
+                  onTap: (){
+                    checkMtnBalance();
+                  },
                   child:  menuWidget(title: 'Balance', imagePath: 'assets/images/balance.png',),
                 )),
                 Expanded(child: GestureDetector(
-                  onTap: (){},
-                  child: menuWidget(title: 'Birthdays', imagePath: 'assets/images/cake.png',),
-                )),
-                Expanded(child: GestureDetector(
-                  onTap: (){},
-                  child:  menuWidget(title: 'Register', imagePath: 'assets/images/man.png',),
-                )),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Divider(),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Expanded(child: GestureDetector(
-                  onTap: (){},
-                  child:  menuWidget(title: 'Link Bank', imagePath: 'assets/images/bank-account.png',),
-                )),
-                Expanded(child: GestureDetector(
-                  onTap: (){},
-                  child: menuWidget(title: 'Bank Accounts', imagePath: 'assets/images/bank.png',),
-                )),
-                Expanded(child: GestureDetector(
-                  onTap: (){},
-                  child:  const Column(
+                  onTap: (){
+                    Get.to(() => const Birthdays());
+                  },
+                  child: Column(
                     children: [
-                      // Image.asset(imagePath,width: 70,height: 70,),
-                      // const SizedBox(height: 10,),
-                      // Text(title,style: const TextStyle(fontWeight: FontWeight.bold),)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: badge.Badge(
+                            position: BadgePosition.bottomStart(),
+                            badgeContent:   Column(
+                            children: [
+                              hasbdinfive
+                                  ? Text(
+                                  "${hasBirthDayInFive.length}",
+                                  style: const TextStyle(
+                                      color: Colors.white))
+                                  : hasbdintoday
+                                  ? Text(
+                                  "${hasBirthDayToday.length}",
+                                  style: const TextStyle(
+                                      color: Colors.white))
+                                  : const Text("0",
+                                  style: TextStyle(
+                                      color: Colors.white)),
+                            ],
+                          )
+                        ),
+                      ),
+                      menuWidget(title: 'Birthdays', imagePath: 'assets/images/cake.png',)
                     ],
-                  )
+                  ),
+                )),
+                Expanded(child: GestureDetector(
+                  onTap: (){
+                    Get.to(() => const AddNewUser());
+                  },
+                  child:  Column(
+                    children: [],
+                  ),
                 )),
               ],
             ),
             const SizedBox(
               height: 40,
             ),
-
           ],
         ),
       ),

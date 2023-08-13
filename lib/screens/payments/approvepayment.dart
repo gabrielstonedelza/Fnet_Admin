@@ -7,28 +7,25 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:http/http.dart' as http;
 import 'package:ussd_advanced/ussd_advanced.dart';
 import '../../static/app_colors.dart';
-import '../bankaccounts/getaccountsandpull.dart';
-import '../bankaccounts/getaccountsandpush.dart';
 import '../homepage.dart';
 
-class ApproveDepositRequestDetail extends StatefulWidget {
+class ApprovePaymentDetail extends StatefulWidget {
   final id;
   final agent;
   final bank;
   final amount;
-  final accnum;
-  const ApproveDepositRequestDetail({super.key,required this.agent,required this.id,required this.amount,required this.bank,required this.accnum});
+  const ApprovePaymentDetail({super.key,required this.agent,required this.id,required this.amount,required this.bank});
 
   @override
-  State<ApproveDepositRequestDetail> createState() => _ApproveDepositRequestDetailState(id:this.id,agent:this.agent,amount:this.amount,bank:this.amount,accnum:this.accnum);
+  State<ApprovePaymentDetail> createState() => _ApprovePaymentDetailState(id:this.id,agent:this.agent,amount:this.amount,bank:this.amount);
 }
 
-class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetail> {
+class _ApprovePaymentDetailState extends State<ApprovePaymentDetail> {
   final id;
   final agent;
   final bank;
   final amount;
-  final accnum;
+
 
   Future<void>openOwnerFinancialServicesPushToBank() async {
     await UssdAdvanced.multisessionUssd(code: "*171*6*1*1#", subscriptionId: 1);
@@ -37,7 +34,7 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
   Future<void> openFinancialServicesPullFromBank() async {
     await UssdAdvanced.multisessionUssd(code: "*171*6*1*2#", subscriptionId: 1);
   }
-  _ApproveDepositRequestDetailState({required this.agent,required this.id,required this.amount,required this.bank,required this.accnum});
+  _ApprovePaymentDetailState({required this.agent,required this.id,required this.amount,required this.bank});
   Future<void> fetchAllInstalled() async {
     List<Application> apps = await DeviceApps.getInstalledApplications(
         onlyAppsWithLaunchIntent: true, includeSystemApps: true,includeAppIcons: false);
@@ -75,10 +72,10 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // openOwnerFinancialServicesPushToBank();
+                      openOwnerFinancialServicesPushToBank();
                       // openFinancialServices();
                       // openMyFinancialServices();
-                      Get.to(() => const GetMyAccountsAndPush());
+                      // Get.to(() => const GetMyAccountsAndPush());
                       // Get.back();
                     },
                     child: Column(
@@ -120,8 +117,8 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                   GestureDetector(
                     onTap: () {
                       // openFinancialServicesPullFromBank();
-                      // openFinancialServicesPullFromBank();
-                      Get.to(() => const GetMyAccountsAndPull());
+                      openFinancialServicesPullFromBank();
+                      // Get.to(() => const GetMyAccountsAndPull());
                     },
                     child: Column(
                       children: [
@@ -297,17 +294,17 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
     );
   }
   approveRequest()async{
-    final accountUrl = "https://www.fnetghana.xyz/admin_approve_bank_deposit_paid/$id/";
+    final accountUrl = "https://www.fnetghana.xyz/admin_approve_bank_payments_paid/$id/";
     final myLink = Uri.parse(accountUrl);
     http.Response response = await http.put(myLink, headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       // "Authorization": "Token ${uToken.value}"
     }, body: {
       "agent": agent,
-      "request_status": "Approved",
+      "payment_status": "Approved",
     });
     if (response.statusCode == 200) {
-      Get.snackbar("Success", "users request was approved",
+      Get.snackbar("Success", "users payment was approved",
           colorText: defaultTextColor1,
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: snackColor);
@@ -316,7 +313,7 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
       });
       // showInstalled();
       Get.offAll(() => const HomePage());
-      showInstalled();
+      // showInstalled();
     } else {
       if (kDebugMode) {
         print(response.body);
@@ -328,8 +325,8 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
     }
   }
 
-  deleteBankRequest(String id) async {
-    final url = "https://fnetghana.xyz/admin_delete_bank_request/$id/";
+  deleteBankPayment(String id) async {
+    final url = "https://fnetghana.xyz/admin_delete_bank_payment/$id/";
     var myLink = Uri.parse(url);
     final response = await http.get(myLink, headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -355,7 +352,7 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Approve Request"),
+        title: const Text("Approve Payment"),
       ),
       body: ListView(
         children: [
@@ -377,30 +374,11 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                     ],
                   ),
                 ),
-                subtitle: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Row(
-                        children: [
-                          const Text("Bank : ",style: TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1)),
-                          Text(bank,style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1)),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        const Text("Acc No : ",style: TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1)),
-                        Text(accnum,style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1)),
-                      ],
-                    ),
-                  ],
-                ),
               ),
             ),
           ),
           const SizedBox(height: 20,),
-        isPosting ? const LoadingUi() :  Row(
+          isPosting ? const LoadingUi() :  Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               RawMaterialButton(
@@ -431,7 +409,7 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                   setState(() {
                     isPosting = true;
                   });
-                  deleteBankRequest(id);
+                  deleteBankPayment(id);
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)

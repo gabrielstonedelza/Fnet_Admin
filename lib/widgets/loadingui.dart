@@ -10,10 +10,12 @@ class LoadingUi extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-          height: 100,
-          width: 100,
-          child: Lottie.asset("assets/images/newfolder.json"),
+        Center(
+          child: SizedBox(
+            height: 100,
+            width: 100,
+            child: Lottie.asset("assets/images/newfolder.json"),
+          ),
         ),
 
       ],

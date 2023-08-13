@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import '../sendsms.dart';
 
 class CustomersController extends GetxController{
@@ -38,6 +37,7 @@ class CustomersController extends GetxController{
     if (storage.read("username") != null) {
       username = storage.read("username");
     }
+
     getAllCustomers();
     fetchCustomersWithBirthDays();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -79,11 +79,11 @@ class CustomersController extends GetxController{
   }
 
   Future<void> fetchCustomersWithBirthDays() async {
-    const url = "https://fnetghana.xyz/user_customers/";
+    const url = "https://www.fnetghana.xyz/all_customers/";
     var myLink = Uri.parse(url);
     final response = await http.get(myLink, headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "Authorization": "Token $uToken"
+      // "Authorization": "Token $uToken"
     });
 
     if (response.statusCode == 200) {

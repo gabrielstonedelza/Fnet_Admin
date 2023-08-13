@@ -26,6 +26,7 @@ class PaymentController extends GetxController{
     if (storage.read("username") != null) {
       username = storage.read("username");
     }
+
     getAllPendingPayments();
     getAllPayments();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {

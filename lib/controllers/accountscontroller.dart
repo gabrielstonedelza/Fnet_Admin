@@ -11,6 +11,8 @@ class AccountsController extends GetxController{
   late List pointsForTheMonth = [];
   late List pointsToday = [];
   late List allPoints = [];
+  late List allMyAgents = [];
+  late List allBlockedUsers = [];
   bool isLoading = true;
   final storage = GetStorage();
   var username = "";
@@ -28,133 +30,185 @@ class AccountsController extends GetxController{
     if (storage.read("username") != null) {
       username = storage.read("username");
     }
-    getAllAccountsWithPointsForToday();
-    getAllAccountsWithPointsForWeek();
-    getAllAccountsWithPointsForMonth();
-    getAllAccountsWithPoints();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      getAllAccountsWithPointsForToday();
-      getAllAccountsWithPointsForWeek();
-      getAllAccountsWithPointsForMonth();
-      getAllAccountsWithPoints();
+
+    // getAllAccountsWithPointsForToday();
+    // getAllAccountsWithPointsForWeek();
+    // getAllAccountsWithPointsForMonth();
+    // getAllAccountsWithPoints();
+    getAllMyAgents();
+    fetchBlockedAgents();
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      // getAllAccountsWithPointsForToday();
+      // getAllAccountsWithPointsForWeek();
+      // getAllAccountsWithPointsForMonth();
+      // getAllAccountsWithPoints();
+      getAllMyAgents();
+      fetchBlockedAgents();
     });
   }
 
-
-  Future<void> getAllAccountsWithPointsForToday() async {
+  Future<void> getAllMyAgents() async {
     try {
       isLoading = true;
-      const profileLink = "https://fnetghana.xyz/get_account_number_points_today/";
-      var link = Uri.parse(profileLink);
+      const  allUsers = "https://fnetghana.xyz/all_agents/";
+      var link = Uri.parse(allUsers);
       http.Response response = await http.get(link, headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": "Token $uToken"
       });
-
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
-        pointsToday.assignAll(jsonData);
-
+        allMyAgents.assignAll(jsonData);
         update();
       }
-      else{
-        if (kDebugMode) {
-          print(response.body);
-        }
-      }
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-    } finally {
+      Get.snackbar("Sorry","something happened or please check your internet connection",snackPosition: SnackPosition.BOTTOM);
+    }
+    finally{
       isLoading = false;
     }
   }
-  Future<void> getAllAccountsWithPointsForWeek() async {
-    try {
+
+  Future<void>fetchBlockedAgents()async{
+    try{
       isLoading = true;
-      const profileLink = "https://fnetghana.xyz/get_account_number_points_week/";
-      var link = Uri.parse(profileLink);
-      http.Response response = await http.get(link, headers: {
+      const url = "https://fnetghana.xyz/get_all_blocked_users/";
+      var myLink = Uri.parse(url);
+      final response = await http.get(myLink, headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": "Token $uToken"
+        // "Authorization": "Token $uToken"
       });
 
-      if(response.statusCode == 200){
-        var jsonData = jsonDecode(response.body);
-        pointsForTheWeek.assignAll(jsonData);
-
+      if(response.statusCode ==200){
+        final codeUnits = response.body.codeUnits;
+        var jsonData = const Utf8Decoder().convert(codeUnits);
+        allBlockedUsers = json.decode(jsonData);
         update();
       }
-      else{
-        if (kDebugMode) {
-          print(response.body);
-        }
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-    } finally {
+    }
+    catch(e){
+      Get.snackbar("Sorry","something happened or please check your internet connection",snackPosition: SnackPosition.BOTTOM);
+    }
+    finally{
       isLoading = false;
     }
-  }
-  Future<void> getAllAccountsWithPointsForMonth() async {
-    try {
-      isLoading = true;
-      const profileLink = "https://fnetghana.xyz/get_account_number_points_month/";
-      var link = Uri.parse(profileLink);
-      http.Response response = await http.get(link, headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": "Token $uToken"
-      });
 
-      if(response.statusCode == 200){
-        var jsonData = jsonDecode(response.body);
-        pointsForTheMonth.assignAll(jsonData);
-
-        update();
-      }
-      else{
-        if (kDebugMode) {
-          print(response.body);
-        }
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-    } finally {
-      isLoading = false;
-    }
   }
-  Future<void> getAllAccountsWithPoints() async {
-    try {
-      isLoading = true;
-      const profileLink = "https://fnetghana.xyz/get_all_account_number_points/";
-      var link = Uri.parse(profileLink);
-      http.Response response = await http.get(link, headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": "Token $uToken"
-      });
 
-      if(response.statusCode == 200){
-        var jsonData = jsonDecode(response.body);
-        allPoints.assignAll(jsonData);
-        update();
-      }
-      else{
-        if (kDebugMode) {
-          print(response.body);
-        }
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-    } finally {
-      isLoading = false;
-    }
-  }
+  // Future<void> getAllAccountsWithPointsForToday() async {
+  //   try {
+  //     isLoading = true;
+  //     const profileLink = "https://fnetghana.xyz/get_account_number_points_today/";
+  //     var link = Uri.parse(profileLink);
+  //     http.Response response = await http.get(link, headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded",
+  //       "Authorization": "Token $uToken"
+  //     });
+  //
+  //     if(response.statusCode == 200){
+  //       var jsonData = jsonDecode(response.body);
+  //       pointsToday.assignAll(jsonData);
+  //
+  //       update();
+  //     }
+  //     else{
+  //       if (kDebugMode) {
+  //         print(response.body);
+  //       }
+  //     }
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print(e.toString());
+  //     }
+  //   } finally {
+  //     isLoading = false;
+  //   }
+  // }
+  // Future<void> getAllAccountsWithPointsForWeek() async {
+  //   try {
+  //     isLoading = true;
+  //     const profileLink = "https://fnetghana.xyz/get_account_number_points_week/";
+  //     var link = Uri.parse(profileLink);
+  //     http.Response response = await http.get(link, headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded",
+  //       "Authorization": "Token $uToken"
+  //     });
+  //
+  //     if(response.statusCode == 200){
+  //       var jsonData = jsonDecode(response.body);
+  //       pointsForTheWeek.assignAll(jsonData);
+  //
+  //       update();
+  //     }
+  //     else{
+  //       if (kDebugMode) {
+  //         print(response.body);
+  //       }
+  //     }
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print(e.toString());
+  //     }
+  //   } finally {
+  //     isLoading = false;
+  //   }
+  // }
+  // Future<void> getAllAccountsWithPointsForMonth() async {
+  //   try {
+  //     isLoading = true;
+  //     const profileLink = "https://fnetghana.xyz/get_account_number_points_month/";
+  //     var link = Uri.parse(profileLink);
+  //     http.Response response = await http.get(link, headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded",
+  //       "Authorization": "Token $uToken"
+  //     });
+  //
+  //     if(response.statusCode == 200){
+  //       var jsonData = jsonDecode(response.body);
+  //       pointsForTheMonth.assignAll(jsonData);
+  //
+  //       update();
+  //     }
+  //     else{
+  //       if (kDebugMode) {
+  //         print(response.body);
+  //       }
+  //     }
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print(e.toString());
+  //     }
+  //   } finally {
+  //     isLoading = false;
+  //   }
+  // }
+  // Future<void> getAllAccountsWithPoints() async {
+  //   try {
+  //     isLoading = true;
+  //     const profileLink = "https://fnetghana.xyz/get_all_account_number_points/";
+  //     var link = Uri.parse(profileLink);
+  //     http.Response response = await http.get(link, headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded",
+  //       "Authorization": "Token $uToken"
+  //     });
+  //
+  //     if(response.statusCode == 200){
+  //       var jsonData = jsonDecode(response.body);
+  //       allPoints.assignAll(jsonData);
+  //       update();
+  //     }
+  //     else{
+  //       if (kDebugMode) {
+  //         print(response.body);
+  //       }
+  //     }
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print(e.toString());
+  //     }
+  //   } finally {
+  //     isLoading = false;
+  //   }
+  // }
 
 }
