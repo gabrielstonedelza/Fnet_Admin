@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:age_calculator/age_calculator.dart';
 import 'package:badges/badges.dart' as badge;
 import 'package:badges/badges.dart';
 import 'package:device_apps/device_apps.dart';
@@ -14,6 +16,7 @@ import 'package:fnet_admin/screens/points/points.dart';
 import 'package:fnet_admin/screens/registeruser.dart';
 import 'package:fnet_admin/screens/reports/reportsummary.dart';
 import 'package:fnet_admin/screens/requestdeposits/allpendingrequest.dart';
+import 'package:fnet_admin/screens/requestdeposits/unpaiddeposits.dart';
 import 'package:fnet_admin/screens/sms/selectsms.dart';
 import 'package:fnet_admin/static/app_colors.dart';
 import 'package:get/get.dart';
@@ -21,6 +24,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:ussd_advanced/ussd_advanced.dart';
+
 import '../sendsms.dart';
 import 'agents/allusers.dart';
 import 'bankaccounts/getaccountsandpull.dart';
@@ -30,7 +34,6 @@ import 'bankaccounts/registerbankaccounts.dart';
 import 'birthdays.dart';
 import 'customers/allcustomers.dart';
 import 'loginview.dart';
-import 'package:age_calculator/age_calculator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -67,10 +70,32 @@ class _HomePageState extends State<HomePage> {
   bool isFetching = true;
   late DateDuration duration;
   final SendSmsController sendSms = SendSmsController();
+  late List unPaidDepositRequests = [];
+
+  Future<void> getAllUnpaidDepositRequests() async {
+    const url = "https://fnetghana.xyz/get_agents_unpaid_deposits/";
+    var myLink = Uri.parse(url);
+    final response = await http.get(myLink);
+    if (response.statusCode == 200) {
+      final codeUnits = response.body.codeUnits;
+      var jsonData = const Utf8Decoder().convert(codeUnits);
+      var deData = json.decode(jsonData);
+      unPaidDepositRequests.assignAll(deData);
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      if (kDebugMode) {
+        print(response.body);
+      }
+    }
+  }
 
   Future<void> fetchAllInstalled() async {
     List<Application> apps = await DeviceApps.getInstalledApplications(
-        onlyAppsWithLaunchIntent: true, includeSystemApps: true,includeAppIcons: false);
+        onlyAppsWithLaunchIntent: true,
+        includeSystemApps: true,
+        includeAppIcons: false);
     // if (kDebugMode) {
     //   print(apps);
     // }
@@ -83,8 +108,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 12,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-                topRight: Radius.circular(10),
-                topLeft: Radius.circular(10))),
+                topRight: Radius.circular(10), topLeft: Radius.circular(10))),
         child: SizedBox(
           height: 450,
           child: Column(
@@ -92,14 +116,12 @@ class _HomePageState extends State<HomePage> {
             children: [
               const Center(
                   child: Text("Continue with mtn's financial services",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold))),
+                      style: TextStyle(fontWeight: FontWeight.bold))),
               const SizedBox(
                 height: 20,
               ),
               Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -119,8 +141,7 @@ class _HomePageState extends State<HomePage> {
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Push USSD",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
@@ -139,8 +160,7 @@ class _HomePageState extends State<HomePage> {
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("MTN App",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
@@ -161,8 +181,7 @@ class _HomePageState extends State<HomePage> {
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Pull USSD",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
@@ -178,17 +197,15 @@ class _HomePageState extends State<HomePage> {
               ),
               const Center(
                   child: Text("Continue with apps",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold))),
+                      style: TextStyle(fontWeight: FontWeight.bold))),
               const SizedBox(
                 height: 20,
               ),
               Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       DeviceApps.openApp('com.ecobank.xpresspoint');
                     },
                     child: Column(
@@ -201,14 +218,13 @@ class _HomePageState extends State<HomePage> {
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Express Point",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
                   ),
                   GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       DeviceApps.openApp('sg.android.fidelity');
                     },
                     child: Column(
@@ -221,14 +237,13 @@ class _HomePageState extends State<HomePage> {
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Fidelity Bank",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
                   ),
                   GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       DeviceApps.openApp('calbank.com.ams');
                     },
                     child: Column(
@@ -241,24 +256,27 @@ class _HomePageState extends State<HomePage> {
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Cal Bank",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               const Divider(),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: () async{
-                      DeviceApps.openApp('accessmob.accessbank.com.accessghana');
+                    onTap: () async {
+                      DeviceApps.openApp(
+                          'accessmob.accessbank.com.accessghana');
                     },
                     child: Column(
                       children: [
@@ -270,14 +288,13 @@ class _HomePageState extends State<HomePage> {
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Access Bank",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
                   ),
                   GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       DeviceApps.openApp('com.m2i.gtexpressbyod');
                     },
                     child: Column(
@@ -290,15 +307,15 @@ class _HomePageState extends State<HomePage> {
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("GT Bank",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
                   ),
                   GestureDetector(
-                    onTap: () async{
-                      DeviceApps.openApp('firstmob.firstbank.com.fbnsubsidiary');
+                    onTap: () async {
+                      DeviceApps.openApp(
+                          'firstmob.firstbank.com.fbnsubsidiary');
                     },
                     child: Column(
                       children: [
@@ -310,8 +327,7 @@ class _HomePageState extends State<HomePage> {
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("FBN Bank",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
@@ -325,11 +341,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void>getAllTriggeredNotifications() async {
+  Future<void> getAllTriggeredNotifications() async {
     const url = "https://fnetghana.xyz/get_triggered_notifications/";
     var myLink = Uri.parse(url);
     final response =
-    await http.get(myLink, headers: {"Authorization": "Token $uToken"});
+        await http.get(myLink, headers: {"Authorization": "Token $uToken"});
     if (response.statusCode == 200) {
       final codeUnits = response.body.codeUnits;
       var jsonData = const Utf8Decoder().convert(codeUnits);
@@ -338,11 +354,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void>getAllUnReadNotifications() async {
+  Future<void> getAllUnReadNotifications() async {
     const url = "https://fnetghana.xyz/get_user_notifications/";
     var myLink = Uri.parse(url);
     final response =
-    await http.get(myLink, headers: {"Authorization": "Token $uToken"});
+        await http.get(myLink, headers: {"Authorization": "Token $uToken"});
     if (response.statusCode == 200) {
       final codeUnits = response.body.codeUnits;
       var jsonData = const Utf8Decoder().convert(codeUnits);
@@ -351,19 +367,18 @@ class _HomePageState extends State<HomePage> {
       // setState(() {
       //   isLoading = false;
       // });
-    }
-    else{
+    } else {
       if (kDebugMode) {
         print(response.body);
       }
     }
   }
 
-  Future<void>getAllNotifications() async {
+  Future<void> getAllNotifications() async {
     const url = "https://fnetghana.xyz/get_all_user_notifications/";
     var myLink = Uri.parse(url);
     final response =
-    await http.get(myLink, headers: {"Authorization": "Token $uToken"});
+        await http.get(myLink, headers: {"Authorization": "Token $uToken"});
     if (response.statusCode == 200) {
       final codeUnits = response.body.codeUnits;
       var jsonData = const Utf8Decoder().convert(codeUnits);
@@ -372,16 +387,14 @@ class _HomePageState extends State<HomePage> {
       // setState(() {
       //   isLoading = false;
       // });
-    }
-    else{
+    } else {
       if (kDebugMode) {
         print(response.body);
       }
     }
-
   }
 
-  Future<void>unTriggerNotifications(int id) async {
+  Future<void> unTriggerNotifications(int id) async {
     final requestUrl = "https://fnetghana.xyz/read_notification/$id/";
     final myLink = Uri.parse(requestUrl);
     final response = await http.put(myLink, headers: {
@@ -420,6 +433,7 @@ class _HomePageState extends State<HomePage> {
       Get.offAll(() => const LoginView());
     }
   }
+
   Future<void> fetchCustomersWithBirthDays() async {
     const url = "https://www.fnetghana.xyz/all_customers/";
     var myLink = Uri.parse(url);
@@ -466,36 +480,35 @@ class _HomePageState extends State<HomePage> {
         }
       }
     }
-
   }
+
   SmsQuery query = SmsQuery();
   late List mySmss = [];
 
-  fetchInbox()async {
+  fetchInbox() async {
     List<mySms.SmsMessage> messages = await query.getAllSms;
     for (var message in messages) {
-      if(message.address == "MobileMoney") {
-        if(!mySmss.contains(message.body)){
+      if (message.address == "MobileMoney") {
+        if (!mySmss.contains(message.body)) {
           mySmss.add(message.body);
         }
       }
     }
   }
+
   Future checkMtnBalance() async {
     fetchInbox();
     Get.defaultDialog(
         content: Column(
-          children: [
-            Text(mySmss.first)
-          ],
+          children: [Text(mySmss.first)],
         ),
         confirm: TextButton(
-          onPressed: (){
+          onPressed: () {
             Get.back();
           },
-          child: const Text("OK",style:TextStyle(fontWeight:FontWeight.bold)),
-        )
-    );
+          child:
+              const Text("OK", style: TextStyle(fontWeight: FontWeight.bold)),
+        ));
   }
 
   @override
@@ -514,9 +527,11 @@ class _HomePageState extends State<HomePage> {
     getAllTriggeredNotifications();
     getAllUnReadNotifications();
     fetchCustomersWithBirthDays();
+    getAllUnpaidDepositRequests();
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       getAllTriggeredNotifications();
       getAllUnReadNotifications();
+      getAllUnpaidDepositRequests();
     });
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       for (var e in triggered) {
@@ -525,7 +540,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<void>openDialer() async {
+  Future<void> openDialer() async {
     await UssdAdvanced.multisessionUssd(code: "*171#", subscriptionId: 1);
   }
 
@@ -580,7 +595,11 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   Get.to(() => const Points());
                 },
-                leading: Image.asset("assets/images/customer-loyalty.png",width:30,height: 30,),
+                leading: Image.asset(
+                  "assets/images/customer-loyalty.png",
+                  width: 30,
+                  height: 30,
+                ),
                 title: const Text('points'),
               ),
 
@@ -605,7 +624,11 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   Get.to(() => const AllReportSummary());
                 },
-                leading: Image.asset("assets/images/notebook.png",width:30,height: 30,),
+                leading: Image.asset(
+                  "assets/images/notebook.png",
+                  width: 30,
+                  height: 30,
+                ),
                 title: const Text('Reports'),
               ),
               ListTile(
@@ -641,8 +664,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text(
-                          'App created by Havens Software Development'),
+                      child: Text('App created by Havens Software Development'),
                     ),
                   ],
                 ),
@@ -672,26 +694,55 @@ class _HomePageState extends State<HomePage> {
         ),
         body: ListView(
           children: [
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Row(
               children: [
-                Expanded(child: GestureDetector(
-                  onTap: (){
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
                     Get.to(() => const AllPendingDepositRequests());
                   },
-                  child:  menuWidget(title: 'Requests', imagePath: 'assets/images/request-for-proposal.png',),
+                  child: menuWidget(
+                    title: 'Requests',
+                    imagePath: 'assets/images/request-for-proposal.png',
+                  ),
                 )),
-                Expanded(child: GestureDetector(
-                  onTap: (){
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
                     Get.to(() => const AllPendingPayments());
                   },
-                  child:  menuWidget(title: 'Payments', imagePath: 'assets/images/cashless-payment.png',),
+                  child: menuWidget(
+                    title: 'Payments',
+                    imagePath: 'assets/images/cashless-payment.png',
+                  ),
                 )),
-                Expanded(child: GestureDetector(
-                  onTap: (){
-                    Get.to(() => const AllCustomers());
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => const AllUnPaidRequests());
                   },
-                  child: menuWidget(title: 'Customers', imagePath: 'assets/images/rating.png',),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: badge.Badge(
+                            position: BadgePosition.bottomStart(),
+                            badgeContent: Column(
+                              children: [
+                                Text("${unPaidDepositRequests.length}",
+                                    style: const TextStyle(color: Colors.white))
+                              ],
+                            )),
+                      ),
+                      menuWidget(
+                        title: 'Unpaid',
+                        imagePath: 'assets/images/cashless-payment.png',
+                      ),
+                    ],
+                  ),
                 )),
               ],
             ),
@@ -704,23 +755,35 @@ class _HomePageState extends State<HomePage> {
             ),
             Row(
               children: [
-                Expanded(child: GestureDetector(
-                  onTap: (){
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
                     Get.to(() => const AddToMyAccount());
                   },
-                  child:  menuWidget(title: 'Link Bank', imagePath: 'assets/images/bank-account.png',),
+                  child: menuWidget(
+                    title: 'Link Bank',
+                    imagePath: 'assets/images/bank-account.png',
+                  ),
                 )),
-                Expanded(child: GestureDetector(
-                  onTap: (){
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
                     Get.to(() => const MyBankAccounts());
                   },
-                  child: menuWidget(title: 'Bank Accounts', imagePath: 'assets/images/bank.png',),
+                  child: menuWidget(
+                    title: 'Bank Accounts',
+                    imagePath: 'assets/images/bank.png',
+                  ),
                 )),
-                Expanded(child: GestureDetector(
-                  onTap: (){
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
                     Get.to(() => const MyAgents());
                   },
-                  child:  menuWidget(title: 'Users', imagePath: 'assets/images/group.png',),
+                  child: menuWidget(
+                    title: 'Users',
+                    imagePath: 'assets/images/group.png',
+                  ),
                 )),
               ],
             ),
@@ -733,23 +796,35 @@ class _HomePageState extends State<HomePage> {
             ),
             Row(
               children: [
-                Expanded(child: GestureDetector(
-                  onTap: (){
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
                     Get.to(() => const SelectSms());
                   },
-                  child:  menuWidget(title: 'SMS', imagePath: 'assets/images/sms.png',),
+                  child: menuWidget(
+                    title: 'SMS',
+                    imagePath: 'assets/images/sms.png',
+                  ),
                 )),
-                Expanded(child: GestureDetector(
-                  onTap: (){
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
                     Get.to(() => const AddNewUser());
                   },
-                  child:  menuWidget(title: 'Register', imagePath: 'assets/images/man.png',),
+                  child: menuWidget(
+                    title: 'Register',
+                    imagePath: 'assets/images/man.png',
+                  ),
                 )),
-                Expanded(child: GestureDetector(
-                  onTap: (){
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
                     showInstalled();
                   },
-                  child:  menuWidget(title: 'Services', imagePath: 'assets/images/commission (1).png',),
+                  child: menuWidget(
+                    title: 'Services',
+                    imagePath: 'assets/images/commission (1).png',
+                  ),
                 )),
               ],
             ),
@@ -762,14 +837,19 @@ class _HomePageState extends State<HomePage> {
             ),
             Row(
               children: [
-                Expanded(child: GestureDetector(
-                  onTap: (){
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
                     checkMtnBalance();
                   },
-                  child:  menuWidget(title: 'Balance', imagePath: 'assets/images/balance.png',),
+                  child: menuWidget(
+                    title: 'Balance',
+                    imagePath: 'assets/images/balance.png',
+                  ),
                 )),
-                Expanded(child: GestureDetector(
-                  onTap: (){
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
                     Get.to(() => const Birthdays());
                   },
                   child: Column(
@@ -778,35 +858,37 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(8.0),
                         child: badge.Badge(
                             position: BadgePosition.bottomStart(),
-                            badgeContent:   Column(
-                            children: [
-                              hasbdinfive
-                                  ? Text(
-                                  "${hasBirthDayInFive.length}",
-                                  style: const TextStyle(
-                                      color: Colors.white))
-                                  : hasbdintoday
-                                  ? Text(
-                                  "${hasBirthDayToday.length}",
-                                  style: const TextStyle(
-                                      color: Colors.white))
-                                  : const Text("0",
-                                  style: TextStyle(
-                                      color: Colors.white)),
-                            ],
-                          )
-                        ),
+                            badgeContent: Column(
+                              children: [
+                                hasbdinfive
+                                    ? Text("${hasBirthDayInFive.length}",
+                                        style: const TextStyle(
+                                            color: Colors.white))
+                                    : hasbdintoday
+                                        ? Text("${hasBirthDayToday.length}",
+                                            style: const TextStyle(
+                                                color: Colors.white))
+                                        : const Text("0",
+                                            style:
+                                                TextStyle(color: Colors.white)),
+                              ],
+                            )),
                       ),
-                      menuWidget(title: 'Birthdays', imagePath: 'assets/images/cake.png',)
+                      menuWidget(
+                        title: 'Birthdays',
+                        imagePath: 'assets/images/cake.png',
+                      )
                     ],
                   ),
                 )),
-                Expanded(child: GestureDetector(
-                  onTap: (){
-                    Get.to(() => const AddNewUser());
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => const AllCustomers());
                   },
-                  child:  Column(
-                    children: [],
+                  child: menuWidget(
+                    title: 'Customers',
+                    imagePath: 'assets/images/rating.png',
                   ),
                 )),
               ],
@@ -819,6 +901,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   void _handleMenuButtonPressed() {
     // NOTICE: Manage Advanced Drawer state through the Controller.
     // _advancedDrawerController.value = AdvancedDrawerValue.visible();
@@ -829,17 +912,25 @@ class _HomePageState extends State<HomePage> {
 class menuWidget extends StatelessWidget {
   String title;
   String imagePath;
-  menuWidget({
-    super.key,required this.title,required this.imagePath
-  });
+
+  menuWidget({super.key, required this.title, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.asset(imagePath,width: 70,height: 70,),
-        const SizedBox(height: 10,),
-        Text(title,style: const TextStyle(fontWeight: FontWeight.bold),)
+        Image.asset(
+          imagePath,
+          width: 70,
+          height: 70,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        )
       ],
     );
   }
