@@ -3,26 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:fnet_admin/screens/homepage.dart';
 import 'package:fnet_admin/screens/loginview.dart';
 import 'package:fnet_admin/static/app_colors.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:telephony/telephony.dart';
 
 import 'controllers/accountscontroller.dart';
-import 'controllers/bankaccountscontroller.dart';
-import 'controllers/customerscontroller.dart';
 import 'controllers/logincontroller.dart';
-import 'package:get/get.dart';
-import 'controllers/notificationcontroller.dart';
-import 'controllers/paymentscontroller.dart';
 import 'controllers/profilecontroller.dart';
-import 'controllers/requestcontroller.dart';
-import 'controllers/userscontroller.dart';
-
 
 onBackgroundMessage(SmsMessage message) {
   debugPrint("onBackgroundMessage called");
 }
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -63,17 +56,15 @@ class _MyAppState extends State<MyApp> {
       _message = message.body ?? "Error reading message body.";
       Get.defaultDialog(
           content: Column(
-            children: [
-              Text(_message)
-            ],
+            children: [Text(_message)],
           ),
           confirm: TextButton(
-            onPressed: (){
+            onPressed: () {
               Get.back();
             },
-            child: const Text("OK",style:TextStyle(fontWeight:FontWeight.bold)),
-          )
-      );
+            child:
+                const Text("OK", style: TextStyle(fontWeight: FontWeight.bold)),
+          ));
     });
   }
 
@@ -84,13 +75,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-
     final bool? result = await telephony.requestPhoneAndSmsPermissions;
 
     if (result != null && result) {
-      telephony.listenIncomingSms(onNewMessage: onMessage, onBackgroundMessage: onBackgroundMessage);
+      telephony.listenIncomingSms(
+          onNewMessage: onMessage, onBackgroundMessage: onBackgroundMessage);
     }
-
 
     if (!mounted) return;
   }
@@ -105,9 +95,7 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         hasToken = true;
       });
-    }
-
-    else{
+    } else {
       setState(() {
         hasToken = false;
       });
@@ -122,13 +110,10 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
           primaryColor: primaryColor,
           appBarTheme: const AppBarTheme(
-              elevation: 0,
-              backgroundColor: defaultColor,
-          )
-      ),
-      home: hasToken  ? const HomePage() : const LoginView(),
+            elevation: 0,
+            backgroundColor: defaultColor,
+          )),
+      home: hasToken ? const HomePage() : const LoginView(),
     );
   }
 }
-
-

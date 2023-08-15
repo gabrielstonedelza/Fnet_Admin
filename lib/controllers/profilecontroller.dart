@@ -1,10 +1,11 @@
-import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-class ProfileController extends GetxController{
+import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
+class ProfileController extends GetxController {
   static ProfileController get to => Get.find<ProfileController>();
   bool isLoading = false;
   List profileDetails = [];
@@ -32,14 +33,13 @@ class ProfileController extends GetxController{
         var jsonData = jsonDecode(response.body);
         profileDetails = jsonData;
         update();
-      }
-      else{
+      } else {
         if (kDebugMode) {
           print(response.body);
         }
       }
     } catch (e) {
-      Get.snackbar("Sorry","something happened or please check your internet connection",snackPosition: SnackPosition.BOTTOM);
+      // Get.snackbar("Sorry","something happened or please check your internet connection",snackPosition: SnackPosition.BOTTOM);
     } finally {
       isLoading = false;
       update();
@@ -59,7 +59,7 @@ class ProfileController extends GetxController{
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         profileDetails = jsonData;
-        for(var i in profileDetails){
+        for (var i in profileDetails) {
           userId = i['id'].toString();
           agentPhone = i['get_phone'];
           email = i['get_email'];
@@ -71,14 +71,13 @@ class ProfileController extends GetxController{
           // phoneNumber = i['phone_number'];
         }
         update();
-      }
-      else{
+      } else {
         if (kDebugMode) {
           print(response.body);
         }
       }
     } catch (e) {
-      Get.snackbar("Sorry","something happened or please check your internet connection",snackPosition: SnackPosition.BOTTOM);
+      // Get.snackbar("Sorry","something happened or please check your internet connection",snackPosition: SnackPosition.BOTTOM);
     } finally {
       isLoading = false;
       update();

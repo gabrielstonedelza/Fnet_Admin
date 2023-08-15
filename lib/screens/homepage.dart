@@ -532,6 +532,7 @@ class _HomePageState extends State<HomePage> {
       getAllTriggeredNotifications();
       getAllUnReadNotifications();
       getAllUnpaidDepositRequests();
+      // fetchCustomersWithBirthDays();
     });
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       for (var e in triggered) {
@@ -602,7 +603,6 @@ class _HomePageState extends State<HomePage> {
                 ),
                 title: const Text('points'),
               ),
-
               ListTile(
                 onTap: () {
                   openDialer();
@@ -610,16 +610,6 @@ class _HomePageState extends State<HomePage> {
                 leading: const Icon(Icons.phone),
                 title: const Text('Dialer'),
               ),
-              // ListTile(
-              //   onTap: () {},
-              //   leading: Image.asset("assets/images/refer.png",width:30,height: 30,),
-              //   title: const Text('Referrals'),
-              // ),
-              // ListTile(
-              //   onTap: () {},
-              //   leading: Image.asset("assets/images/earning.png",width:30,height: 30,),
-              //   title: const Text('Earnings'),
-              // ),
               ListTile(
                 onTap: () {
                   Get.to(() => const AllReportSummary());
@@ -675,7 +665,7 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(username),
+          title: Text("${username.toString().capitalize}"),
           leading: IconButton(
             onPressed: _handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
