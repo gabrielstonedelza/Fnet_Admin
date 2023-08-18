@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -9,12 +10,12 @@ import '../../../sendsms.dart';
 import '../../../static/app_colors.dart';
 import '../../../widgets/loadingui.dart';
 
-class EcoBankSummaryDetail extends StatefulWidget {
+class AllBankSummaryDetail extends StatefulWidget {
   final date_requested;
   final username;
   final phone;
 
-  const EcoBankSummaryDetail(
+  const AllBankSummaryDetail(
       {Key? key,
       this.date_requested,
       required this.username,
@@ -22,18 +23,18 @@ class EcoBankSummaryDetail extends StatefulWidget {
       : super(key: key);
 
   @override
-  _EcoBankSummaryDetailState createState() => _EcoBankSummaryDetailState(
+  _AllBankSummaryDetailState createState() => _AllBankSummaryDetailState(
       date_requested: this.date_requested,
       username: this.username,
       phone: this.phone);
 }
 
-class _EcoBankSummaryDetailState extends State<EcoBankSummaryDetail> {
+class _AllBankSummaryDetailState extends State<AllBankSummaryDetail> {
   final date_requested;
   final username;
   final phone;
 
-  _EcoBankSummaryDetailState(
+  _AllBankSummaryDetailState(
       {required this.date_requested,
       required this.username,
       required this.phone});
@@ -48,10 +49,11 @@ class _EcoBankSummaryDetailState extends State<EcoBankSummaryDetail> {
   late List amountResults = [];
   late List requestDates = [];
   double sum = 0.0;
-  final SendSmsController sendSms = SendSmsController();
+  bool isPosting = false;
+  late Timer _timer;
 
-  Future<void> fetchAllEcobankRequests() async {
-    final url = "https://fnetghana.xyz/get_agents_eco_bank/$username/";
+  Future<void> fetchAllbankRequests() async {
+    final url = "https://fnetghana.xyz/get_agents_bank_deposits/$username/";
     var myLink = Uri.parse(url);
     final response = await http.get(
       myLink,
@@ -73,6 +75,8 @@ class _EcoBankSummaryDetailState extends State<EcoBankSummaryDetail> {
     }
   }
 
+  final SendSmsController sendSms = SendSmsController();
+
   deleteBankRequest(String id) async {
     final url = "https://fnetghana.xyz/admin_delete_bank_request/$id/";
     var myLink = Uri.parse(url);
@@ -83,8 +87,7 @@ class _EcoBankSummaryDetailState extends State<EcoBankSummaryDetail> {
     if (response.statusCode == 204) {
       String telnum = phone;
       telnum = telnum.replaceFirst("0", '+233');
-      sendSms.sendMySms(
-          telnum, "FNET", "Hello,your Ecobank request is cancelled");
+      sendSms.sendMySms(telnum, "FNET", "Hello,your Bank request is cancelled");
       Get.snackbar("Success", "Request was deleted",
           colorText: defaultTextColor1,
           snackPosition: SnackPosition.BOTTOM,
@@ -93,6 +96,7 @@ class _EcoBankSummaryDetailState extends State<EcoBankSummaryDetail> {
       setState(() {
         isLoading = false;
       });
+      fetchAllbankRequests();
     } else {}
   }
 
@@ -107,14 +111,14 @@ class _EcoBankSummaryDetailState extends State<EcoBankSummaryDetail> {
         uToken = storage.read("token");
       });
     }
-    fetchAllEcobankRequests();
+    fetchAllbankRequests();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ecobank summary for $date_requested"),
+        title: Text("Requests summary for $date_requested"),
       ),
       body: SafeArea(
           child: isLoading
@@ -136,14 +140,6 @@ class _EcoBankSummaryDetailState extends State<EcoBankSummaryDetail> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             child: ListTile(
-                              trailing: IconButton(
-                                onPressed: () {
-                                  deleteBankRequest(
-                                      requestDates[i]['id'].toString());
-                                },
-                                icon:
-                                    const Icon(Icons.delete, color: Colors.red),
-                              ),
                               title: RowWidget(
                                 items: items,
                                 title: 'Agent: ',
@@ -236,6 +232,15 @@ class _EcoBankSummaryDetailState extends State<EcoBankSummaryDetail> {
                                     ],
                                   ),
                                 ],
+                              ),
+                              trailing: IconButton(
+                                icon:
+                                    const Icon(Icons.delete, color: Colors.red),
+                                onPressed: () {
+                                  isLoading = true;
+                                  deleteBankRequest(
+                                      requestDates[i]['id'].toString());
+                                },
                               ),
                             ),
                           ),

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +9,6 @@ import 'package:http/http.dart' as http;
 
 import '../../controllers/accountscontroller.dart';
 import 'agentsdetail.dart';
-
-
 
 class MyAgents extends StatefulWidget {
   const MyAgents({Key? key}) : super(key: key);
@@ -30,6 +27,7 @@ class _MyAgentsState extends State<MyAgents> {
   late List allBlockedUsers = [];
   bool isPosting = false;
   final AccountsController controller = Get.find();
+
   //
   // Future<void> getAllMyAgents() async {
   //   try {
@@ -74,7 +72,8 @@ class _MyAgentsState extends State<MyAgents> {
   //   }
   //
   // }
-  addToBlockedList(String userId,String email,String username,String phone,String fullName) async {
+  addToBlockedList(String userId, String email, String username, String phone,
+      String fullName) async {
     final depositUrl = "https://fnetghana.xyz/update_blocked/$userId/";
     final myLink = Uri.parse(depositUrl);
     final res = await http.put(myLink, headers: {
@@ -97,15 +96,15 @@ class _MyAgentsState extends State<MyAgents> {
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 5),
           backgroundColor: snackBackground);
-    }
-    else{
+    } else {
       if (kDebugMode) {
         print(res.body);
       }
     }
   }
 
-  removeFromBlockedList(String userId,String email,String username,String phone,String fullName) async {
+  removeFromBlockedList(String userId, String email, String username,
+      String phone, String fullName) async {
     final depositUrl = "https://fnetghana.xyz/update_blocked/$userId/";
     final myLink = Uri.parse(depositUrl);
     final res = await http.put(myLink, headers: {
@@ -128,8 +127,7 @@ class _MyAgentsState extends State<MyAgents> {
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 5),
           backgroundColor: snackBackground);
-    }
-    else{
+    } else {
       if (kDebugMode) {
         // print(res.body);
       }
@@ -144,7 +142,6 @@ class _MyAgentsState extends State<MyAgents> {
         uToken = storage.read("token");
       });
     }
-
   }
 
   @override
@@ -155,70 +152,96 @@ class _MyAgentsState extends State<MyAgents> {
         // backgroundColor: secondaryColor,
         actions: [
           IconButton(
-            onPressed: (){
+            onPressed: () {
               controller.getAllMyAgents();
             },
-            icon: const Icon(Icons.refresh,size: 30,),
+            icon: const Icon(
+              Icons.refresh,
+              size: 30,
+            ),
           )
         ],
       ),
-      body: GetBuilder<AccountsController>(builder: (controller){
-        return ListView.builder(
-            itemCount: controller.allMyAgents != null ? controller.allMyAgents.length : 0,
-            itemBuilder: (context, i) {
-              items = controller.allMyAgents[i];
-              return Card(
-                color: secondaryColor,
-                elevation: 12,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                child: ListTile(
-                  onTap: (){
-                    Get.to(()=>AgentDetails(username:controller.allMyAgents[i]['username']));
-                  },
-                  title: buildRow("Name: ", "full_name"),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildRow("Username : ", "username"),
-                      buildRow("Phone : ", "phone"),
-                      buildRow("Email : ", "email"),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 1.0,bottom: 8,top: 3),
-                        child: Text("Tap for more",style: TextStyle(fontWeight: FontWeight.bold,color: snackBackground),),
-                      )
-                    ],
+      body: GetBuilder<AccountsController>(
+        builder: (controller) {
+          return ListView.builder(
+              itemCount: controller.allMyAgents != null
+                  ? controller.allMyAgents.length
+                  : 0,
+              itemBuilder: (context, i) {
+                items = controller.allMyAgents[i];
+                return Card(
+                  color: secondaryColor,
+                  elevation: 12,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  child: ListTile(
+                    onTap: () {
+                      Get.to(() => AgentDetails(
+                          username: controller.allMyAgents[i]['username'],
+                          phone: controller.allMyAgents[i]['phone']));
+                    },
+                    title: buildRow("Name: ", "full_name"),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildRow("Username : ", "username"),
+                        buildRow("Phone : ", "phone"),
+                        buildRow("Email : ", "email"),
+                        const Padding(
+                          padding:
+                              EdgeInsets.only(left: 1.0, bottom: 8, top: 3),
+                          child: Text(
+                            "Tap for more",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: snackBackground),
+                          ),
+                        )
+                      ],
+                    ),
+                    trailing: items['user_blocked']
+                        ? IconButton(
+                            onPressed: () async {
+                              Get.snackbar("Please wait...", "unblocking agent",
+                                  colorText: defaultTextColor1,
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  duration: const Duration(seconds: 5),
+                                  backgroundColor: snackBackground);
+                              removeFromBlockedList(
+                                  controller.allMyAgents[i]['id'].toString(),
+                                  controller.allMyAgents[i]['email'],
+                                  controller.allMyAgents[i]['username'],
+                                  controller.allMyAgents[i]['phone'],
+                                  controller.allMyAgents[i]['full_name']);
+                              await Future.delayed(const Duration(seconds: 3));
+                              controller.getAllMyAgents();
+                            },
+                            icon: Image.asset("assets/images/blocked.png",
+                                width: 100, height: 100))
+                        : IconButton(
+                            onPressed: () async {
+                              Get.snackbar("Please wait...", "blocking user",
+                                  colorText: defaultTextColor1,
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  duration: const Duration(seconds: 5),
+                                  backgroundColor: snackBackground);
+                              addToBlockedList(
+                                  controller.allMyAgents[i]['id'].toString(),
+                                  controller.allMyAgents[i]['email'],
+                                  controller.allMyAgents[i]['username'],
+                                  controller.allMyAgents[i]['phone'],
+                                  controller.allMyAgents[i]['full_name']);
+                              await Future.delayed(const Duration(seconds: 3));
+                              controller.getAllMyAgents();
+                            },
+                            icon: Image.asset("assets/images/user-blocked.png",
+                                width: 100, height: 100)),
                   ),
-                  trailing: items['user_blocked'] ? IconButton(
-                      onPressed: () async{
-                        Get.snackbar("Please wait...", "unblocking agent",
-                            colorText: defaultTextColor1,
-                            snackPosition: SnackPosition.BOTTOM,
-                            duration: const Duration(seconds: 5),
-                            backgroundColor: snackBackground);
-                        removeFromBlockedList(controller.allMyAgents[i]['id'].toString(),controller.allMyAgents[i]['email'],controller.allMyAgents[i]['username'],controller.allMyAgents[i]['phone'],controller.allMyAgents[i]['full_name']);
-                        await Future.delayed(const Duration(seconds: 3));
-                        controller.getAllMyAgents();
-                      },
-                      icon:Image.asset("assets/images/blocked.png",width:100,height:100)
-                  ) : IconButton(
-                      onPressed: () async{
-                        Get.snackbar("Please wait...", "blocking user",
-                            colorText: defaultTextColor1,
-                            snackPosition: SnackPosition.BOTTOM,
-                            duration: const Duration(seconds: 5),
-                            backgroundColor: snackBackground);
-                        addToBlockedList(controller.allMyAgents[i]['id'].toString(),controller.allMyAgents[i]['email'],controller.allMyAgents[i]['username'],controller.allMyAgents[i]['phone'],controller.allMyAgents[i]['full_name']);
-                        await Future.delayed(const Duration(seconds: 3));
-                        controller.getAllMyAgents();
-                      },
-                      icon:Image.asset("assets/images/user-blocked.png",width:100,height:100)
-                  ),
-                ),
-              );
-            });
-      },),
-
+                );
+              });
+        },
+      ),
     );
   }
 

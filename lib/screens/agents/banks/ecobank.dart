@@ -10,43 +10,50 @@ import 'ecobankdetail.dart';
 
 class EcoBankDepositRequests extends StatefulWidget {
   final username;
-  const EcoBankDepositRequests({super.key,required this.username});
+  final phone;
+
+  const EcoBankDepositRequests(
+      {super.key, required this.username, required this.phone});
 
   @override
-  State<EcoBankDepositRequests> createState() => _EcoBankDepositRequestsState(username:this.username);
+  State<EcoBankDepositRequests> createState() =>
+      _EcoBankDepositRequestsState(username: this.username, phone: this.phone);
 }
 
 class _EcoBankDepositRequestsState extends State<EcoBankDepositRequests> {
   final username;
-  _EcoBankDepositRequestsState({required this.username});
+  final phone;
+
+  _EcoBankDepositRequestsState({required this.username, required this.phone});
+
   late List allEcoBankRequests = [];
   var items;
   bool isLoading = true;
 
   late List requestsDates = [];
 
-  Future<void>fetchAllEcoBankRequests()async{
+  Future<void> fetchAllEcoBankRequests() async {
     final url = "https://fnetghana.xyz/get_agents_eco_bank/$username/";
     var myLink = Uri.parse(url);
     final response = await http.get(myLink, headers: {
       // "Authorization": "Token $uToken"
     });
 
-    if(response.statusCode ==200){
+    if (response.statusCode == 200) {
       final codeUnits = response.body.codeUnits;
       var jsonData = const Utf8Decoder().convert(codeUnits);
       allEcoBankRequests = json.decode(jsonData);
 
-      for(var i in allEcoBankRequests){
-        if(!requestsDates.contains(i['date_requested'].toString().split("T").first)){
+      for (var i in allEcoBankRequests) {
+        if (!requestsDates
+            .contains(i['date_requested'].toString().split("T").first)) {
           requestsDates.add(i['date_requested'].toString().split("T").first);
         }
       }
       setState(() {
         isLoading = false;
       });
-    }
-    else{
+    } else {
       if (kDebugMode) {
         print(response.body);
       }
@@ -59,57 +66,75 @@ class _EcoBankDepositRequestsState extends State<EcoBankDepositRequests> {
     super.initState();
     fetchAllEcoBankRequests();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("$username's EcoBank"),
       ),
-      body: isLoading ? const LoadingUi() :
-      ListView.builder(
-          itemCount: requestsDates != null ? requestsDates.length : 0,
-          itemBuilder: (context,i){
-            items = requestsDates[i];
-            return Column(
-              children: [
-                const SizedBox(height: 10,),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return EcoBankSummaryDetail(date_requested:requestsDates[i],username:username);
-                    }));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0,right: 8),
-                    child: Card(
-                      color: secondaryColor,
-                      elevation: 12,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)
-                      ),
-                      // shadowColor: Colors.pink,
+      body: isLoading
+          ? const LoadingUi()
+          : ListView.builder(
+              itemCount: requestsDates != null ? requestsDates.length : 0,
+              itemBuilder: (context, i) {
+                items = requestsDates[i];
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return EcoBankSummaryDetail(
+                            date_requested: requestsDates[i],
+                            username: username,
+                            phone: phone,
+                          );
+                        }));
+                      },
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 5.0,bottom: 5),
-                        child: ListTile(
-                          title: Padding(
-                            padding: const EdgeInsets.only(bottom: 5.0),
-                            child: Row(
-                              children: [
-                                const Text("Date: ",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.white),),
-                                Text(items,style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.white),),
-
-                              ],
+                        padding: const EdgeInsets.only(left: 8.0, right: 8),
+                        child: Card(
+                          color: secondaryColor,
+                          elevation: 12,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          // shadowColor: Colors.pink,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5.0, bottom: 5),
+                            child: ListTile(
+                              title: Padding(
+                                padding: const EdgeInsets.only(bottom: 5.0),
+                                child: Row(
+                                  children: [
+                                    const Text(
+                                      "Date: ",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                    Text(
+                                      items,
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                )
-              ],
-            );
-          }
-      ),
+                    )
+                  ],
+                );
+              }),
     );
   }
 }

@@ -1,31 +1,32 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:fnet_admin/screens/agents/payments/paymentsummary.dart';
 import 'package:fnet_admin/screens/agents/reports/reportsummary.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
-import 'package:flutter/material.dart';
 
 import '../../widgets/getonlineimage.dart';
 import 'agentcustomers.dart';
 import 'bankdeposits.dart';
 import 'bankwithdrawals.dart';
 
-
 class AgentDetails extends StatefulWidget {
   final username;
+  final phone;
 
-  const AgentDetails({Key? key, required this.username}) : super(key: key);
-
+  const AgentDetails({Key? key, required this.username, required this.phone})
+      : super(key: key);
 
   @override
   State<AgentDetails> createState() =>
-      _AgentDetailsState(username: this.username);
+      _AgentDetailsState(username: this.username, phone: this.phone);
 }
 
 class _AgentDetailsState extends State<AgentDetails> {
   final username;
-  _AgentDetailsState({required this.username});
+  final phone;
+
+  _AgentDetailsState({required this.username, required this.phone});
+
   final storage = GetStorage();
   late String uToken = "";
 
@@ -45,7 +46,6 @@ class _AgentDetailsState extends State<AgentDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Details for $username"),
-
       ),
       body: ListView(
         children: [
@@ -58,7 +58,7 @@ class _AgentDetailsState extends State<AgentDetails> {
                 child: GestureDetector(
                   child: Column(
                     children: [
-                      myOnlineImage("assets/images/group.png",70,70),
+                      myOnlineImage("assets/images/group.png", 70, 70),
                       const SizedBox(
                         height: 10,
                       ),
@@ -66,7 +66,9 @@ class _AgentDetailsState extends State<AgentDetails> {
                     ],
                   ),
                   onTap: () {
-                    Get.to(() => AgentCustomers(username: username,));
+                    Get.to(() => AgentCustomers(
+                          username: username,
+                        ));
                   },
                 ),
               ),
@@ -74,7 +76,7 @@ class _AgentDetailsState extends State<AgentDetails> {
                 child: GestureDetector(
                   child: Column(
                     children: [
-                      myOnlineImage("assets/images/bank.png",70,70),
+                      myOnlineImage("assets/images/bank.png", 70, 70),
                       const SizedBox(
                         height: 10,
                       ),
@@ -82,7 +84,8 @@ class _AgentDetailsState extends State<AgentDetails> {
                     ],
                   ),
                   onTap: () {
-                    Get.to(() => BankDepositSummary(username: username,));
+                    Get.to(() =>
+                        BankDepositSummary(username: username, phone: phone));
                   },
                 ),
               ),
@@ -90,7 +93,7 @@ class _AgentDetailsState extends State<AgentDetails> {
                 child: GestureDetector(
                   child: Column(
                     children: [
-                      myOnlineImage("assets/images/bank.png",70,70),
+                      myOnlineImage("assets/images/bank.png", 70, 70),
                       const SizedBox(
                         height: 10,
                       ),
@@ -117,7 +120,8 @@ class _AgentDetailsState extends State<AgentDetails> {
                 child: GestureDetector(
                   child: Column(
                     children: [
-                      myOnlineImage("assets/images/cashless-payment.png",70,70),
+                      myOnlineImage(
+                          "assets/images/cashless-payment.png", 70, 70),
                       const SizedBox(
                         height: 10,
                       ),
@@ -125,7 +129,10 @@ class _AgentDetailsState extends State<AgentDetails> {
                     ],
                   ),
                   onTap: () {
-                    Get.to(() => PaymentSummary(username: username,));
+                    Get.to(() => PaymentSummary(
+                          username: username,
+                          phone: phone,
+                        ));
                   },
                 ),
               ),
@@ -133,7 +140,7 @@ class _AgentDetailsState extends State<AgentDetails> {
                 child: GestureDetector(
                   child: Column(
                     children: [
-                      myOnlineImage("assets/images/notebook.png",70,70),
+                      myOnlineImage("assets/images/notebook.png", 70, 70),
                       const SizedBox(
                         height: 10,
                       ),
@@ -141,13 +148,15 @@ class _AgentDetailsState extends State<AgentDetails> {
                     ],
                   ),
                   onTap: () {
-                    Get.to(() => ReportSummary(username: username,));
+                    Get.to(() => ReportSummary(
+                          username: username,
+                        ));
                   },
                 ),
               ),
               Expanded(
                 child: GestureDetector(
-                  child: Column(
+                  child: const Column(
                     children: [
                       // myOnlineImage("assets/images/bank.png",70,70),
                       // const SizedBox(

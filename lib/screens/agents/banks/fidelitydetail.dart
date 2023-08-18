@@ -1,28 +1,43 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:get/get.dart';
+
+import '../../../sendsms.dart';
 import '../../../static/app_colors.dart';
 import '../../../widgets/loadingui.dart';
-
-
 
 class FidelityBankSummaryDetail extends StatefulWidget {
   final date_requested;
   final username;
-  const FidelityBankSummaryDetail({Key? key, this.date_requested,required this.username})
+  final phone;
+
+  const FidelityBankSummaryDetail(
+      {Key? key,
+      this.date_requested,
+      required this.username,
+      required this.phone})
       : super(key: key);
 
   @override
   _FidelityBankSummaryDetailState createState() =>
-      _FidelityBankSummaryDetailState(date_requested: this.date_requested,username:this.username);
+      _FidelityBankSummaryDetailState(
+          date_requested: this.date_requested,
+          username: this.username,
+          phone: this.phone);
 }
 
 class _FidelityBankSummaryDetailState extends State<FidelityBankSummaryDetail> {
   final date_requested;
   final username;
-  _FidelityBankSummaryDetailState({required this.date_requested,required this.username});
+  final phone;
+
+  _FidelityBankSummaryDetailState(
+      {required this.date_requested,
+      required this.username,
+      required this.phone});
 
   final storage = GetStorage();
   bool hasToken = false;
@@ -35,11 +50,12 @@ class _FidelityBankSummaryDetailState extends State<FidelityBankSummaryDetail> {
   late List requestDates = [];
   double sum = 0.0;
 
-  Future<void>fetchAllFidelityBankRequests() async {
+  Future<void> fetchAllFidelityBankRequests() async {
     final url = "https://fnetghana.xyz/get_agents_fidelity_bank/$username/";
     var myLink = Uri.parse(url);
-    final response =
-    await http.get(myLink,);
+    final response = await http.get(
+      myLink,
+    );
 
     if (response.statusCode == 200) {
       final codeUnits = response.body.codeUnits;
@@ -57,6 +73,8 @@ class _FidelityBankSummaryDetailState extends State<FidelityBankSummaryDetail> {
     }
   }
 
+  final SendSmsController sendSms = SendSmsController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -71,6 +89,29 @@ class _FidelityBankSummaryDetailState extends State<FidelityBankSummaryDetail> {
     fetchAllFidelityBankRequests();
   }
 
+  deleteBankRequest(String id) async {
+    final url = "https://fnetghana.xyz/admin_delete_bank_request/$id/";
+    var myLink = Uri.parse(url);
+    final response = await http.get(myLink, headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    });
+
+    if (response.statusCode == 204) {
+      String telnum = phone;
+      telnum = telnum.replaceFirst("0", '+233');
+      sendSms.sendMySms(
+          telnum, "FNET", "Hello,your Fidelity Bank request is cancelled");
+      Get.snackbar("Success", "Request was deleted",
+          colorText: defaultTextColor1,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 4),
+          backgroundColor: snackBackground);
+      setState(() {
+        isLoading = false;
+      });
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,116 +122,187 @@ class _FidelityBankSummaryDetailState extends State<FidelityBankSummaryDetail> {
           child: isLoading
               ? const LoadingUi()
               : ListView.builder(
-              itemCount: requestDates != null ? requestDates.length : 0,
-              itemBuilder: (context, i) {
-                items = requestDates[i];
-                return Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8),
-                      child: Card(
-                        color: secondaryColor,
-                        elevation: 12,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: ListTile(
-                          title: RowWidget(items: items, title: 'Agent: ', itemTitle: 'agent_username',),
-                          subtitle: Column(
-                            children: [
-                              RowWidget(items: items, title: 'Customer: ', itemTitle: 'customer',),
-                              RowWidget(items: items, title: 'Bank: ', itemTitle: 'bank',),
-                              RowWidget(items: items, title: 'Acc No: ', itemTitle: 'account_number',),
-                              RowWidget(items: items, title: 'Acc Name: ', itemTitle: 'account_name',),
-                              RowWidget(items: items, title: 'Amount: ', itemTitle: 'amount',),
-                              RowWidget(items: items, title: 'Req Status: ', itemTitle: 'request_status',),
-                              RowWidget(items: items, title: 'Req Paid: ', itemTitle: 'deposit_paid',),
-                              Row(
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.only(bottom: 8),
-                                    child: Text("Date: ",style: TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 8),
-                                    child: Text(items['date_requested'],style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.only(bottom: 8),
-                                    child: Text("Time: ",style: TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 8),
-                                    child: Text(items['time_requested'].toString().split(".").first,style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                  itemCount: requestDates != null ? requestDates.length : 0,
+                  itemBuilder: (context, i) {
+                    items = requestDates[i];
+                    return Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
                         ),
-                      ),
-                    )
-                  ],
-                );
-              })),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8),
+                          child: Card(
+                            color: secondaryColor,
+                            elevation: 12,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: ListTile(
+                              trailing: IconButton(
+                                onPressed: () {
+                                  deleteBankRequest(
+                                      requestDates[i]['id'].toString());
+                                },
+                                icon:
+                                    const Icon(Icons.delete, color: Colors.red),
+                              ),
+                              title: RowWidget(
+                                items: items,
+                                title: 'Agent: ',
+                                itemTitle: 'agent_username',
+                              ),
+                              subtitle: Column(
+                                children: [
+                                  RowWidget(
+                                    items: items,
+                                    title: 'Customer: ',
+                                    itemTitle: 'customer',
+                                  ),
+                                  RowWidget(
+                                    items: items,
+                                    title: 'Bank: ',
+                                    itemTitle: 'bank',
+                                  ),
+                                  RowWidget(
+                                    items: items,
+                                    title: 'Acc No: ',
+                                    itemTitle: 'account_number',
+                                  ),
+                                  RowWidget(
+                                    items: items,
+                                    title: 'Acc Name: ',
+                                    itemTitle: 'account_name',
+                                  ),
+                                  RowWidget(
+                                    items: items,
+                                    title: 'Amount: ',
+                                    itemTitle: 'amount',
+                                  ),
+                                  RowWidget(
+                                    items: items,
+                                    title: 'Req Status: ',
+                                    itemTitle: 'request_status',
+                                  ),
+                                  RowWidget(
+                                    items: items,
+                                    title: 'Req Paid: ',
+                                    itemTitle: 'deposit_paid',
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(bottom: 8),
+                                        child: Text(
+                                          "Date: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: defaultTextColor1),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8),
+                                        child: Text(
+                                          items['date_requested'],
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: defaultTextColor1),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(bottom: 8),
+                                        child: Text(
+                                          "Time: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: defaultTextColor1),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8),
+                                        child: Text(
+                                          items['time_requested']
+                                              .toString()
+                                              .split(".")
+                                              .first,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: defaultTextColor1),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  })),
       floatingActionButton: !isLoading
           ? FloatingActionButton(
-        backgroundColor: snackBackground,
-        child: const Text("Total"),
-        onPressed: () {
-          Get.defaultDialog(
-            buttonColor: secondaryColor,
-            title: "Total",
-            middleText: "$sum",
-            confirm: RawMaterialButton(
-                shape: const StadiumBorder(),
-                fillColor: secondaryColor,
-                onPressed: () {
-                  Get.back();
-                },
-                child: const Text(
-                  "Close",
-                  style: TextStyle(color: Colors.white),
-                )),
-          );
-        },
-      )
+              backgroundColor: snackBackground,
+              child: const Text("Total"),
+              onPressed: () {
+                Get.defaultDialog(
+                  buttonColor: secondaryColor,
+                  title: "Total",
+                  middleText: "$sum",
+                  confirm: RawMaterialButton(
+                      shape: const StadiumBorder(),
+                      fillColor: secondaryColor,
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text(
+                        "Close",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                );
+              },
+            )
           : Container(),
     );
   }
 
-  Padding buildRow(String mainTitle,String subtitle) {
+  Padding buildRow(String mainTitle, String subtitle) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
-          Text(mainTitle, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
+          Text(
+            mainTitle,
+            style: const TextStyle(
+                fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
           ),
-          Text(items[subtitle].toString(), style: const TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+          Text(
+            items[subtitle].toString(),
+            style: const TextStyle(
+                fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ],
       ),
     );
   }
 }
+
 class RowWidget extends StatelessWidget {
   String title;
   String itemTitle;
-  RowWidget({
-    super.key,
-    required this.items,
-    required this.title,
-    required this.itemTitle
-  });
 
-  final  items;
+  RowWidget(
+      {super.key,
+      required this.items,
+      required this.title,
+      required this.itemTitle});
+
+  final items;
 
   @override
   Widget build(BuildContext context) {
@@ -198,11 +310,19 @@ class RowWidget extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
-          child: Text(title,style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
+          child: Text(
+            title,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: defaultTextColor1),
+          ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 18.0,bottom: 8),
-          child: Text(items[itemTitle],style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1),),
+          padding: const EdgeInsets.only(left: 18.0, bottom: 8),
+          child: Text(
+            items[itemTitle],
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: defaultTextColor1),
+          ),
         ),
       ],
     );

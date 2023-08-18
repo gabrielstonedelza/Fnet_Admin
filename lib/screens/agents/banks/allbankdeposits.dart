@@ -6,34 +6,34 @@ import 'package:http/http.dart' as http;
 
 import '../../../static/app_colors.dart';
 import '../../../widgets/loadingui.dart';
-import 'calbankdetail.dart';
+import 'allbankrequestdetails.dart';
 
-class CalBankDepositRequests extends StatefulWidget {
+class AllBankDepositRequests extends StatefulWidget {
   final username;
   final phone;
 
-  const CalBankDepositRequests(
+  const AllBankDepositRequests(
       {super.key, required this.username, required this.phone});
 
   @override
-  State<CalBankDepositRequests> createState() =>
-      _CalBankDepositRequestsState(username: this.username, phone: this.phone);
+  State<AllBankDepositRequests> createState() =>
+      _AllBankDepositRequestsState(username: this.username, phone: this.phone);
 }
 
-class _CalBankDepositRequestsState extends State<CalBankDepositRequests> {
+class _AllBankDepositRequestsState extends State<AllBankDepositRequests> {
   final username;
   final phone;
 
-  _CalBankDepositRequestsState({required this.username, required this.phone});
+  _AllBankDepositRequestsState({required this.username, required this.phone});
 
-  late List allCalBankRequests = [];
+  late List allBankRequests = [];
   var items;
   bool isLoading = true;
 
   late List requestsDates = [];
 
-  Future<void> fetchAllCalBankRequests() async {
-    final url = "https://fnetghana.xyz/get_agents_cal_bank/$username/";
+  Future<void> fetchAllBankRequests() async {
+    final url = "https://fnetghana.xyz/get_agents_bank_deposits/$username/";
     var myLink = Uri.parse(url);
     final response = await http.get(myLink, headers: {
       // "Authorization": "Token $uToken"
@@ -42,9 +42,9 @@ class _CalBankDepositRequestsState extends State<CalBankDepositRequests> {
     if (response.statusCode == 200) {
       final codeUnits = response.body.codeUnits;
       var jsonData = const Utf8Decoder().convert(codeUnits);
-      allCalBankRequests = json.decode(jsonData);
+      allBankRequests = json.decode(jsonData);
 
-      for (var i in allCalBankRequests) {
+      for (var i in allBankRequests) {
         if (!requestsDates
             .contains(i['date_requested'].toString().split("T").first)) {
           requestsDates.add(i['date_requested'].toString().split("T").first);
@@ -64,14 +64,14 @@ class _CalBankDepositRequestsState extends State<CalBankDepositRequests> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchAllCalBankRequests();
+    fetchAllBankRequests();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("$username's CalBank"),
+        title: Text("$username's Bank Requests"),
       ),
       body: isLoading
           ? const LoadingUi()
@@ -88,7 +88,7 @@ class _CalBankDepositRequestsState extends State<CalBankDepositRequests> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return CalBankSummaryDetail(
+                          return AllBankSummaryDetail(
                             date_requested: requestsDates[i],
                             username: username,
                             phone: phone,
