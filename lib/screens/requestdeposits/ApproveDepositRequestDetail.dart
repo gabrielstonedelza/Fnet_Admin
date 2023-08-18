@@ -70,6 +70,13 @@ class _ApproveDepositRequestDetailState
     // }
   }
 
+  var myDefaultCardColor = Colors.white;
+  var gtBankColor = const Color(0xFFFB5607);
+  var ecoBanColor = Colors.blue;
+  var fidelityColor = Colors.orange;
+  var calBankColor = Colors.yellow;
+  var accessBankColor = Colors.greenAccent;
+  var fbankColor = Colors.lightBlueAccent;
   bool isPosting = false;
 
   void showInstalled() {
@@ -369,6 +376,33 @@ class _ApproveDepositRequestDetailState
 
   @override
   Widget build(BuildContext context) {
+    switch (bank) {
+      case "GT Bank":
+        setState(() {
+          myDefaultCardColor = gtBankColor;
+        });
+        break;
+      case "Access Bank":
+        setState(() {
+          myDefaultCardColor = accessBankColor;
+        });
+        break;
+      case "Cal Bank":
+        setState(() {
+          myDefaultCardColor = calBankColor;
+        });
+        break;
+      case "Ecobank":
+        setState(() {
+          myDefaultCardColor = ecoBanColor;
+        });
+        break;
+      case "Fidelity Bank":
+        setState(() {
+          myDefaultCardColor = fidelityColor;
+        });
+        break;
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Approve Request"),
@@ -379,7 +413,7 @@ class _ApproveDepositRequestDetailState
             height: 20,
           ),
           Card(
-            color: secondaryColor,
+            color: myDefaultCardColor,
             elevation: 12,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -390,14 +424,18 @@ class _ApproveDepositRequestDetailState
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Row(
                     children: [
-                      const Text("Amount: ",
+                      Text("Amount: ",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: defaultTextColor1)),
+                              color: bank == "Access Bank" || bank == "Cal Bank"
+                                  ? Colors.black
+                                  : defaultTextColor1)),
                       Text(amount,
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: defaultTextColor1)),
+                              color: bank == "Access Bank" || bank == "Cal Bank"
+                                  ? Colors.black
+                                  : defaultTextColor1)),
                     ],
                   ),
                 ),
@@ -407,27 +445,39 @@ class _ApproveDepositRequestDetailState
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Row(
                         children: [
-                          const Text("Bank : ",
+                          Text("Bank : ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: defaultTextColor1)),
+                                  color: bank == "Access Bank" ||
+                                          bank == "Cal Bank"
+                                      ? Colors.black
+                                      : defaultTextColor1)),
                           Text(bank,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: defaultTextColor1)),
+                                  color: bank == "Access Bank" ||
+                                          bank == "Cal Bank"
+                                      ? Colors.black
+                                      : defaultTextColor1)),
                         ],
                       ),
                     ),
                     Row(
                       children: [
-                        const Text("Acc No : ",
+                        Text("Acc No : ",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: defaultTextColor1)),
+                                color:
+                                    bank == "Access Bank" || bank == "Cal Bank"
+                                        ? Colors.black
+                                        : defaultTextColor1)),
                         Text(accnum,
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: defaultTextColor1)),
+                                color:
+                                    bank == "Access Bank" || bank == "Cal Bank"
+                                        ? Colors.black
+                                        : defaultTextColor1)),
                       ],
                     ),
                   ],
