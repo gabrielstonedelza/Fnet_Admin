@@ -3,9 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fnet_admin/widgets/loadingui.dart';
 import 'package:get/get.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:http/http.dart' as http;
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:ussd_advanced/ussd_advanced.dart';
+
 import '../../static/app_colors.dart';
 import '../bankaccounts/getaccountsandpull.dart';
 import '../bankaccounts/getaccountsandpush.dart';
@@ -17,36 +18,59 @@ class ApproveDepositRequestDetail extends StatefulWidget {
   final bank;
   final amount;
   final accnum;
-  const ApproveDepositRequestDetail({super.key,required this.agent,required this.id,required this.amount,required this.bank,required this.accnum});
+
+  const ApproveDepositRequestDetail(
+      {super.key,
+      required this.agent,
+      required this.id,
+      required this.amount,
+      required this.bank,
+      required this.accnum});
 
   @override
-  State<ApproveDepositRequestDetail> createState() => _ApproveDepositRequestDetailState(id:this.id,agent:this.agent,amount:this.amount,bank:this.amount,accnum:this.accnum);
+  State<ApproveDepositRequestDetail> createState() =>
+      _ApproveDepositRequestDetailState(
+          id: this.id,
+          agent: this.agent,
+          amount: this.amount,
+          bank: this.bank,
+          accnum: this.accnum);
 }
 
-class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetail> {
+class _ApproveDepositRequestDetailState
+    extends State<ApproveDepositRequestDetail> {
   final id;
   final agent;
   final bank;
   final amount;
   final accnum;
 
-  Future<void>openOwnerFinancialServicesPushToBank() async {
+  Future<void> openOwnerFinancialServicesPushToBank() async {
     await UssdAdvanced.multisessionUssd(code: "*171*6*1*1#", subscriptionId: 1);
   }
 
   Future<void> openFinancialServicesPullFromBank() async {
     await UssdAdvanced.multisessionUssd(code: "*171*6*1*2#", subscriptionId: 1);
   }
-  _ApproveDepositRequestDetailState({required this.agent,required this.id,required this.amount,required this.bank,required this.accnum});
+
+  _ApproveDepositRequestDetailState(
+      {required this.agent,
+      required this.id,
+      required this.amount,
+      required this.bank,
+      required this.accnum});
+
   Future<void> fetchAllInstalled() async {
     List<Application> apps = await DeviceApps.getInstalledApplications(
-        onlyAppsWithLaunchIntent: true, includeSystemApps: true,includeAppIcons: false);
+        onlyAppsWithLaunchIntent: true,
+        includeSystemApps: true,
+        includeAppIcons: false);
     // if (kDebugMode) {
     //   print(apps);
     // }
   }
-  bool isPosting = false;
 
+  bool isPosting = false;
 
   void showInstalled() {
     showMaterialModalBottomSheet(
@@ -55,8 +79,7 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
         elevation: 12,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-                topRight: Radius.circular(10),
-                topLeft: Radius.circular(10))),
+                topRight: Radius.circular(10), topLeft: Radius.circular(10))),
         child: SizedBox(
           height: 450,
           child: Column(
@@ -64,14 +87,12 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
             children: [
               const Center(
                   child: Text("Continue with mtn's financial services",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold))),
+                      style: TextStyle(fontWeight: FontWeight.bold))),
               const SizedBox(
                 height: 20,
               ),
               Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -91,8 +112,7 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Push USSD",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
@@ -111,8 +131,7 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("MTN App",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
@@ -133,8 +152,7 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Pull USSD",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
@@ -150,17 +168,15 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
               ),
               const Center(
                   child: Text("Continue with apps",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold))),
+                      style: TextStyle(fontWeight: FontWeight.bold))),
               const SizedBox(
                 height: 20,
               ),
               Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       DeviceApps.openApp('com.ecobank.xpresspoint');
                     },
                     child: Column(
@@ -173,14 +189,13 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Express Point",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
                   ),
                   GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       DeviceApps.openApp('sg.android.fidelity');
                     },
                     child: Column(
@@ -193,14 +208,13 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Fidelity Bank",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
                   ),
                   GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       DeviceApps.openApp('calbank.com.ams');
                     },
                     child: Column(
@@ -213,24 +227,27 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Cal Bank",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               const Divider(),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: () async{
-                      DeviceApps.openApp('accessmob.accessbank.com.accessghana');
+                    onTap: () async {
+                      DeviceApps.openApp(
+                          'accessmob.accessbank.com.accessghana');
                     },
                     child: Column(
                       children: [
@@ -242,14 +259,13 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("Access Bank",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
                   ),
                   GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       DeviceApps.openApp('com.m2i.gtexpressbyod');
                     },
                     child: Column(
@@ -262,15 +278,15 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("GT Bank",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
                   ),
                   GestureDetector(
-                    onTap: () async{
-                      DeviceApps.openApp('firstmob.firstbank.com.fbnsubsidiary');
+                    onTap: () async {
+                      DeviceApps.openApp(
+                          'firstmob.firstbank.com.fbnsubsidiary');
                     },
                     child: Column(
                       children: [
@@ -282,8 +298,7 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                         const Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Text("FBN Bank",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
@@ -296,8 +311,10 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
       ),
     );
   }
-  approveRequest()async{
-    final accountUrl = "https://www.fnetghana.xyz/admin_approve_bank_deposit_paid/$id/";
+
+  approveRequest() async {
+    final accountUrl =
+        "https://www.fnetghana.xyz/admin_approve_bank_deposit_paid/$id/";
     final myLink = Uri.parse(accountUrl);
     http.Response response = await http.put(myLink, headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -350,7 +367,6 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
     fetchAllInstalled();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -359,12 +375,14 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
       ),
       body: ListView(
         children: [
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Card(
             color: secondaryColor,
             elevation: 12,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListTile(
@@ -372,8 +390,14 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Row(
                     children: [
-                      const Text("Amount: ",style: TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1)),
-                      Text(amount,style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1)),
+                      const Text("Amount: ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: defaultTextColor1)),
+                      Text(amount,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: defaultTextColor1)),
                     ],
                   ),
                 ),
@@ -383,15 +407,27 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Row(
                         children: [
-                          const Text("Bank : ",style: TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1)),
-                          Text(bank,style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1)),
+                          const Text("Bank : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: defaultTextColor1)),
+                          Text(bank,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: defaultTextColor1)),
                         ],
                       ),
                     ),
                     Row(
                       children: [
-                        const Text("Acc No : ",style: TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1)),
-                        Text(accnum,style: const TextStyle(fontWeight: FontWeight.bold,color: defaultTextColor1)),
+                        const Text("Acc No : ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: defaultTextColor1)),
+                        Text(accnum,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: defaultTextColor1)),
                       ],
                     ),
                   ],
@@ -399,56 +435,59 @@ class _ApproveDepositRequestDetailState extends State<ApproveDepositRequestDetai
               ),
             ),
           ),
-          const SizedBox(height: 20,),
-        isPosting ? const LoadingUi() :  Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RawMaterialButton(
-                onPressed: () {
-                  setState(() {
-                    isPosting = true;
-                  });
-                  approveRequest();
-
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                ),
-                elevation: 8,
-                fillColor: primaryColor,
-                splashColor: defaultColor,
-                child: const Text(
-                  "Approve",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white),
-                ),
-              ),
-              const SizedBox(width: 20,),
-              RawMaterialButton(
-                onPressed: () {
-                  setState(() {
-                    isPosting = true;
-                  });
-                  deleteBankRequest(id);
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                ),
-                elevation: 8,
-                fillColor: primaryColor,
-                splashColor: defaultColor,
-                child: const Text(
-                  "Delete",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white),
-                ),
-              )
-            ],
-          )
+          const SizedBox(
+            height: 20,
+          ),
+          isPosting
+              ? const LoadingUi()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RawMaterialButton(
+                      onPressed: () {
+                        setState(() {
+                          isPosting = true;
+                        });
+                        approveRequest();
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      elevation: 8,
+                      fillColor: primaryColor,
+                      splashColor: defaultColor,
+                      child: const Text(
+                        "Approve",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    RawMaterialButton(
+                      onPressed: () {
+                        setState(() {
+                          isPosting = true;
+                        });
+                        deleteBankRequest(id);
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      elevation: 8,
+                      fillColor: primaryColor,
+                      splashColor: defaultColor,
+                      child: const Text(
+                        "Delete",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white),
+                      ),
+                    )
+                  ],
+                )
         ],
       ),
     );
