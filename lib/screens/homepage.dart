@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:age_calculator/age_calculator.dart';
-import 'package:badges/badges.dart' as badge;
+import 'package:badges/badges.dart' as badges;
 import 'package:badges/badges.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/foundation.dart';
@@ -718,18 +718,23 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: badge.Badge(
-                            position: BadgePosition.bottomStart(),
-                            badgeContent: Column(
-                              children: [
-                                Text("${unPaidDepositRequests.length}",
-                                    style: const TextStyle(color: Colors.white))
-                              ],
+                        child: badges.Badge(
+                            badgeContent: Text(
+                                "${unPaidDepositRequests.length}",
+                                style: const TextStyle(color: Colors.white)),
+                            badgeAnimation:
+                                const badges.BadgeAnimation.rotation(
+                              animationDuration: Duration(seconds: 1),
+                              colorChangeAnimationDuration:
+                                  Duration(seconds: 1),
+                              loopAnimation: false,
+                              curve: Curves.fastOutSlowIn,
+                              colorChangeAnimationCurve: Curves.easeInCubic,
+                            ),
+                            child: menuWidget(
+                              title: 'Unpaid',
+                              imagePath: 'assets/images/cashless-payment.png',
                             )),
-                      ),
-                      menuWidget(
-                        title: 'Unpaid',
-                        imagePath: 'assets/images/cashless-payment.png',
                       ),
                     ],
                   ),
@@ -846,28 +851,30 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: badge.Badge(
-                            position: BadgePosition.bottomStart(),
-                            badgeContent: Column(
-                              children: [
-                                hasbdinfive
-                                    ? Text("${hasBirthDayInFive.length}",
+                        child: badges.Badge(
+                            badgeContent: hasbdinfive
+                                ? Text("${hasBirthDayInFive.length}",
+                                    style: const TextStyle(color: Colors.white))
+                                : hasbdintoday
+                                    ? Text("${hasBirthDayToday.length}",
                                         style: const TextStyle(
                                             color: Colors.white))
-                                    : hasbdintoday
-                                        ? Text("${hasBirthDayToday.length}",
-                                            style: const TextStyle(
-                                                color: Colors.white))
-                                        : const Text("0",
-                                            style:
-                                                TextStyle(color: Colors.white)),
-                              ],
+                                    : const Text("0",
+                                        style: TextStyle(color: Colors.white)),
+                            badgeAnimation:
+                                const badges.BadgeAnimation.rotation(
+                              animationDuration: Duration(seconds: 1),
+                              colorChangeAnimationDuration:
+                                  Duration(seconds: 1),
+                              loopAnimation: false,
+                              curve: Curves.fastOutSlowIn,
+                              colorChangeAnimationCurve: Curves.easeInCubic,
+                            ),
+                            child: menuWidget(
+                              title: 'Birthdays',
+                              imagePath: 'assets/images/cake.png',
                             )),
                       ),
-                      menuWidget(
-                        title: 'Birthdays',
-                        imagePath: 'assets/images/cake.png',
-                      )
                     ],
                   ),
                 )),

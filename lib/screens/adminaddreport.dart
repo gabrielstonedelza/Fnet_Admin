@@ -8,14 +8,14 @@ import 'package:speech_to_text/speech_to_text.dart';
 import '../static/app_colors.dart';
 import 'homepage.dart';
 
-class AddNewReport extends StatefulWidget {
-  const AddNewReport({Key? key}) : super(key: key);
+class AdminAddNewReport extends StatefulWidget {
+  const AdminAddNewReport({Key? key}) : super(key: key);
 
   @override
-  State<AddNewReport> createState() => _AddNewReportState();
+  State<AdminAddNewReport> createState() => _AdminAddNewReportState();
 }
 
-class _AddNewReportState extends State<AddNewReport> {
+class _AdminAddNewReportState extends State<AdminAddNewReport> {
   late final TextEditingController titleController = TextEditingController();
   late final TextEditingController reportController = TextEditingController();
   var text = "";

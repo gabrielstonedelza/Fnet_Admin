@@ -63,12 +63,6 @@ class ProfileController extends GetxController {
           userId = i['id'].toString();
           agentPhone = i['get_phone'];
           email = i['get_email'];
-          // agentUniqueCode = i['agent_unique_code'];
-          // companyName = i['company_name'];
-          // companyNumber = i['company_number'];
-          // agentUsername = i['username'];
-          // agentFullName = i['full_name'];
-          // phoneNumber = i['phone_number'];
         }
         update();
       } else {
