@@ -50,6 +50,7 @@ class _AddNewReportState extends State<AddNewReport> {
           backgroundColor: snackColor);
       Get.offAll(() => const HomePage());
     } else {
+      print(res.body);
       Get.snackbar("Error", "something went",
           colorText: defaultTextColor1,
           snackPosition: SnackPosition.TOP,
@@ -60,14 +61,9 @@ class _AddNewReportState extends State<AddNewReport> {
   @override
   void initState() {
     super.initState();
-    if (storage.read("usertoken") != null) {
+    if (storage.read("token") != null) {
       setState(() {
-        uToken = storage.read("usertoken");
-      });
-    }
-    if (storage.read("username") != null) {
-      setState(() {
-        username = storage.read("username");
+        uToken = storage.read("token");
       });
     }
   }

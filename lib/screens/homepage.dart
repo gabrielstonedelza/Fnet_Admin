@@ -622,7 +622,33 @@ class _HomePageState extends State<HomePage> {
                 title: const Text('Reports'),
               ),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  Get.defaultDialog(
+                      buttonColor: primaryColor,
+                      title: "Confirm Logout",
+                      middleText: "Are you sure you want to logout?",
+                      confirm: RawMaterialButton(
+                          shape: const StadiumBorder(),
+                          fillColor: primaryColor,
+                          onPressed: () {
+                            logoutUser();
+                            Get.back();
+                          },
+                          child: const Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                      cancel: RawMaterialButton(
+                          shape: const StadiumBorder(),
+                          fillColor: primaryColor,
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: const Text(
+                            "Cancel",
+                            style: TextStyle(color: Colors.white),
+                          )));
+                },
                 leading: const Icon(Icons.logout),
                 title: const Text('Logout'),
               ),
