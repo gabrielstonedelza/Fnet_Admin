@@ -19,6 +19,7 @@ class ApproveDepositRequestDetail extends StatefulWidget {
   final amount;
   final accnum;
   final userLoc;
+  final userLocDist;
 
   const ApproveDepositRequestDetail(
       {super.key,
@@ -27,7 +28,9 @@ class ApproveDepositRequestDetail extends StatefulWidget {
       required this.amount,
       required this.bank,
       required this.accnum,
-      required this.userLoc});
+      required this.userLoc,
+      required this.userLocDist
+      });
 
   @override
   State<ApproveDepositRequestDetail> createState() =>
@@ -38,6 +41,7 @@ class ApproveDepositRequestDetail extends StatefulWidget {
         bank: this.bank,
         accnum: this.accnum,
         userLoc: this.userLoc,
+        userLocDist: this.userLocDist,
       );
 }
 
@@ -49,6 +53,7 @@ class _ApproveDepositRequestDetailState
   final amount;
   final accnum;
   final userLoc;
+  final userLocDist;
 
   Future<void> openOwnerFinancialServicesPushToBank() async {
     await UssdAdvanced.multisessionUssd(code: "*171*6*1*1#", subscriptionId: 1);
@@ -64,7 +69,9 @@ class _ApproveDepositRequestDetailState
       required this.amount,
       required this.bank,
       required this.accnum,
-      required this.userLoc});
+      required this.userLoc,
+      required this.userLocDist,
+      });
 
   Future<void> fetchAllInstalled() async {
     List<Application> apps = await DeviceApps.getInstalledApplications(
@@ -336,6 +343,7 @@ class _ApproveDepositRequestDetailState
       "agent": agent,
       "request_status": "Approved",
       "user_location": userLoc,
+      "user_local_district": userLocDist,
     });
     if (response.statusCode == 200) {
       Get.snackbar("Success", "users request was approved",

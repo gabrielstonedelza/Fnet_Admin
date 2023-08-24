@@ -88,7 +88,10 @@ class _AllPendingDepositRequestsState extends State<AllPendingDepositRequests> {
                             amount: allPendingRequests[index]['amount'],
                             accnum: allPendingRequests[index]['account_number'],
                             userLoc: allPendingRequests[index]
-                                ['user_location']),
+                                ['user_location'],
+                          userLocDist:allPendingRequests[index]
+                          ['user_local_district']
+                        ),
                       );
                     },
                     title: RowWidget(
@@ -102,6 +105,11 @@ class _AllPendingDepositRequestsState extends State<AllPendingDepositRequests> {
                           items: items,
                           title: 'Location: ',
                           itemTitle: 'user_location',
+                        ),
+                        RowWidget(
+                          items: items,
+                          title: 'Local District: ',
+                          itemTitle: 'user_local_district',
                         ),
                         RowWidget(
                           items: items,
