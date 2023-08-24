@@ -8,16 +8,27 @@ import 'package:http/http.dart' as http;
 
 import '../homepage.dart';
 
-class AddNewReport extends StatefulWidget {
-  const AddNewReport({Key? key}) : super(key: key);
+class UpdateReport extends StatefulWidget {
+  final report;
+  final user;
+  final id;
+  const UpdateReport(
+      {Key? key, required this.report, required this.user, required this.id})
+      : super(key: key);
 
   @override
-  State<AddNewReport> createState() => _AddNewReportState();
+  State<UpdateReport> createState() =>
+      _UpdateReportState(report: this.report, user: this.user, id: this.id);
 }
 
-class _AddNewReportState extends State<AddNewReport> {
+class _UpdateReportState extends State<UpdateReport> {
+  final report;
+  final user;
+  final id;
+  _UpdateReportState(
+      {required this.report, required this.user, required this.id});
   late final TextEditingController titleController = TextEditingController();
-  late final TextEditingController reportController = TextEditingController();
+  late final TextEditingController reportController;
 
   late String uToken = "";
   final storage = GetStorage();
@@ -35,17 +46,18 @@ class _AddNewReportState extends State<AddNewReport> {
     });
   }
 
-  addNewReport() async {
-    const registerUrl = "https://fnetghana.xyz/add_report/";
+  updateReport() async {
+    final registerUrl = "https://fnetghana.xyz/update_report/$id/";
     final myLink = Uri.parse(registerUrl);
-    final res = await http.post(myLink, headers: {
+    final res = await http.put(myLink, headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "Authorization": "Token $uToken"
     }, body: {
+      "user": user,
       "report": reportController.text,
     });
-    if (res.statusCode == 201) {
-      Get.snackbar("Congratulations", "report added successfully",
+    if (res.statusCode == 200) {
+      Get.snackbar("Congratulations", "report updated successfully",
           colorText: defaultTextColor1,
           snackPosition: SnackPosition.TOP,
           backgroundColor: snackColor);
@@ -69,6 +81,8 @@ class _AddNewReportState extends State<AddNewReport> {
         uToken = storage.read("token");
       });
     }
+
+    reportController = TextEditingController(text: report);
   }
 
   @override
@@ -76,7 +90,7 @@ class _AddNewReportState extends State<AddNewReport> {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              title: const Text("Add Report"),
+              title: const Text("Update Report"),
               backgroundColor: primaryColor,
               actions: [
                 isPosting
@@ -97,7 +111,7 @@ class _AddNewReportState extends State<AddNewReport> {
                                 backgroundColor: Colors.red);
                             return;
                           } else {
-                            addNewReport();
+                            updateReport();
                           }
                         },
                         child: const Text(
