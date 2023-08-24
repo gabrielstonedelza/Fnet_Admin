@@ -53,10 +53,6 @@ class _AllPendingPaymentsState extends State<AllPendingPayments> {
     // TODO: implement initState
     super.initState();
     getAllPendingPayments();
-    // requestController.getAllPendingRequestDeposits();
-    // _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-    //   requestController.getAllPendingRequestDeposits;
-    // });
   }
 
   @override
@@ -81,13 +77,20 @@ class _AllPendingPaymentsState extends State<AllPendingPayments> {
                     onTap: () {
                       Get.to(
                         () => ApprovePaymentDetail(
-                            agent:
-                                allPendingPayments[index]['agent'].toString(),
-                            id: allPendingPayments[index]['id'].toString(),
-                            bank: allPendingPayments[index]['bank'],
-                            amount: allPendingPayments[index]['amount'],
-                            transactionId: allPendingPayments[index]
-                                ['transaction_id1']),
+                          agent: allPendingPayments[index]['agent'].toString(),
+                          id: allPendingPayments[index]['id'].toString(),
+                          bank: allPendingPayments[index]['bank1'],
+                          bank2: allPendingPayments[index]['bank2'],
+                          amount: allPendingPayments[index]['amount'],
+                          transactionId: allPendingPayments[index]
+                              ['transaction_id1'],
+                          transactionId2: allPendingPayments[index]
+                              ['transaction_id2'],
+                          mop1: allPendingPayments[index]['mode_of_payment1'],
+                          mop2: allPendingPayments[index]['mode_of_payment2'],
+                          cla1: allPendingPayments[index]['cash_at_location1'],
+                          cla2: allPendingPayments[index]['cash_at_location2'],
+                        ),
                       );
                     },
                     title: RowWidget(

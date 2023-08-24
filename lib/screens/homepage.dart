@@ -71,6 +71,65 @@ class _HomePageState extends State<HomePage> {
   late DateDuration duration;
   final SendSmsController sendSms = SendSmsController();
   late List unPaidDepositRequests = [];
+  late List allPendingPayments = [];
+  String transactionId = "";
+
+  approvePayment(String agent, String id) async {
+    final accountUrl =
+        "https://www.fnetghana.xyz/admin_approve_bank_payments_paid/$id/";
+    final myLink = Uri.parse(accountUrl);
+    http.Response response = await http.put(myLink, headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      // "Authorization": "Token ${uToken.value}"
+    }, body: {
+      "agent": agent,
+      "payment_status": "Approved",
+    });
+    if (response.statusCode == 200) {
+      Get.snackbar("Success", "users payment was approved",
+          colorText: defaultTextColor1,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: snackColor);
+      // showInstalled();
+      // Get.offAll(() => const HomePage());
+      // showInstalled();
+    } else {
+      if (kDebugMode) {
+        print(response.body);
+      }
+      Get.snackbar("Account", "something went wrong,please try again later",
+          colorText: defaultTextColor1,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: warning);
+    }
+  }
+
+  Future<void> getAllPendingPayments() async {
+    const profileLink =
+        "https://fnetghana.xyz/admin_get_all_pending_bank_payments/";
+    var link = Uri.parse(profileLink);
+    http.Response response = await http.get(link, headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    });
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      allPendingPayments.assignAll(jsonData);
+
+      for (var i in allPendingPayments) {
+        if (transactionId.trim() == i['transaction_id1'].trim()) {
+          if (kDebugMode) {
+            // print(i);
+            approvePayment(i['agent'].toString(), i['id'].toString());
+          }
+        }
+      }
+    } else {
+      if (kDebugMode) {
+        print(response.body);
+      }
+    }
+  }
 
   Future<void> getAllUnpaidDepositRequests() async {
     const url = "https://fnetghana.xyz/get_agents_unpaid_deposits/";
@@ -494,6 +553,16 @@ class _HomePageState extends State<HomePage> {
         }
       }
     }
+    String lastMessage = mySmss[0];
+    setState(() {
+      transactionId =
+          lastMessage.split("Transaction Id:").last.split(".").first;
+    });
+    // print("This is from sms $transactionId");
+
+    // if (lastMessage.contains("Transaction Id")) {
+    //   print(lastMessage.split("Transaction Id:").last.split(".").first);
+    // }
   }
 
   Future checkMtnBalance() async {
@@ -528,10 +597,14 @@ class _HomePageState extends State<HomePage> {
     getAllUnReadNotifications();
     fetchCustomersWithBirthDays();
     getAllUnpaidDepositRequests();
+    fetchInbox();
+    getAllPendingPayments();
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       getAllTriggeredNotifications();
       getAllUnReadNotifications();
       getAllUnpaidDepositRequests();
+      fetchInbox();
+      getAllPendingPayments();
       // fetchCustomersWithBirthDays();
     });
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) {

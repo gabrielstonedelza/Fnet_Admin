@@ -16,6 +16,12 @@ class ApprovePaymentDetail extends StatefulWidget {
   final bank;
   final amount;
   final transactionId;
+  final bank2;
+  final transactionId2;
+  final mop1;
+  final mop2;
+  final cla1;
+  final cla2;
 
   const ApprovePaymentDetail(
       {super.key,
@@ -23,15 +29,28 @@ class ApprovePaymentDetail extends StatefulWidget {
       required this.id,
       required this.amount,
       required this.bank,
-      required this.transactionId});
+      required this.transactionId,
+      required this.bank2,
+      required this.transactionId2,
+      required this.mop1,
+      required this.mop2,
+      required this.cla1,
+      required this.cla2});
 
   @override
   State<ApprovePaymentDetail> createState() => _ApprovePaymentDetailState(
-      id: this.id,
-      agent: this.agent,
-      amount: this.amount,
-      bank: this.amount,
-      transactionId: this.transactionId);
+        id: this.id,
+        agent: this.agent,
+        amount: this.amount,
+        bank: this.amount,
+        transactionId: this.transactionId,
+        bank2: this.bank2,
+        transactionId2: this.transactionId,
+        mop1: this.mop1,
+        mop2: this.mop2,
+        cla1: this.cla1,
+        cla2: this.cla2,
+      );
 }
 
 class _ApprovePaymentDetailState extends State<ApprovePaymentDetail> {
@@ -40,6 +59,12 @@ class _ApprovePaymentDetailState extends State<ApprovePaymentDetail> {
   final bank;
   final amount;
   final transactionId;
+  final bank2;
+  final transactionId2;
+  final mop1;
+  final mop2;
+  final cla1;
+  final cla2;
 
   Future<void> openOwnerFinancialServicesPushToBank() async {
     await UssdAdvanced.multisessionUssd(code: "*171*6*1*1#", subscriptionId: 1);
@@ -54,7 +79,13 @@ class _ApprovePaymentDetailState extends State<ApprovePaymentDetail> {
       required this.id,
       required this.amount,
       required this.bank,
-      required this.transactionId});
+      required this.transactionId,
+      required this.bank2,
+      required this.transactionId2,
+      required this.mop1,
+      required this.mop2,
+      required this.cla1,
+      required this.cla2});
 
   Future<void> fetchAllInstalled() async {
     List<Application> apps = await DeviceApps.getInstalledApplications(
@@ -410,11 +441,77 @@ class _ApprovePaymentDetailState extends State<ApprovePaymentDetail> {
                 ),
                 subtitle: Column(
                   children: [
+                    mop1 != "Select mode of payment"
+                        ? Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Row(
+                              children: [
+                                const Text("Mode of payment1: ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                                Text(mop1,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                              ],
+                            ),
+                          )
+                        : Container(),
+                    mop2 != "Select mode of payment"
+                        ? Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Row(
+                              children: [
+                                const Text("Mode of payment2: ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                                Text(mop2,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                              ],
+                            ),
+                          )
+                        : Container(),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Row(
                         children: [
-                          const Text("Transaction Id: ",
+                          const Text("Bank1: ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: defaultTextColor1)),
+                          Text(bank,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: defaultTextColor1)),
+                        ],
+                      ),
+                    ),
+                    bank2 != "Select bank"
+                        ? Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Row(
+                              children: [
+                                const Text("Bank2: ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                                Text(bank2,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                              ],
+                            ),
+                          )
+                        : Container(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Row(
+                        children: [
+                          const Text("Transaction Id1: ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: defaultTextColor1)),
@@ -424,7 +521,58 @@ class _ApprovePaymentDetailState extends State<ApprovePaymentDetail> {
                                   color: defaultTextColor1)),
                         ],
                       ),
-                    )
+                    ),
+                    transactionId2 != ""
+                        ? Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Row(
+                              children: [
+                                const Text("Transaction Id2: ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                                Text(transactionId2,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                              ],
+                            ),
+                          )
+                        : Container(),
+                    cla1 != "Please select cash at location"
+                        ? Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Row(
+                              children: [
+                                const Text("Cash Left @1: ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                                Text(cla1,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                              ],
+                            ),
+                          )
+                        : Container(),
+                    cla2 != "Please select cash at location"
+                        ? Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Row(
+                              children: [
+                                const Text("Cash Left @2: ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                                Text(cla2,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: defaultTextColor1)),
+                              ],
+                            ),
+                          )
+                        : Container(),
                   ],
                 ),
               ),
