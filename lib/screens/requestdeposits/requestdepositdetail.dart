@@ -82,6 +82,16 @@ class _BankDepositRequestDetailState extends State<BankDepositRequestDetail> {
                 title: RowWidget(items: items, title: 'Agent: ', itemTitle: 'agent_username',),
                 subtitle: Column(
                   children: [
+                    RowWidget(
+                      items: items,
+                      title: 'Location: ',
+                      itemTitle: 'user_location',
+                    ),
+                    RowWidget(
+                      items: items,
+                      title: 'Local District: ',
+                      itemTitle: 'user_local_district',
+                    ),
                     RowWidget(items: items, title: 'Customer: ', itemTitle: 'customer',),
                     RowWidget(items: items, title: 'Bank: ', itemTitle: 'bank',),
                     RowWidget(items: items, title: 'Acc No: ', itemTitle: 'account_number',),
