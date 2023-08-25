@@ -104,6 +104,50 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  SmsQuery query = SmsQuery();
+  late List mySmss = [];
+  late List transactionIds = [];
+
+  fetchInbox() async {
+    List<mySms.SmsMessage> messages = await query.getAllSms;
+    for (var message in messages) {
+      if (message.address == "MobileMoney") {
+        if (!mySmss.contains(message.body)) {
+          mySmss.add(message.body);
+        }
+      }
+    }
+    for (var item in mySmss) {
+      if (item.contains("External Transaction Id:")) {
+        if (!transactionIds.contains(item
+            .split("External Transaction Id:")
+            .last
+            .split(".")
+            .first
+            .trim())) {
+          transactionIds.add(item
+              .split("External Transaction Id:")
+              .last
+              .split(".")
+              .first
+              .trim());
+        }
+      }
+    }
+    // print(transactionIds);
+    // for (var t in transactionIds) {}
+    // String lastMessage = mySmss[0];
+    // setState(() {
+    //   transactionId =
+    //       lastMessage.split("Transaction Id:").last.split(".").first;
+    // });
+    // print("This is from sms $transactionId");
+
+    // if (lastMessage.contains("Transaction Id")) {
+    //   print(lastMessage.split("Transaction Id:").last.split(".").first);
+    // }
+  }
+
   Future<void> getAllPendingPayments() async {
     const profileLink =
         "https://fnetghana.xyz/admin_get_all_pending_bank_payments/";
@@ -117,12 +161,21 @@ class _HomePageState extends State<HomePage> {
       allPendingPayments.assignAll(jsonData);
 
       for (var i in allPendingPayments) {
-        if (transactionId.trim() == i['transaction_id1'].trim()) {
-          if (kDebugMode) {
-            // print(i);
-            approvePayment(i['agent'].toString(), i['id'].toString());
-          }
+        if (transactionIds.contains(i['transaction_id1'].trim())) {
+          print("true");
+          setState(() {
+            transactionId = i['transaction_id1'].trim();
+          });
+          approvePayment(i['agent'].toString(), i['id'].toString());
+        } else {
+          print("false");
         }
+        // if (transactionId.trim() == i['transaction_id1'].trim()) {
+        //   if (kDebugMode) {
+        //     print(i);
+        //     approvePayment(i['agent'].toString(), i['id'].toString());
+        //   }
+        // }
       }
     } else {
       if (kDebugMode) {
@@ -539,30 +592,6 @@ class _HomePageState extends State<HomePage> {
         }
       }
     }
-  }
-
-  SmsQuery query = SmsQuery();
-  late List mySmss = [];
-
-  fetchInbox() async {
-    List<mySms.SmsMessage> messages = await query.getAllSms;
-    for (var message in messages) {
-      if (message.address == "MobileMoney") {
-        if (!mySmss.contains(message.body)) {
-          mySmss.add(message.body);
-        }
-      }
-    }
-    String lastMessage = mySmss[0];
-    setState(() {
-      transactionId =
-          lastMessage.split("Transaction Id:").last.split(".").first;
-    });
-    // print("This is from sms $transactionId");
-
-    // if (lastMessage.contains("Transaction Id")) {
-    //   print(lastMessage.split("Transaction Id:").last.split(".").first);
-    // }
   }
 
   Future checkMtnBalance() async {
