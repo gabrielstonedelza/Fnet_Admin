@@ -43,17 +43,14 @@ dependencies:
   get:
   age_calculator:
   rxdart:
-  avatar_glow:
-    git:
-      url: https://github.com/apgapg/avatar_glow
-      ref: master
+
 
   modal_bottom_sheet:
     git:
       url: https://github.com/CoolDude53/modal_bottom_sheet.git
       ref: main
       path: modal_bottom_sheet
-  speech_to_text: ^6.3.0
+
   flutter_sms_inbox: ^1.0.1
   lottie:
   http:
@@ -67,9 +64,6 @@ dependencies:
   flutter_local_notifications: ^14.0.0+2
   flutter_phone_direct_caller: ^2.1.1
   device_info_plus: ^9.0.0
-  dio:
-  image_picker:
-  image_cropper:
   device_apps: ^2.2.0
 
 

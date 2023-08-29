@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../../../static/app_colors.dart';
 import '../../../widgets/loadingui.dart';
-import '../adminaddreport.dart';
+
 import 'addnewreport.dart';
 
 class AllReportSummary extends StatefulWidget {

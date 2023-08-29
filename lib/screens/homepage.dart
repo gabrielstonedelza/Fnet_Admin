@@ -193,9 +193,6 @@ class _HomePageState extends State<HomePage> {
       var jsonData = const Utf8Decoder().convert(codeUnits);
       var deData = json.decode(jsonData);
       unPaidDepositRequests.assignAll(deData);
-      // setState(() {
-      //   isLoading = false;
-      // });
     } else {
       if (kDebugMode) {
         print(response.body);
