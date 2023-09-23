@@ -31,20 +31,12 @@ class AccountsController extends GetxController {
       username = storage.read("username");
     }
 
-    // getAllAccountsWithPointsForToday();
-    // getAllAccountsWithPointsForWeek();
-    // getAllAccountsWithPointsForMonth();
-    // getAllAccountsWithPoints();
     getAllMyAgents();
     fetchBlockedAgents();
-    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      // getAllAccountsWithPointsForToday();
-      // getAllAccountsWithPointsForWeek();
-      // getAllAccountsWithPointsForMonth();
-      // getAllAccountsWithPoints();
-      getAllMyAgents();
-      fetchBlockedAgents();
-    });
+    // _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+    //   getAllMyAgents();
+    //   fetchBlockedAgents();
+    // });
   }
 
   Future<void> getAllMyAgents() async {

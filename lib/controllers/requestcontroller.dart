@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-
 class RequestController extends GetxController {
   late List allRequests = [];
   late List allPendingRequests = [];
@@ -14,7 +13,6 @@ class RequestController extends GetxController {
   var username = "";
   String uToken = "";
   late Timer _timer;
-
 
   @override
   void onInit() {
@@ -28,31 +26,31 @@ class RequestController extends GetxController {
     }
     getAllPendingRequestDeposits();
     getAllPendingDeposits();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      getAllPendingRequestDeposits();
-      getAllPendingDeposits();
-    });
+    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    //   getAllPendingRequestDeposits();
+    //   getAllPendingDeposits();
+    // });
   }
 
   Future<void> getAllPendingRequestDeposits() async {
     try {
       isLoading = true;
-      const profileLink = "https://fnetghana.xyz/admin_get_all_pending_bank_deposits/";
+      const profileLink =
+          "https://fnetghana.xyz/admin_get_all_pending_bank_deposits/";
       var link = Uri.parse(profileLink);
       http.Response response = await http.get(link, headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         // "Authorization": "Token $uToken"
       });
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         allPendingRequests.assignAll(jsonData);
         if (kDebugMode) {
           print(allPendingRequests);
         }
         update();
-      }
-      else{
+      } else {
         if (kDebugMode) {
           print(response.body);
         }
@@ -65,6 +63,7 @@ class RequestController extends GetxController {
       isLoading = false;
     }
   }
+
   Future<void> getAllPendingDeposits() async {
     try {
       isLoading = true;
@@ -75,15 +74,14 @@ class RequestController extends GetxController {
         // "Authorization": "Token $uToken"
       });
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         allRequests.assignAll(jsonData);
         if (kDebugMode) {
           print(allRequests);
         }
         update();
-      }
-      else{
+      } else {
         if (kDebugMode) {
           print(response.body);
         }
@@ -96,5 +94,4 @@ class RequestController extends GetxController {
       isLoading = false;
     }
   }
-
 }

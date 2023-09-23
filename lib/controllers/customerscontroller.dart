@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../sendsms.dart';
 
-class CustomersController extends GetxController{
+class CustomersController extends GetxController {
   late List allCustomers = [];
   bool isLoading = true;
   final storage = GetStorage();
@@ -40,10 +40,10 @@ class CustomersController extends GetxController{
 
     getAllCustomers();
     fetchCustomersWithBirthDays();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      getAllCustomers();
-      fetchCustomersWithBirthDays();
-    });
+    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    //   getAllCustomers();
+    //   fetchCustomersWithBirthDays();
+    // });
   }
 
   Future<void> getAllCustomers() async {
@@ -56,15 +56,14 @@ class CustomersController extends GetxController{
         // "Authorization": "Token $uToken"
       });
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         allCustomers.assignAll(jsonData);
         if (kDebugMode) {
           print(allCustomers);
         }
         update();
-      }
-      else{
+      } else {
         if (kDebugMode) {
           print(response.body);
         }
@@ -125,6 +124,5 @@ class CustomersController extends GetxController{
         }
       }
     }
-
   }
 }

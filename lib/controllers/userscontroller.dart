@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class UsersController extends GetxController{
+class UsersController extends GetxController {
   late List allUsers = [];
   late List allBlockedUsers = [];
   bool isLoading = true;
@@ -14,7 +14,6 @@ class UsersController extends GetxController{
   var username = "";
   String uToken = "";
   late Timer _timer;
-
 
   @override
   void onInit() {
@@ -28,10 +27,10 @@ class UsersController extends GetxController{
     }
     getAllUsers();
     getAllBlockedUsers();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      getAllUsers();
-      getAllBlockedUsers();
-    });
+    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    //   getAllUsers();
+    //   getAllBlockedUsers();
+    // });
   }
 
   Future<void> getAllUsers() async {
@@ -44,12 +43,11 @@ class UsersController extends GetxController{
         // "Authorization": "Token $uToken"
       });
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         allUsers.assignAll(jsonData);
         update();
-      }
-      else{
+      } else {
         if (kDebugMode) {
           print(response.body);
         }
@@ -62,6 +60,7 @@ class UsersController extends GetxController{
       isLoading = false;
     }
   }
+
   Future<void> getAllBlockedUsers() async {
     try {
       isLoading = true;
@@ -72,12 +71,11 @@ class UsersController extends GetxController{
         // "Authorization": "Token $uToken"
       });
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         allBlockedUsers.assignAll(jsonData);
         update();
-      }
-      else{
+      } else {
         if (kDebugMode) {
           print(response.body);
         }

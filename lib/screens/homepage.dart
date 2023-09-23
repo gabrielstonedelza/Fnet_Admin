@@ -32,6 +32,7 @@ import 'bankaccounts/getaccountsandpush.dart';
 import 'bankaccounts/mybankaccounts.dart';
 import 'bankaccounts/registerbankaccounts.dart';
 import 'birthdays.dart';
+import 'closeaccounts/closeaccountsummary.dart';
 import 'customers/allcustomers.dart';
 import 'loginview.dart';
 
@@ -719,6 +720,13 @@ class _HomePageState extends State<HomePage> {
                   height: 30,
                 ),
                 title: const Text('Reports'),
+              ),
+              ListTile(
+                onTap: () {
+                  Get.to(() => const CloseAccountSummary());
+                },
+                leading: const Icon(Icons.upload),
+                title: const Text('Close Accounts'),
               ),
               ListTile(
                 onTap: () {

@@ -11,6 +11,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:telephony/telephony.dart';
 import 'package:http/http.dart' as http;
 import 'controllers/accountscontroller.dart';
+import 'controllers/closeaccountcontroller.dart';
 import 'controllers/logincontroller.dart';
 import 'controllers/profilecontroller.dart';
 
@@ -26,6 +27,7 @@ void main() async {
   Get.put(LoginController());
   Get.put(ProfileController());
   Get.put(AccountsController());
+  Get.put(CloseAccountsController());
   runApp(const MyApp());
 }
 
