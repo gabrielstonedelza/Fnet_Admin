@@ -656,7 +656,7 @@ class _HomePageState extends State<HomePage> {
                   Get.to(() => const CloseAccountSummary());
                 },
                 leading: const Icon(Icons.upload),
-                title: const Text('Close Accounts'),
+                title: const Text('Accounts'),
               ),
               ListTile(
                 onTap: () {

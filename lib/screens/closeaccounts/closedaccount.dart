@@ -155,6 +155,37 @@ class _CloseAccountState extends State<CloseAccount> {
                               user8: allClosedDates[index]['user8'],
                               user9: allClosedDates[index]['user9'],
                               user10: allClosedDates[index]['user10'],
+                              credit1: allClosedDates[index]['user_to_credit1'],
+                              credit2: allClosedDates[index]['user_to_credit2'],
+                              credit3: allClosedDates[index]['user_to_credit3'],
+                              credit4: allClosedDates[index]['user_to_credit4'],
+                              credit5: allClosedDates[index]['user_to_credit5'],
+                              credit6: allClosedDates[index]['user_to_credit6'],
+                              credit7: allClosedDates[index]['user_to_credit7'],
+                              credit8: allClosedDates[index]['user_to_credit8'],
+                              credit9: allClosedDates[index]['user_to_credit9'],
+                              credit10: allClosedDates[index]
+                                  ['user_to_credit10'],
+                              acredit1: allClosedDates[index]
+                                  ['amount_to_credit1'],
+                              acredit2: allClosedDates[index]
+                                  ['amount_to_credit2'],
+                              acredit3: allClosedDates[index]
+                                  ['amount_to_credit3'],
+                              acredit4: allClosedDates[index]
+                                  ['amount_to_credit4'],
+                              acredit5: allClosedDates[index]
+                                  ['amount_to_credit5'],
+                              acredit6: allClosedDates[index]
+                                  ['amount_to_credit6'],
+                              acredit7: allClosedDates[index]
+                                  ['amount_to_credit7'],
+                              acredit8: allClosedDates[index]
+                                  ['amount_to_credit8'],
+                              acredit9: allClosedDates[index]
+                                  ['amount_to_credit9'],
+                              acredit10: allClosedDates[index]
+                                  ['amount_to_credit10'],
                               total: allClosedDates[index]['total'],
                             ));
                       },
@@ -359,6 +390,148 @@ class _CloseAccountState extends State<CloseAccount> {
                                   items: items,
                                   title: 'User: ',
                                   itemTitle: 'user10',
+                                )
+                              : Container(),
+
+                          // for users and credits
+                          items['user_to_credit1'] != ""
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'user_to_credit1',
+                                )
+                              : Container(),
+                          items['amount_to_credit1'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'amount_to_credit1'.toString(),
+                                )
+                              : Container(),
+                          items['user_to_credit2'] != ""
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'user_to_credit2',
+                                )
+                              : Container(),
+                          items['amount_to_credit2'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'amount_to_credit2'.toString(),
+                                )
+                              : Container(),
+                          items['user_to_credit3'] != ""
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'user_to_credit3',
+                                )
+                              : Container(),
+                          items['amount_to_credit3'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'amount_to_credit3'.toString(),
+                                )
+                              : Container(),
+                          items['user_to_credit4'] != ""
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'user_to_credit4',
+                                )
+                              : Container(),
+                          items['amount_to_credit4'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'amount_to_credit4'.toString(),
+                                )
+                              : Container(),
+                          items['user_to_credit5'] != ""
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'user_to_credit5',
+                                )
+                              : Container(),
+                          items['amount_to_credit5'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'amount_to_credit5'.toString(),
+                                )
+                              : Container(),
+                          items['user_to_credit6'] != ""
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'user_to_credit6',
+                                )
+                              : Container(),
+                          items['amount_to_credit6'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'amount_to_credit6'.toString(),
+                                )
+                              : Container(),
+                          items['user_to_credit7'] != ""
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'user_to_credit7',
+                                )
+                              : Container(),
+                          items['amount_to_credit7'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'amount_to_credit7'.toString(),
+                                )
+                              : Container(),
+                          items['user_to_credit8'] != ""
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'user_to_credit8',
+                                )
+                              : Container(),
+                          items['amount_to_credit8'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'amount_to_credit8'.toString(),
+                                )
+                              : Container(),
+                          items['user_to_credit9'] != ""
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'user_to_credit9',
+                                )
+                              : Container(),
+                          items['amount_to_credit9'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'amount_to_credit9'.toString(),
+                                )
+                              : Container(),
+                          items['user_to_credit10'] != ""
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'user_to_credit10',
+                                )
+                              : Container(),
+                          items['amount_to_credit10'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'amount_to_credit10'.toString(),
                                 )
                               : Container(),
                           Padding(

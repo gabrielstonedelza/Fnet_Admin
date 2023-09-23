@@ -38,10 +38,50 @@ class UpdateCloseAccount extends StatefulWidget {
   final user8;
   final user9;
   final user10;
+  final credit1;
+  final credit2;
+  final credit3;
+  final credit4;
+  final credit5;
+  final credit6;
+  final credit7;
+  final credit8;
+  final credit9;
+  final credit10;
+  final acredit1;
+  final acredit2;
+  final acredit3;
+  final acredit4;
+  final acredit5;
+  final acredit6;
+  final acredit7;
+  final acredit8;
+  final acredit9;
+  final acredit10;
   final total;
   final id;
   const UpdateCloseAccount({
     super.key,
+    required this.credit1,
+    required this.credit2,
+    required this.credit3,
+    required this.credit4,
+    required this.credit5,
+    required this.credit6,
+    required this.credit7,
+    required this.credit8,
+    required this.credit9,
+    required this.credit10,
+    required this.acredit1,
+    required this.acredit2,
+    required this.acredit3,
+    required this.acredit4,
+    required this.acredit5,
+    required this.acredit6,
+    required this.acredit7,
+    required this.acredit8,
+    required this.acredit9,
+    required this.acredit10,
     required this.mtn_cash,
     required this.express_cash,
     required this.ecobank_cash,
@@ -77,6 +117,26 @@ class UpdateCloseAccount extends StatefulWidget {
 
   @override
   State<UpdateCloseAccount> createState() => _UpdateCloseAccountState(
+        credit1: this.credit1,
+        credit2: this.credit2,
+        credit3: this.credit3,
+        credit4: this.credit4,
+        credit5: this.credit5,
+        credit6: this.credit6,
+        credit7: this.credit7,
+        credit8: this.credit8,
+        credit9: this.credit9,
+        credit10: this.credit10,
+        acredit1: this.acredit1,
+        acredit2: this.acredit2,
+        acredit3: this.acredit3,
+        acredit4: this.acredit4,
+        acredit5: this.acredit5,
+        acredit6: this.acredit6,
+        acredit7: this.acredit7,
+        acredit8: this.acredit8,
+        acredit9: this.acredit9,
+        acredit10: this.acredit10,
         mtn_cash: this.mtn_cash,
         express_cash: this.express_cash,
         ecobank_cash: this.ecobank_cash,
@@ -112,6 +172,26 @@ class UpdateCloseAccount extends StatefulWidget {
 }
 
 class _UpdateCloseAccountState extends State<UpdateCloseAccount> {
+  final credit1;
+  final credit2;
+  final credit3;
+  final credit4;
+  final credit5;
+  final credit6;
+  final credit7;
+  final credit8;
+  final credit9;
+  final credit10;
+  final acredit1;
+  final acredit2;
+  final acredit3;
+  final acredit4;
+  final acredit5;
+  final acredit6;
+  final acredit7;
+  final acredit8;
+  final acredit9;
+  final acredit10;
   final mtn_cash;
   final express_cash;
   final ecobank_cash;
@@ -144,6 +224,26 @@ class _UpdateCloseAccountState extends State<UpdateCloseAccount> {
   final total;
   final id;
   _UpdateCloseAccountState({
+    required this.credit1,
+    required this.credit2,
+    required this.credit3,
+    required this.credit4,
+    required this.credit5,
+    required this.credit6,
+    required this.credit7,
+    required this.credit8,
+    required this.credit9,
+    required this.credit10,
+    required this.acredit1,
+    required this.acredit2,
+    required this.acredit3,
+    required this.acredit4,
+    required this.acredit5,
+    required this.acredit6,
+    required this.acredit7,
+    required this.acredit8,
+    required this.acredit9,
+    required this.acredit10,
     required this.mtn_cash,
     required this.express_cash,
     required this.ecobank_cash,
