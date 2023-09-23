@@ -66,6 +66,28 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
   late final TextEditingController user9;
   late final TextEditingController user10;
 
+  late final TextEditingController userToCredit1;
+  late final TextEditingController userToCredit2;
+  late final TextEditingController userToCredit3;
+  late final TextEditingController userToCredit4;
+  late final TextEditingController userToCredit5;
+  late final TextEditingController userToCredit6;
+  late final TextEditingController userToCredit7;
+  late final TextEditingController userToCredit8;
+  late final TextEditingController userToCredit9;
+  late final TextEditingController userToCredit10;
+
+  late final TextEditingController amountToCredit1;
+  late final TextEditingController amountToCredit2;
+  late final TextEditingController amountToCredit3;
+  late final TextEditingController amountToCredit4;
+  late final TextEditingController amountToCredit5;
+  late final TextEditingController amountToCredit6;
+  late final TextEditingController amountToCredit7;
+  late final TextEditingController amountToCredit8;
+  late final TextEditingController amountToCredit9;
+  late final TextEditingController amountToCredit10;
+
   bool addedForm1 = false;
   bool addedForm2 = false;
   bool addedForm3 = false;
@@ -76,20 +98,38 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
   bool addedForm8 = false;
   bool addedForm9 = false;
   bool addedForm10 = false;
+
+  // for creditors
+
+  bool addedCredit1 = false;
+  bool addedCredit2 = false;
+  bool addedCredit3 = false;
+  bool addedCredit4 = false;
+  bool addedCredit5 = false;
+  bool addedCredit6 = false;
+  bool addedCredit7 = false;
+  bool addedCredit8 = false;
+  bool addedCredit9 = false;
+  bool addedCredit10 = false;
+
   late final TextEditingController numOfFormsController;
+  late final TextEditingController numOfCreditController;
   bool isAmountSelectedAndNumOfFormsProvided = false;
+  bool isAmountSelectedAndNumOfCreditProvided = false;
   int numberOfForms = 10;
+  int numberOfCredit = 10;
   bool numberOfFormsProvided = false;
-  double myTotal = 0.0;
-  double myMtn = 0.0;
-  double myExpress = 0.0;
-  double myEcobnak = 0.0;
-  double myGtbank = 0.0;
-  double myCalbank = 0.0;
-  double myFidelity = 0.0;
-  double myDebit = 0.0;
-  double myShortage = 0.0;
-  double myOver = 0.0;
+  bool numberOfCreditProvided = false;
+  double myTotal = 0.00;
+  double myMtn = 0.00;
+  double myExpress = 0.00;
+  double myEcobnak = 0.00;
+  double myGtbank = 0.00;
+  double myCalbank = 0.00;
+  double myFidelity = 0.00;
+  double myDebit = 0.00;
+  double myShortage = 0.00;
+  double myOver = 0.00;
 
   void showAndEnterFormNumber() {
     showMaterialModalBottomSheet(
@@ -320,6 +360,235 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
     );
   }
 
+  void showAndEnterNumberForCredit() {
+    showMaterialModalBottomSheet(
+      context: context,
+      builder: (context) => SingleChildScrollView(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        reverse: true,
+        child: SizedBox(
+          height: 200,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Center(
+                  child: Text("Enter number of fields needed to credit",
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 10, left: 10.0, right: 10),
+                child: TextFormField(
+                  controller: numOfCreditController,
+                  cursorColor: primaryColor,
+                  cursorRadius: const Radius.elliptical(10, 10),
+                  cursorWidth: 10,
+                  decoration: InputDecoration(
+                      labelText: "Number of forms",
+                      labelStyle: const TextStyle(color: secondaryColor),
+                      focusColor: primaryColor,
+                      fillColor: primaryColor,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: primaryColor, width: 2),
+                          borderRadius: BorderRadius.circular(12)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12))),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (numOfCreditController.text != "") {
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
+                    if (int.parse(numOfCreditController.text.trim()) >
+                        numberOfForms) {
+                      Get.snackbar("Sorry", "cannot be greater than 10",
+                          colorText: Colors.white,
+                          snackPosition: SnackPosition.TOP,
+                          duration: const Duration(seconds: 5),
+                          backgroundColor: Colors.red);
+                    } else {
+                      setState(() {
+                        numberOfFormsProvided = true;
+                        numberOfForms =
+                            int.parse(numOfCreditController.text.trim());
+                        isAmountSelectedAndNumOfFormsProvided = true;
+                      });
+                      switch (int.parse(numOfCreditController.text.trim())) {
+                        case 1:
+                          setState(() {
+                            addedCredit1 = true;
+                            addedCredit2 = false;
+                            addedCredit3 = false;
+                            addedCredit4 = false;
+                            addedCredit5 = false;
+                            addedCredit6 = false;
+                            addedCredit7 = false;
+                            addedCredit8 = false;
+                            addedCredit9 = false;
+                            addedCredit10 = false;
+                          });
+                          break;
+                        case 2:
+                          setState(() {
+                            addedCredit1 = true;
+                            addedCredit2 = true;
+                            addedCredit3 = false;
+                            addedCredit4 = false;
+                            addedCredit5 = false;
+                            addedCredit6 = false;
+                            addedCredit7 = false;
+                            addedCredit8 = false;
+                            addedCredit9 = false;
+                            addedCredit10 = false;
+                          });
+                          break;
+                        case 3:
+                          setState(() {
+                            addedCredit1 = true;
+                            addedCredit2 = true;
+                            addedCredit3 = true;
+                            addedCredit4 = false;
+                            addedCredit5 = false;
+                            addedCredit6 = false;
+                            addedCredit7 = false;
+                            addedCredit8 = false;
+                            addedCredit9 = false;
+                            addedCredit10 = false;
+                          });
+                          break;
+                        case 4:
+                          setState(() {
+                            addedCredit1 = true;
+                            addedCredit2 = true;
+                            addedCredit3 = true;
+                            addedCredit4 = true;
+                            addedCredit5 = false;
+                            addedCredit6 = false;
+                            addedCredit7 = false;
+                            addedCredit8 = false;
+                            addedCredit9 = false;
+                            addedCredit10 = false;
+                          });
+                          break;
+                        case 5:
+                          setState(() {
+                            addedCredit1 = true;
+                            addedCredit2 = true;
+                            addedCredit3 = true;
+                            addedCredit4 = true;
+                            addedCredit5 = true;
+                            addedCredit6 = false;
+                            addedCredit7 = false;
+                            addedCredit8 = false;
+                            addedCredit9 = false;
+                            addedCredit10 = false;
+                          });
+                          break;
+                        case 6:
+                          setState(() {
+                            addedCredit1 = true;
+                            addedCredit2 = true;
+                            addedCredit3 = true;
+                            addedCredit4 = true;
+                            addedCredit5 = true;
+                            addedCredit6 = true;
+                            addedCredit7 = false;
+                            addedCredit8 = false;
+                            addedCredit9 = false;
+                            addedCredit10 = false;
+                          });
+                          break;
+                        case 7:
+                          setState(() {
+                            addedCredit1 = true;
+                            addedCredit2 = true;
+                            addedCredit3 = true;
+                            addedCredit4 = true;
+                            addedCredit5 = true;
+                            addedCredit6 = true;
+                            addedCredit7 = true;
+                            addedCredit8 = false;
+                            addedCredit9 = false;
+                            addedCredit10 = false;
+                          });
+                          break;
+                        case 8:
+                          setState(() {
+                            addedCredit1 = true;
+                            addedCredit2 = true;
+                            addedCredit3 = true;
+                            addedCredit4 = true;
+                            addedCredit5 = true;
+                            addedCredit6 = true;
+                            addedCredit7 = true;
+                            addedCredit8 = true;
+                            addedCredit9 = false;
+                            addedCredit10 = false;
+                          });
+                          break;
+                        case 9:
+                          setState(() {
+                            addedCredit1 = true;
+                            addedCredit2 = true;
+                            addedCredit3 = true;
+                            addedCredit4 = true;
+                            addedCredit5 = true;
+                            addedCredit6 = true;
+                            addedCredit7 = true;
+                            addedCredit8 = true;
+                            addedCredit9 = true;
+                            addedCredit10 = false;
+                          });
+                          break;
+                        case 10:
+                          setState(() {
+                            addedCredit1 = true;
+                            addedCredit2 = true;
+                            addedCredit3 = true;
+                            addedCredit4 = true;
+                            addedCredit5 = true;
+                            addedCredit6 = true;
+                            addedCredit7 = true;
+                            addedCredit8 = true;
+                            addedCredit9 = true;
+                            addedCredit10 = true;
+                          });
+                          break;
+                      }
+                      Navigator.pop(context);
+                    }
+                  } else {
+                    setState(() {
+                      numberOfCreditProvided = false;
+                      isAmountSelectedAndNumOfCreditProvided = false;
+                      numberOfCredit = 0;
+                    });
+                    Get.snackbar("Sorry", "Please enter number of forms needed",
+                        colorText: Colors.white,
+                        snackPosition: SnackPosition.TOP,
+                        duration: const Duration(seconds: 5),
+                        backgroundColor: Colors.red);
+                  }
+                },
+                child: const Text("Add Forms"),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   void _startPosting() async {
     setState(() {
       isPosting = true;
@@ -366,6 +635,26 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
       "user8": user8.text.trim(),
       "user9": user9.text.trim(),
       "user10": user10.text.trim(),
+      "user_to_credit1": userToCredit1.text.trim(),
+      "user_to_credit2": userToCredit2.text.trim(),
+      "user_to_credit3": userToCredit3.text.trim(),
+      "user_to_credit4": userToCredit4.text.trim(),
+      "user_to_credit5": userToCredit5.text.trim(),
+      "user_to_credit6": userToCredit6.text.trim(),
+      "user_to_credit7": userToCredit7.text.trim(),
+      "user_to_credit8": userToCredit8.text.trim(),
+      "user_to_credit9": userToCredit9.text.trim(),
+      "user_to_credit10": userToCredit10.text.trim(),
+      "amount_to_credit1": amountToCredit1.text.trim(),
+      "amount_to_credit2": amountToCredit2.text.trim(),
+      "amount_to_credit3": amountToCredit3.text.trim(),
+      "amount_to_credit4": amountToCredit4.text.trim(),
+      "amount_to_credit5": amountToCredit5.text.trim(),
+      "amount_to_credit6": amountToCredit6.text.trim(),
+      "amount_to_credit7": amountToCredit7.text.trim(),
+      "amount_to_credit8": amountToCredit8.text.trim(),
+      "amount_to_credit9": amountToCredit9.text.trim(),
+      "amount_to_credit10": amountToCredit10.text.trim(),
       "total": myTotal.toString(),
     });
     if (res.statusCode == 201) {
@@ -386,6 +675,8 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
     }
   }
 
+  double sumTotal = 0.00;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -398,15 +689,16 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
 
     numOfFormsController = TextEditingController();
     totalController = TextEditingController();
-    mtn = TextEditingController(text: "0.0");
-    express = TextEditingController(text: "0.0");
-    ecobank = TextEditingController(text: "0.0");
-    gtbank = TextEditingController(text: "0.0");
-    calbank = TextEditingController(text: "0.0");
-    fidelity = TextEditingController(text: "0.0");
-    debit = TextEditingController(text: "0.0");
-    over = TextEditingController(text: "0.0");
-    shortage = TextEditingController(text: "0.0");
+    mtn = TextEditingController(text: "0.00");
+    express = TextEditingController(text: "0.00");
+    ecobank = TextEditingController(text: "0.00");
+    gtbank = TextEditingController(text: "0.00");
+    calbank = TextEditingController(text: "0.00");
+    fidelity = TextEditingController(text: "0.00");
+    debit = TextEditingController(text: "0.00");
+    over = TextEditingController(text: "0.00");
+    shortage = TextEditingController(text: "0.00");
+    numOfCreditController = TextEditingController();
     user1 = TextEditingController();
     user2 = TextEditingController();
     user3 = TextEditingController();
@@ -417,6 +709,27 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
     user8 = TextEditingController();
     user9 = TextEditingController();
     user10 = TextEditingController();
+
+    userToCredit1 = TextEditingController();
+    userToCredit2 = TextEditingController();
+    userToCredit3 = TextEditingController();
+    userToCredit4 = TextEditingController();
+    userToCredit5 = TextEditingController();
+    userToCredit6 = TextEditingController();
+    userToCredit7 = TextEditingController();
+    userToCredit8 = TextEditingController();
+    userToCredit9 = TextEditingController();
+    userToCredit10 = TextEditingController();
+    amountToCredit1 = TextEditingController();
+    amountToCredit2 = TextEditingController();
+    amountToCredit3 = TextEditingController();
+    amountToCredit4 = TextEditingController();
+    amountToCredit5 = TextEditingController();
+    amountToCredit6 = TextEditingController();
+    amountToCredit7 = TextEditingController();
+    amountToCredit8 = TextEditingController();
+    amountToCredit9 = TextEditingController();
+    amountToCredit10 = TextEditingController();
   }
 
   @override
@@ -442,6 +755,27 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
     user8.dispose();
     user9.dispose();
     user10.dispose();
+    userToCredit1.dispose();
+    userToCredit2.dispose();
+    userToCredit3.dispose();
+    userToCredit4.dispose();
+    userToCredit5.dispose();
+    userToCredit6.dispose();
+    userToCredit7.dispose();
+    userToCredit8.dispose();
+    userToCredit9.dispose();
+    userToCredit10.dispose();
+    amountToCredit1.dispose();
+    amountToCredit2.dispose();
+    amountToCredit3.dispose();
+    amountToCredit4.dispose();
+    amountToCredit5.dispose();
+    amountToCredit6.dispose();
+    amountToCredit7.dispose();
+    amountToCredit8.dispose();
+    amountToCredit9.dispose();
+    amountToCredit10.dispose();
+    numOfCreditController.dispose();
     super.dispose();
   }
 
@@ -452,6 +786,19 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Close Account"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 18.0),
+            child: Row(
+              children: [
+                const Text("Total: ",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                Text(sumTotal.toString(),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+          )
+        ],
       ),
       body: ListView(
         children: [
@@ -465,7 +812,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
@@ -477,6 +824,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               } else {
                                 setState(() {
                                   myMtn = double.parse(value);
+                                  sumTotal = myMtn;
                                 });
                               }
                             },
@@ -506,18 +854,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         ),
                       ),
                       Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(myMtn.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
@@ -529,6 +865,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               } else {
                                 setState(() {
                                   myExpress = double.parse(value) + myMtn;
+                                  sumTotal = double.parse(value) + myMtn;
                                 });
                               }
                             },
@@ -557,19 +894,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           ),
                         ),
                       ),
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(myExpress.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                      ))
                     ],
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
@@ -581,6 +913,9 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               } else {
                                 setState(() {
                                   myEcobnak = double.parse(value) +
+                                      double.parse(mtn.text.trim()) +
+                                      double.parse(express.text.trim());
+                                  sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim());
                                 });
@@ -612,18 +947,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         ),
                       ),
                       Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(myEcobnak.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
@@ -635,6 +958,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               } else {
                                 setState(() {
                                   myGtbank = double.parse(value) +
+                                      double.parse(mtn.text.trim()) +
+                                      double.parse(express.text.trim()) +
+                                      double.parse(ecobank.text.trim());
+                                  sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim()) +
                                       double.parse(ecobank.text.trim());
@@ -666,19 +993,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           ),
                         ),
                       ),
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(myGtbank.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                      ))
                     ],
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
@@ -690,6 +1012,11 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               } else {
                                 setState(() {
                                   myCalbank = double.parse(value) +
+                                      double.parse(mtn.text.trim()) +
+                                      double.parse(express.text.trim()) +
+                                      double.parse(ecobank.text.trim()) +
+                                      double.parse(gtbank.text.trim());
+                                  sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim()) +
                                       double.parse(ecobank.text.trim()) +
@@ -723,18 +1050,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         ),
                       ),
                       Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(myCalbank.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
@@ -746,6 +1061,12 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               } else {
                                 setState(() {
                                   myFidelity = double.parse(value) +
+                                      double.parse(mtn.text.trim()) +
+                                      double.parse(express.text.trim()) +
+                                      double.parse(ecobank.text.trim()) +
+                                      double.parse(gtbank.text.trim()) +
+                                      double.parse(calbank.text.trim());
+                                  sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim()) +
                                       double.parse(ecobank.text.trim()) +
@@ -779,19 +1100,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           ),
                         ),
                       ),
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(myFidelity.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                      ))
                     ],
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
@@ -803,6 +1119,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               } else {
                                 setState(() {
                                   myDebit = double.parse(value) +
+                                      double.parse(mtn.text.trim()) +
+                                      double.parse(express.text.trim()) +
+                                      double.parse(ecobank.text.trim()) +
+                                      double.parse(gtbank.text.trim()) +
+                                      double.parse(calbank.text.trim()) +
+                                      double.parse(fidelity.text.trim());
+                                  sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim()) +
                                       double.parse(ecobank.text.trim()) +
@@ -838,18 +1161,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         ),
                       ),
                       Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(myDebit.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
@@ -861,6 +1172,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               } else {
                                 setState(() {
                                   myShortage = double.parse(value) +
+                                      double.parse(mtn.text.trim()) +
+                                      double.parse(express.text.trim()) +
+                                      double.parse(ecobank.text.trim()) +
+                                      double.parse(gtbank.text.trim()) +
+                                      double.parse(calbank.text.trim()) +
+                                      double.parse(fidelity.text.trim()) +
+                                      double.parse(debit.text.trim());
+                                  sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim()) +
                                       double.parse(ecobank.text.trim()) +
@@ -896,19 +1215,15 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           ),
                         ),
                       ),
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(myShortage.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                      ))
                     ],
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
@@ -920,6 +1235,15 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               } else {
                                 setState(() {
                                   myOver = double.parse(value) +
+                                      double.parse(mtn.text.trim()) +
+                                      double.parse(express.text.trim()) +
+                                      double.parse(ecobank.text.trim()) +
+                                      double.parse(gtbank.text.trim()) +
+                                      double.parse(calbank.text.trim()) +
+                                      double.parse(fidelity.text.trim()) +
+                                      double.parse(debit.text.trim()) +
+                                      double.parse(shortage.text.trim());
+                                  sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim()) +
                                       double.parse(ecobank.text.trim()) +
@@ -959,7 +1283,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                       Expanded(
                           child: Padding(
                         padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(myOver.toString(),
+                        child: Text("",
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16)),
                       ))
@@ -1647,11 +1971,698 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           ),
                         )
                       : Container(),
-                  TextButton(
-                    onPressed: () {
-                      showAndEnterFormNumber();
-                    },
-                    child: const Text("Tap to add forms for cash left at"),
+                  // creditors forms
+                  addedCredit1
+                      ? SlideInUp(
+                          animate: true,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: userToCredit1,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Username",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.text,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: amountToCredit1,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  addedCredit2
+                      ? SlideInUp(
+                          animate: true,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: userToCredit2,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Username",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.text,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: amountToCredit2,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  addedCredit3
+                      ? SlideInUp(
+                          animate: true,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: userToCredit3,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Username",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.text,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: amountToCredit3,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  addedCredit4
+                      ? SlideInUp(
+                          animate: true,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: userToCredit4,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Username",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.text,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: amountToCredit4,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  addedCredit5
+                      ? SlideInUp(
+                          animate: true,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: userToCredit5,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Username",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.text,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: amountToCredit5,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  addedCredit6
+                      ? SlideInUp(
+                          animate: true,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: userToCredit6,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Username",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.text,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: amountToCredit6,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  addedCredit7
+                      ? SlideInUp(
+                          animate: true,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: userToCredit7,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Username",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.text,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: amountToCredit7,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  addedCredit8
+                      ? SlideInUp(
+                          animate: true,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: userToCredit8,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Username",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.text,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: amountToCredit8,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  addedCredit9
+                      ? SlideInUp(
+                          animate: true,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: userToCredit9,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Username",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.text,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: amountToCredit9,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  addedCredit10
+                      ? SlideInUp(
+                          animate: true,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: userToCredit10,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Username",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.text,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: amountToCredit10,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  // creditors forms
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          showAndEnterFormNumber();
+                        },
+                        child: const Text("Add cash left @"),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Text("|"),
+                      TextButton(
+                        onPressed: () {
+                          showAndEnterNumberForCredit();
+                        },
+                        child: const Text("Credit User"),
+                      ),
+                    ],
                   ),
                   // post payment
                   isPosting

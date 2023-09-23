@@ -27,10 +27,6 @@ class UsersController extends GetxController {
     }
     getAllUsers();
     getAllBlockedUsers();
-    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   getAllUsers();
-    //   getAllBlockedUsers();
-    // });
   }
 
   Future<void> getAllUsers() async {

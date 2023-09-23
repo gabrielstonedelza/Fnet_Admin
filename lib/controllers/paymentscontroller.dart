@@ -29,10 +29,6 @@ class PaymentController extends GetxController {
 
     getAllPendingPayments();
     getAllPayments();
-    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   getAllPendingPayments();
-    //   getAllPayments();
-    // });
   }
 
   Future<void> getAllPendingPayments() async {

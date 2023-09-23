@@ -40,10 +40,6 @@ class CustomersController extends GetxController {
 
     getAllCustomers();
     fetchCustomersWithBirthDays();
-    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   getAllCustomers();
-    //   fetchCustomersWithBirthDays();
-    // });
   }
 
   Future<void> getAllCustomers() async {

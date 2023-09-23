@@ -72,38 +72,6 @@ class _HomePageState extends State<HomePage> {
   late DateDuration duration;
   final SendSmsController sendSms = SendSmsController();
   late List unPaidDepositRequests = [];
-  // late List allPendingPayments = [];
-  // String transactionId = "";
-
-  // approvePayment(String agent, String id) async {
-  //   final accountUrl =
-  //       "https://www.fnetghana.xyz/admin_approve_bank_payments_paid/$id/";
-  //   final myLink = Uri.parse(accountUrl);
-  //   http.Response response = await http.put(myLink, headers: {
-  //     "Content-Type": "application/x-www-form-urlencoded",
-  //     // "Authorization": "Token ${uToken.value}"
-  //   }, body: {
-  //     "agent": agent,
-  //     "payment_status": "Approved",
-  //   });
-  //   if (response.statusCode == 200) {
-  //     Get.snackbar("Success", "users payment was approved",
-  //         colorText: defaultTextColor1,
-  //         snackPosition: SnackPosition.BOTTOM,
-  //         backgroundColor: snackColor);
-  //     // showInstalled();
-  //     // Get.offAll(() => const HomePage());
-  //     // showInstalled();
-  //   } else {
-  //     if (kDebugMode) {
-  //       print(response.body);
-  //     }
-  //     Get.snackbar("Account", "something went wrong,please try again later",
-  //         colorText: defaultTextColor1,
-  //         snackPosition: SnackPosition.BOTTOM,
-  //         backgroundColor: warning);
-  //   }
-  // }
 
   SmsQuery query = SmsQuery();
   late List mySmss = [];
@@ -148,42 +116,6 @@ class _HomePageState extends State<HomePage> {
     //   print(lastMessage.split("Transaction Id:").last.split(".").first);
     // }
   }
-
-  // Future<void> getAllPendingPayments() async {
-  //   const profileLink =
-  //       "https://fnetghana.xyz/admin_get_all_pending_bank_payments/";
-  //   var link = Uri.parse(profileLink);
-  //   http.Response response = await http.get(link, headers: {
-  //     "Content-Type": "application/x-www-form-urlencoded",
-  //   });
-  //
-  //   if (response.statusCode == 200) {
-  //     var jsonData = jsonDecode(response.body);
-  //     allPendingPayments.assignAll(jsonData);
-  //
-  //     for (var i in allPendingPayments) {
-  //       if (transactionIds.contains(i['transaction_id1'].trim())) {
-  //         print("true");
-  //         setState(() {
-  //           transactionId = i['transaction_id1'].trim();
-  //         });
-  //         approvePayment(i['agent'].toString(), i['id'].toString());
-  //       } else {
-  //         print("false");
-  //       }
-  //       // if (transactionId.trim() == i['transaction_id1'].trim()) {
-  //       //   if (kDebugMode) {
-  //       //     print(i);
-  //       //     approvePayment(i['agent'].toString(), i['id'].toString());
-  //       //   }
-  //       // }
-  //     }
-  //   } else {
-  //     if (kDebugMode) {
-  //       print(response.body);
-  //     }
-  //   }
-  // }
 
   Future<void> getAllUnpaidDepositRequests() async {
     const url = "https://fnetghana.xyz/get_agents_unpaid_deposits/";
@@ -631,8 +563,6 @@ class _HomePageState extends State<HomePage> {
       getAllUnReadNotifications();
       getAllUnpaidDepositRequests();
       fetchInbox();
-      // getAllPendingPayments();
-      // fetchCustomersWithBirthDays();
     });
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       for (var e in triggered) {
@@ -1033,8 +963,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _handleMenuButtonPressed() {
-    // NOTICE: Manage Advanced Drawer state through the Controller.
-    // _advancedDrawerController.value = AdvancedDrawerValue.visible();
     _advancedDrawerController.showDrawer();
   }
 }

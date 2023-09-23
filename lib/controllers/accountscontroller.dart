@@ -33,10 +33,7 @@ class AccountsController extends GetxController {
 
     getAllMyAgents();
     fetchBlockedAgents();
-    // _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-    //   getAllMyAgents();
-    //   fetchBlockedAgents();
-    // });
+    ;
   }
 
   Future<void> getAllMyAgents() async {

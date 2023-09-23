@@ -26,9 +26,6 @@ class BankAccountsController extends GetxController {
       username = storage.read("username");
     }
     getAllBankAccounts();
-    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   getAllBankAccounts();
-    // });
   }
 
   Future<void> getAllBankAccounts() async {

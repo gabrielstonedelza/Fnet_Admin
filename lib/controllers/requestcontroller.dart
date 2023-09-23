@@ -26,10 +26,6 @@ class RequestController extends GetxController {
     }
     getAllPendingRequestDeposits();
     getAllPendingDeposits();
-    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   getAllPendingRequestDeposits();
-    //   getAllPendingDeposits();
-    // });
   }
 
   Future<void> getAllPendingRequestDeposits() async {
