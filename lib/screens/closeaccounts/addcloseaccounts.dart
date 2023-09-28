@@ -88,6 +88,17 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
   late final TextEditingController amountToCredit9;
   late final TextEditingController amountToCredit10;
 
+  late final TextEditingController cashLeftAtAmount1;
+  late final TextEditingController cashLeftAtAmount2;
+  late final TextEditingController cashLeftAtAmount3;
+  late final TextEditingController cashLeftAtAmount4;
+  late final TextEditingController cashLeftAtAmount5;
+  late final TextEditingController cashLeftAtAmount6;
+  late final TextEditingController cashLeftAtAmount7;
+  late final TextEditingController cashLeftAtAmount8;
+  late final TextEditingController cashLeftAtAmount9;
+  late final TextEditingController cashLeftAtAmount10;
+
   bool addedForm1 = false;
   bool addedForm2 = false;
   bool addedForm3 = false;
@@ -645,6 +656,16 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
       "user_to_credit8": userToCredit8.text.trim(),
       "user_to_credit9": userToCredit9.text.trim(),
       "user_to_credit10": userToCredit10.text.trim(),
+      "cash_left_at_amount1": cashLeftAtAmount1.text.trim(),
+      "cash_left_at_amount2": cashLeftAtAmount2.text.trim(),
+      "cash_left_at_amount3": cashLeftAtAmount3.text.trim(),
+      "cash_left_at_amount4": cashLeftAtAmount4.text.trim(),
+      "cash_left_at_amount5": cashLeftAtAmount5.text.trim(),
+      "cash_left_at_amount6": cashLeftAtAmount6.text.trim(),
+      "cash_left_at_amount7": cashLeftAtAmount7.text.trim(),
+      "cash_left_at_amount8": cashLeftAtAmount8.text.trim(),
+      "cash_left_at_amount9": cashLeftAtAmount9.text.trim(),
+      "cash_left_at_amount10": cashLeftAtAmount10.text.trim(),
       "amount_to_credit1": amountToCredit1.text.trim(),
       "amount_to_credit2": amountToCredit2.text.trim(),
       "amount_to_credit3": amountToCredit3.text.trim(),
@@ -730,6 +751,16 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
     amountToCredit8 = TextEditingController();
     amountToCredit9 = TextEditingController();
     amountToCredit10 = TextEditingController();
+    cashLeftAtAmount1 = TextEditingController();
+    cashLeftAtAmount2 = TextEditingController();
+    cashLeftAtAmount3 = TextEditingController();
+    cashLeftAtAmount4 = TextEditingController();
+    cashLeftAtAmount5 = TextEditingController();
+    cashLeftAtAmount6 = TextEditingController();
+    cashLeftAtAmount7 = TextEditingController();
+    cashLeftAtAmount8 = TextEditingController();
+    cashLeftAtAmount9 = TextEditingController();
+    cashLeftAtAmount10 = TextEditingController();
   }
 
   @override
@@ -775,6 +806,16 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
     amountToCredit8.dispose();
     amountToCredit9.dispose();
     amountToCredit10.dispose();
+    cashLeftAtAmount1.dispose();
+    cashLeftAtAmount2.dispose();
+    cashLeftAtAmount3.dispose();
+    cashLeftAtAmount4.dispose();
+    cashLeftAtAmount5.dispose();
+    cashLeftAtAmount6.dispose();
+    cashLeftAtAmount7.dispose();
+    cashLeftAtAmount8.dispose();
+    cashLeftAtAmount9.dispose();
+    cashLeftAtAmount10.dispose();
     numOfCreditController.dispose();
     super.dispose();
   }
@@ -912,9 +953,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 });
                               } else {
                                 setState(() {
-                                  myEcobnak = double.parse(value) +
-                                      double.parse(mtn.text.trim()) +
-                                      double.parse(express.text.trim());
                                   sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim());
@@ -1011,11 +1049,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 });
                               } else {
                                 setState(() {
-                                  myCalbank = double.parse(value) +
-                                      double.parse(mtn.text.trim()) +
-                                      double.parse(express.text.trim()) +
-                                      double.parse(ecobank.text.trim()) +
-                                      double.parse(gtbank.text.trim());
                                   sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim()) +
@@ -1060,12 +1093,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 });
                               } else {
                                 setState(() {
-                                  myFidelity = double.parse(value) +
-                                      double.parse(mtn.text.trim()) +
-                                      double.parse(express.text.trim()) +
-                                      double.parse(ecobank.text.trim()) +
-                                      double.parse(gtbank.text.trim()) +
-                                      double.parse(calbank.text.trim());
                                   sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim()) +
@@ -1108,23 +1135,17 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                   Row(
                     children: [
                       Expanded(
+                        flex: 1,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
-                                  myDebit = 0.0;
+                                  myOver = 0.0;
                                 });
                               } else {
                                 setState(() {
-                                  myDebit = double.parse(value) +
-                                      double.parse(mtn.text.trim()) +
-                                      double.parse(express.text.trim()) +
-                                      double.parse(ecobank.text.trim()) +
-                                      double.parse(gtbank.text.trim()) +
-                                      double.parse(calbank.text.trim()) +
-                                      double.parse(fidelity.text.trim());
                                   sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim()) +
@@ -1135,12 +1156,12 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 });
                               }
                             },
-                            controller: debit,
+                            controller: over,
                             cursorColor: primaryColor,
                             cursorRadius: const Radius.elliptical(10, 10),
                             cursorWidth: 10,
                             decoration: InputDecoration(
-                                labelText: "Debit",
+                                labelText: "Over",
                                 labelStyle:
                                     const TextStyle(color: secondaryColor),
                                 focusColor: primaryColor,
@@ -1171,14 +1192,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 });
                               } else {
                                 setState(() {
-                                  myShortage = double.parse(value) +
-                                      double.parse(mtn.text.trim()) +
-                                      double.parse(express.text.trim()) +
-                                      double.parse(ecobank.text.trim()) +
-                                      double.parse(gtbank.text.trim()) +
-                                      double.parse(calbank.text.trim()) +
-                                      double.parse(fidelity.text.trim()) +
-                                      double.parse(debit.text.trim());
                                   sumTotal = double.parse(value) +
                                       double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim()) +
@@ -1186,7 +1199,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                       double.parse(gtbank.text.trim()) +
                                       double.parse(calbank.text.trim()) +
                                       double.parse(fidelity.text.trim()) +
-                                      double.parse(debit.text.trim());
+                                      double.parse(over.text.trim());
                                 });
                               }
                             },
@@ -1223,44 +1236,34 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 1,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
-                                  myOver = 0.0;
+                                  myDebit = 0.0;
                                 });
                               } else {
                                 setState(() {
-                                  myOver = double.parse(value) +
-                                      double.parse(mtn.text.trim()) +
+                                  sumTotal = double.parse(mtn.text.trim()) +
                                       double.parse(express.text.trim()) +
                                       double.parse(ecobank.text.trim()) +
                                       double.parse(gtbank.text.trim()) +
                                       double.parse(calbank.text.trim()) +
                                       double.parse(fidelity.text.trim()) +
-                                      double.parse(debit.text.trim()) +
-                                      double.parse(shortage.text.trim());
-                                  sumTotal = double.parse(value) +
-                                      double.parse(mtn.text.trim()) +
-                                      double.parse(express.text.trim()) +
-                                      double.parse(ecobank.text.trim()) +
-                                      double.parse(gtbank.text.trim()) +
-                                      double.parse(calbank.text.trim()) +
-                                      double.parse(fidelity.text.trim()) +
-                                      double.parse(debit.text.trim()) +
-                                      double.parse(shortage.text.trim());
+                                      double.parse(over.text.trim()) +
+                                      double.parse(shortage.text.trim()) -
+                                      double.parse(value);
                                 });
                               }
                             },
-                            controller: over,
+                            controller: debit,
                             cursorColor: primaryColor,
                             cursorRadius: const Radius.elliptical(10, 10),
                             cursorWidth: 10,
                             decoration: InputDecoration(
-                                labelText: "Over",
+                                labelText: "Debit",
                                 labelStyle:
                                     const TextStyle(color: secondaryColor),
                                 focusColor: primaryColor,
@@ -1280,11 +1283,11 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           ),
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                           child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
+                        padding: EdgeInsets.only(left: 18.0),
                         child: Text("",
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16)),
                       ))
                     ],
@@ -1334,7 +1337,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -1351,6 +1354,35 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: cashLeftAtAmount1,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
                                     }
                                   },
                                 ),
@@ -1402,7 +1434,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -1419,6 +1451,35 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: cashLeftAtAmount2,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
                                     }
                                   },
                                 ),
@@ -1470,7 +1531,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -1487,6 +1548,35 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: cashLeftAtAmount3,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
                                     }
                                   },
                                 ),
@@ -1538,7 +1628,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -1555,6 +1645,35 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: cashLeftAtAmount4,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
                                     }
                                   },
                                 ),
@@ -1606,7 +1725,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -1623,6 +1742,35 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: cashLeftAtAmount5,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
                                     }
                                   },
                                 ),
@@ -1674,7 +1822,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -1691,6 +1839,35 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: cashLeftAtAmount6,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
                                     }
                                   },
                                 ),
@@ -1742,7 +1919,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -1759,6 +1936,35 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: cashLeftAtAmount7,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
                                     }
                                   },
                                 ),
@@ -1810,7 +2016,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -1827,6 +2033,35 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: cashLeftAtAmount8,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
                                     }
                                   },
                                 ),
@@ -1878,7 +2113,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -1895,6 +2130,35 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: cashLeftAtAmount9,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
                                     }
                                   },
                                 ),
@@ -1946,7 +2210,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -1963,6 +2227,35 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please enter username";
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  controller: cashLeftAtAmount10,
+                                  cursorColor: primaryColor,
+                                  cursorRadius: const Radius.elliptical(10, 10),
+                                  cursorWidth: 10,
+                                  decoration: InputDecoration(
+                                      labelText: "Amount",
+                                      labelStyle: const TextStyle(
+                                          color: secondaryColor),
+                                      focusColor: primaryColor,
+                                      fillColor: primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: primaryColor, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please enter amount";
                                     }
                                   },
                                 ),
@@ -1985,7 +2278,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -2052,7 +2345,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -2119,7 +2412,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -2186,7 +2479,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -2253,7 +2546,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -2320,7 +2613,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -2387,7 +2680,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -2454,7 +2747,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -2521,7 +2814,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,
@@ -2588,7 +2881,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
                                   decoration: InputDecoration(
-                                      labelText: "Username",
+                                      labelText: "Name",
                                       labelStyle: const TextStyle(
                                           color: secondaryColor),
                                       focusColor: primaryColor,

@@ -186,6 +186,26 @@ class _CloseAccountState extends State<CloseAccount> {
                                   ['amount_to_credit9'],
                               acredit10: allClosedDates[index]
                                   ['amount_to_credit10'],
+                              cashleftamount1: allClosedDates[index]
+                                  ['cash_left_at_amount1'],
+                              cashleftamount2: allClosedDates[index]
+                                  ['cash_left_at_amount2'],
+                              cashleftamount3: allClosedDates[index]
+                                  ['cash_left_at_amount3'],
+                              cashleftamount4: allClosedDates[index]
+                                  ['cash_left_at_amount4'],
+                              cashleftamount5: allClosedDates[index]
+                                  ['cash_left_at_amount5'],
+                              cashleftamount6: allClosedDates[index]
+                                  ['cash_left_at_amount6'],
+                              cashleftamount7: allClosedDates[index]
+                                  ['cash_left_at_amount7'],
+                              cashleftamount8: allClosedDates[index]
+                                  ['cash_left_at_amount8'],
+                              cashleftamount9: allClosedDates[index]
+                                  ['cash_left_at_amount9'],
+                              cashleftamount10: allClosedDates[index]
+                                  ['cash_left_at_amount10'],
                               total: allClosedDates[index]['total'],
                             ));
                       },
@@ -259,67 +279,12 @@ class _CloseAccountState extends State<CloseAccount> {
                                   itemTitle: 'shortage'.toString(),
                                 )
                               : Container(),
+
                           items['cash_left_at1'] != "Select cash left @"
                               ? RowWidget(
                                   items: items,
                                   title: 'Cash Left @: ',
                                   itemTitle: 'cash_left_at1',
-                                )
-                              : Container(),
-                          items['cash_left_at2'] != "Select cash left @"
-                              ? RowWidget(
-                                  items: items,
-                                  title: 'Cash Left @: ',
-                                  itemTitle: 'cash_left_at2',
-                                )
-                              : Container(),
-                          items['cash_left_at3'] != "Select cash left @"
-                              ? RowWidget(
-                                  items: items,
-                                  title: 'Cash Left @: ',
-                                  itemTitle: 'cash_left_at3',
-                                )
-                              : Container(),
-                          items['cash_left_at4'] != "Select cash left @"
-                              ? RowWidget(
-                                  items: items,
-                                  title: 'Cash Left @: ',
-                                  itemTitle: 'cash_left_at4',
-                                )
-                              : Container(),
-                          items['cash_left_at5'] != "Select cash left @"
-                              ? RowWidget(
-                                  items: items,
-                                  title: 'Cash Left @: ',
-                                  itemTitle: 'cash_left_at5',
-                                )
-                              : Container(),
-                          items['cash_left_at6'] != "Select cash left @"
-                              ? RowWidget(
-                                  items: items,
-                                  title: 'Cash Left @: ',
-                                  itemTitle: 'cash_left_at6',
-                                )
-                              : Container(),
-                          items['cash_left_at7'] != "Select cash left @"
-                              ? RowWidget(
-                                  items: items,
-                                  title: 'Cash Left @: ',
-                                  itemTitle: 'cash_left_at7',
-                                )
-                              : Container(),
-                          items['cash_left_at8'] != "Select cash left @"
-                              ? RowWidget(
-                                  items: items,
-                                  title: 'Cash Left @: ',
-                                  itemTitle: 'cash_left_at8',
-                                )
-                              : Container(),
-                          items['cash_left_at9'] != "Select cash left @"
-                              ? RowWidget(
-                                  items: items,
-                                  title: 'Cash Left @: ',
-                                  itemTitle: 'cash_left_at9',
                                 )
                               : Container(),
                           items['user1'] != ""
@@ -329,11 +294,41 @@ class _CloseAccountState extends State<CloseAccount> {
                                   itemTitle: 'user1',
                                 )
                               : Container(),
+                          items['cash_left_at_amount1'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'cash_left_at_amount1'.toString(),
+                                )
+                              : Container(),
+
+                          items['cash_left_at2'] != "Select cash left @"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'Cash Left @: ',
+                                  itemTitle: 'cash_left_at2',
+                                )
+                              : Container(),
                           items['user2'] != ""
                               ? RowWidget(
                                   items: items,
                                   title: 'User: ',
                                   itemTitle: 'user2',
+                                )
+                              : Container(),
+                          items['cash_left_at_amount2'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'cash_left_at_amount2'.toString(),
+                                )
+                              : Container(),
+
+                          items['cash_left_at3'] != "Select cash left @"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'Cash Left @: ',
+                                  itemTitle: 'cash_left_at3',
                                 )
                               : Container(),
                           items['user3'] != ""
@@ -343,11 +338,41 @@ class _CloseAccountState extends State<CloseAccount> {
                                   itemTitle: 'user3',
                                 )
                               : Container(),
+                          items['cash_left_at_amount3'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'cash_left_at_amount3'.toString(),
+                                )
+                              : Container(),
+
+                          items['cash_left_at4'] != "Select cash left @"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'Cash Left @: ',
+                                  itemTitle: 'cash_left_at4',
+                                )
+                              : Container(),
                           items['user4'] != ""
                               ? RowWidget(
                                   items: items,
                                   title: 'User: ',
                                   itemTitle: 'user4',
+                                )
+                              : Container(),
+                          items['cash_left_at_amount4'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'cash_left_at_amount4'.toString(),
+                                )
+                              : Container(),
+
+                          items['cash_left_at5'] != "Select cash left @"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'Cash Left @: ',
+                                  itemTitle: 'cash_left_at5',
                                 )
                               : Container(),
                           items['user5'] != ""
@@ -357,11 +382,41 @@ class _CloseAccountState extends State<CloseAccount> {
                                   itemTitle: 'user5',
                                 )
                               : Container(),
+                          items['cash_left_at_amount5'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'cash_left_at_amount5'.toString(),
+                                )
+                              : Container(),
+
+                          items['cash_left_at6'] != "Select cash left @"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'Cash Left @: ',
+                                  itemTitle: 'cash_left_at6',
+                                )
+                              : Container(),
                           items['user6'] != ""
                               ? RowWidget(
                                   items: items,
                                   title: 'User: ',
                                   itemTitle: 'user6',
+                                )
+                              : Container(),
+                          items['cash_left_at_amount6'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'cash_left_at_amount6'.toString(),
+                                )
+                              : Container(),
+
+                          items['cash_left_at7'] != "Select cash left @"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'Cash Left @: ',
+                                  itemTitle: 'cash_left_at7',
                                 )
                               : Container(),
                           items['user7'] != ""
@@ -371,11 +426,41 @@ class _CloseAccountState extends State<CloseAccount> {
                                   itemTitle: 'user7',
                                 )
                               : Container(),
+                          items['cash_left_at_amount7'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'cash_left_at_amount7'.toString(),
+                                )
+                              : Container(),
+
+                          items['cash_left_at8'] != "Select cash left @"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'Cash Left @: ',
+                                  itemTitle: 'cash_left_at8',
+                                )
+                              : Container(),
                           items['user8'] != ""
                               ? RowWidget(
                                   items: items,
                                   title: 'User: ',
                                   itemTitle: 'user8',
+                                )
+                              : Container(),
+                          items['cash_left_at_amount8'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'cash_left_at_amount8'.toString(),
+                                )
+                              : Container(),
+
+                          items['cash_left_at9'] != "Select cash left @"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'Cash Left @: ',
+                                  itemTitle: 'cash_left_at9',
                                 )
                               : Container(),
                           items['user9'] != ""
@@ -385,11 +470,33 @@ class _CloseAccountState extends State<CloseAccount> {
                                   itemTitle: 'user9',
                                 )
                               : Container(),
+                          items['cash_left_at_amount9'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'cash_left_at_amount9'.toString(),
+                                )
+                              : Container(),
+
+                          items['cash_left_at10'] != "Select cash left @"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'Cash Left @: ',
+                                  itemTitle: 'cash_left_at10',
+                                )
+                              : Container(),
                           items['user10'] != ""
                               ? RowWidget(
                                   items: items,
                                   title: 'User: ',
                                   itemTitle: 'user10',
+                                )
+                              : Container(),
+                          items['cash_left_at_amount10'] != "0.00"
+                              ? RowWidget(
+                                  items: items,
+                                  title: 'User: ',
+                                  itemTitle: 'cash_left_at_amount10'.toString(),
                                 )
                               : Container(),
 
