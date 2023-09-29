@@ -43,6 +43,7 @@ dependencies:
   get:
   age_calculator:
   rxdart:
+  web_socket_channel: ^2.4.0
 
 
   modal_bottom_sheet:
@@ -64,6 +65,9 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.1
   device_info_plus: ^9.0.0
   device_apps: ^2.2.0
+  shared_preferences: ^2.2.1
+  sqflite: ^2.3.0
+  provider:
 
 
 dev_dependencies:

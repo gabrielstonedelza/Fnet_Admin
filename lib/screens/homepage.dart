@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:age_calculator/age_calculator.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:badges/badges.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -836,7 +835,7 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                     child: GestureDetector(
                   onTap: () {
-                    Get.to(() => const MyAgents());
+                    Get.to(() => MyAgents());
                   },
                   child: menuWidget(
                     title: 'Users',

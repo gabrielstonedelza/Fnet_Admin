@@ -1,148 +1,17 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fnet_admin/static/app_colors.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
 
 import '../../controllers/accountscontroller.dart';
 import 'agentsdetail.dart';
 
-class MyAgents extends StatefulWidget {
-  const MyAgents({Key? key}) : super(key: key);
-
-  @override
-  State<MyAgents> createState() => _MyAgentsState();
-}
-
-class _MyAgentsState extends State<MyAgents> {
-  late String uToken = "";
-  late String agentCode = "";
-  final storage = GetStorage();
+class MyAgents extends StatelessWidget {
+  MyAgents({super.key});
   var items;
-  bool isLoading = true;
-  late List allMyAgents = [];
-  late List allBlockedUsers = [];
-  bool isPosting = false;
+
   final AccountsController controller = Get.find();
-
-  //
-  // Future<void> getAllMyAgents() async {
-  //   try {
-  //     isLoading = true;
-  //     const  allUsers = "https://fnetghana.xyz/all_agents/";
-  //     var link = Uri.parse(allUsers);
-  //     http.Response response = await http.get(link, headers: {
-  //       "Content-Type": "application/x-www-form-urlencoded",
-  //       "Authorization": "Token $uToken"
-  //     });
-  //     if (response.statusCode == 200) {
-  //       var jsonData = jsonDecode(response.body);
-  //       allMyAgents.assignAll(jsonData);
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //     }
-  //   } catch (e) {
-  //     Get.snackbar("Sorry","something happened or please check your internet connection");
-  //   }
-  // }
-  //
-  // Future<void>fetchBlockedAgents()async{
-  //   const url = "https://fnetghana.xyz/get_all_blocked_users/";
-  //   var myLink = Uri.parse(url);
-  //   final response = await http.get(myLink, headers: {
-  //     "Content-Type": "application/x-www-form-urlencoded",
-  //     // "Authorization": "Token $uToken"
-  //   });
-  //
-  //   if(response.statusCode ==200){
-  //     final codeUnits = response.body.codeUnits;
-  //     var jsonData = const Utf8Decoder().convert(codeUnits);
-  //     allBlockedUsers = json.decode(jsonData);
-  //     if (kDebugMode) {
-  //       print(allBlockedUsers);
-  //     }
-  //     setState(() {
-  //       isLoading = false;
-  //       allBlockedUsers = allBlockedUsers;
-  //     });
-  //   }
-  //
-  // }
-  addToBlockedList(String userId, String email, String username, String phone,
-      String fullName) async {
-    final depositUrl = "https://fnetghana.xyz/update_blocked/$userId/";
-    final myLink = Uri.parse(depositUrl);
-    final res = await http.put(myLink, headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Authorization": "Token $uToken"
-    }, body: {
-      "user_blocked": "True",
-      "email": email,
-      "username": username,
-      "phone": phone,
-      "full_name": fullName,
-    });
-    if (res.statusCode == 201) {
-      setState(() {
-        isLoading = false;
-      });
-      controller.getAllMyAgents();
-      Get.snackbar("Success", "blocking agent",
-          colorText: defaultTextColor1,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 5),
-          backgroundColor: snackBackground);
-    } else {
-      if (kDebugMode) {
-        print(res.body);
-      }
-    }
-  }
-
-  removeFromBlockedList(String userId, String email, String username,
-      String phone, String fullName) async {
-    final depositUrl = "https://fnetghana.xyz/update_blocked/$userId/";
-    final myLink = Uri.parse(depositUrl);
-    final res = await http.put(myLink, headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Authorization": "Token $uToken"
-    }, body: {
-      "user_blocked": "False",
-      "email": email,
-      "username": username,
-      "phone": phone,
-      "full_name": fullName,
-    });
-    if (res.statusCode == 201) {
-      setState(() {
-        isLoading = false;
-      });
-      controller.getAllMyAgents();
-      Get.snackbar("Success", "agent is removed from block lists",
-          colorText: defaultTextColor1,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 5),
-          backgroundColor: snackBackground);
-    } else {
-      if (kDebugMode) {
-        // print(res.body);
-      }
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (storage.read("token") != null) {
-      setState(() {
-        uToken = storage.read("token");
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +77,7 @@ class _MyAgentsState extends State<MyAgents> {
                                   snackPosition: SnackPosition.BOTTOM,
                                   duration: const Duration(seconds: 5),
                                   backgroundColor: snackBackground);
-                              removeFromBlockedList(
+                              controller.removeFromBlockedList(
                                   controller.allMyAgents[i]['id'].toString(),
                                   controller.allMyAgents[i]['email'],
                                   controller.allMyAgents[i]['username'],
@@ -226,7 +95,7 @@ class _MyAgentsState extends State<MyAgents> {
                                   snackPosition: SnackPosition.BOTTOM,
                                   duration: const Duration(seconds: 5),
                                   backgroundColor: snackBackground);
-                              addToBlockedList(
+                              controller.addToBlockedList(
                                   controller.allMyAgents[i]['id'].toString(),
                                   controller.allMyAgents[i]['email'],
                                   controller.allMyAgents[i]['username'],

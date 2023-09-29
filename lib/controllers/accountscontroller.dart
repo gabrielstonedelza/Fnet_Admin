@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+
+import '../static/app_colors.dart';
 
 class AccountsController extends GetxController {
   late List accountsStarted = [];
@@ -33,7 +36,6 @@ class AccountsController extends GetxController {
 
     getAllMyAgents();
     fetchBlockedAgents();
-    ;
   }
 
   Future<void> getAllMyAgents() async {
@@ -87,119 +89,59 @@ class AccountsController extends GetxController {
     }
   }
 
-// Future<void> getAllAccountsWithPointsForToday() async {
-//   try {
-//     isLoading = true;
-//     const profileLink = "https://fnetghana.xyz/get_account_number_points_today/";
-//     var link = Uri.parse(profileLink);
-//     http.Response response = await http.get(link, headers: {
-//       "Content-Type": "application/x-www-form-urlencoded",
-//       "Authorization": "Token $uToken"
-//     });
-//
-//     if(response.statusCode == 200){
-//       var jsonData = jsonDecode(response.body);
-//       pointsToday.assignAll(jsonData);
-//
-//       update();
-//     }
-//     else{
-//       if (kDebugMode) {
-//         print(response.body);
-//       }
-//     }
-//   } catch (e) {
-//     if (kDebugMode) {
-//       print(e.toString());
-//     }
-//   } finally {
-//     isLoading = false;
-//   }
-// }
-// Future<void> getAllAccountsWithPointsForWeek() async {
-//   try {
-//     isLoading = true;
-//     const profileLink = "https://fnetghana.xyz/get_account_number_points_week/";
-//     var link = Uri.parse(profileLink);
-//     http.Response response = await http.get(link, headers: {
-//       "Content-Type": "application/x-www-form-urlencoded",
-//       "Authorization": "Token $uToken"
-//     });
-//
-//     if(response.statusCode == 200){
-//       var jsonData = jsonDecode(response.body);
-//       pointsForTheWeek.assignAll(jsonData);
-//
-//       update();
-//     }
-//     else{
-//       if (kDebugMode) {
-//         print(response.body);
-//       }
-//     }
-//   } catch (e) {
-//     if (kDebugMode) {
-//       print(e.toString());
-//     }
-//   } finally {
-//     isLoading = false;
-//   }
-// }
-// Future<void> getAllAccountsWithPointsForMonth() async {
-//   try {
-//     isLoading = true;
-//     const profileLink = "https://fnetghana.xyz/get_account_number_points_month/";
-//     var link = Uri.parse(profileLink);
-//     http.Response response = await http.get(link, headers: {
-//       "Content-Type": "application/x-www-form-urlencoded",
-//       "Authorization": "Token $uToken"
-//     });
-//
-//     if(response.statusCode == 200){
-//       var jsonData = jsonDecode(response.body);
-//       pointsForTheMonth.assignAll(jsonData);
-//
-//       update();
-//     }
-//     else{
-//       if (kDebugMode) {
-//         print(response.body);
-//       }
-//     }
-//   } catch (e) {
-//     if (kDebugMode) {
-//       print(e.toString());
-//     }
-//   } finally {
-//     isLoading = false;
-//   }
-// }
-// Future<void> getAllAccountsWithPoints() async {
-//   try {
-//     isLoading = true;
-//     const profileLink = "https://fnetghana.xyz/get_all_account_number_points/";
-//     var link = Uri.parse(profileLink);
-//     http.Response response = await http.get(link, headers: {
-//       "Content-Type": "application/x-www-form-urlencoded",
-//       "Authorization": "Token $uToken"
-//     });
-//
-//     if(response.statusCode == 200){
-//       var jsonData = jsonDecode(response.body);
-//       allPoints.assignAll(jsonData);
-//       update();
-//     }
-//     else{
-//       if (kDebugMode) {
-//         print(response.body);
-//       }
-//     }
-//   } catch (e) {
-//     if (kDebugMode) {
-//       print(e.toString());
-//     }
-//   } finally {
-//     isLoading = false;
-//   }
-// }
+  addToBlockedList(String userId, String email, String username, String phone,
+      String fullName) async {
+    final depositUrl = "https://fnetghana.xyz/update_blocked/$userId/";
+    final myLink = Uri.parse(depositUrl);
+    final res = await http.put(myLink, headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      // "Authorization": "Token $uToken"
+    }, body: {
+      "user_blocked": "True",
+      "email": email,
+      "username": username,
+      "phone": phone,
+      "full_name": fullName,
+    });
+    if (res.statusCode == 201) {
+      getAllMyAgents();
+      Get.snackbar("Success", "blocking agent",
+          colorText: defaultTextColor1,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5),
+          backgroundColor: snackBackground);
+    } else {
+      if (kDebugMode) {
+        print(res.body);
+      }
+    }
+  }
+
+  removeFromBlockedList(String userId, String email, String username,
+      String phone, String fullName) async {
+    final depositUrl = "https://fnetghana.xyz/update_blocked/$userId/";
+    final myLink = Uri.parse(depositUrl);
+    final res = await http.put(myLink, headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      // "Authorization": "Token $uToken"
+    }, body: {
+      "user_blocked": "False",
+      "email": email,
+      "username": username,
+      "phone": phone,
+      "full_name": fullName,
+    });
+    if (res.statusCode == 201) {
+      getAllMyAgents();
+      Get.snackbar("Success", "agent is removed from block lists",
+          colorText: defaultTextColor1,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5),
+          backgroundColor: snackBackground);
+    } else {
+      if (kDebugMode) {
+        print(res.body);
+      }
+    }
+  }
 }
