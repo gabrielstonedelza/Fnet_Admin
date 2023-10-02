@@ -135,13 +135,34 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
   double myTotal = 0.00;
   double myMtn = 0.00;
   double myExpress = 0.00;
-  double myEcobnak = 0.00;
+  double myEcobank = 0.00;
   double myGtbank = 0.00;
   double myCalbank = 0.00;
   double myFidelity = 0.00;
   double myDebit = 0.00;
   double myShortage = 0.00;
   double myOver = 0.00;
+  double myCashLeft1 = 0.00;
+  double myCashLeft2 = 0.00;
+  double myCashLeft3 = 0.00;
+  double myCashLeft4 = 0.00;
+  double myCashLeft5 = 0.00;
+  double myCashLeft6 = 0.00;
+  double myCashLeft7 = 0.00;
+  double myCashLeft8 = 0.00;
+  double myCashLeft9 = 0.00;
+  double myCashLeft10 = 0.00;
+  double myCreditAmount1 = 0.00;
+  double myCreditAmount2 = 0.00;
+  double myCreditAmount3 = 0.00;
+  double myCreditAmount4 = 0.00;
+  double myCreditAmount5 = 0.00;
+  double myCreditAmount6 = 0.00;
+  double myCreditAmount7 = 0.00;
+  double myCreditAmount8 = 0.00;
+  double myCreditAmount9 = 0.00;
+  double myCreditAmount10 = 0.00;
+
 
   void showAndEnterFormNumber() {
     showMaterialModalBottomSheet(
@@ -742,26 +763,26 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
     userToCredit8 = TextEditingController();
     userToCredit9 = TextEditingController();
     userToCredit10 = TextEditingController();
-    amountToCredit1 = TextEditingController();
-    amountToCredit2 = TextEditingController();
-    amountToCredit3 = TextEditingController();
-    amountToCredit4 = TextEditingController();
-    amountToCredit5 = TextEditingController();
-    amountToCredit6 = TextEditingController();
-    amountToCredit7 = TextEditingController();
-    amountToCredit8 = TextEditingController();
-    amountToCredit9 = TextEditingController();
-    amountToCredit10 = TextEditingController();
-    cashLeftAtAmount1 = TextEditingController();
-    cashLeftAtAmount2 = TextEditingController();
-    cashLeftAtAmount3 = TextEditingController();
-    cashLeftAtAmount4 = TextEditingController();
-    cashLeftAtAmount5 = TextEditingController();
-    cashLeftAtAmount6 = TextEditingController();
-    cashLeftAtAmount7 = TextEditingController();
-    cashLeftAtAmount8 = TextEditingController();
-    cashLeftAtAmount9 = TextEditingController();
-    cashLeftAtAmount10 = TextEditingController();
+    amountToCredit1 = TextEditingController(text: "0.00");
+    amountToCredit2 = TextEditingController(text: "0.00");
+    amountToCredit3 = TextEditingController(text: "0.00");
+    amountToCredit4 = TextEditingController(text: "0.00");
+    amountToCredit5 = TextEditingController(text: "0.00");
+    amountToCredit6 = TextEditingController(text: "0.00");
+    amountToCredit7 = TextEditingController(text: "0.00");
+    amountToCredit8 = TextEditingController(text: "0.00");
+    amountToCredit9 = TextEditingController(text: "0.00");
+    amountToCredit10 = TextEditingController(text: "0.00");
+    cashLeftAtAmount1 = TextEditingController(text: "0.00");
+    cashLeftAtAmount2 = TextEditingController(text: "0.00");
+    cashLeftAtAmount3 = TextEditingController(text: "0.00");
+    cashLeftAtAmount4 = TextEditingController(text: "0.00");
+    cashLeftAtAmount5 = TextEditingController(text: "0.00");
+    cashLeftAtAmount6 = TextEditingController(text: "0.00");
+    cashLeftAtAmount7 = TextEditingController(text: "0.00");
+    cashLeftAtAmount8 = TextEditingController(text: "0.00");
+    cashLeftAtAmount9 = TextEditingController(text: "0.00");
+    cashLeftAtAmount10 = TextEditingController(text: "0.00");
   }
 
   @override
@@ -858,6 +879,9 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
+                            onTap: (){
+                              mtn.text = "";
+                            },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -899,6 +923,9 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
+                              onTap: (){
+                                express.text = "";
+                              },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -947,10 +974,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
+                            onTap: (){
+                              ecobank.text = "";
+                            },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
-                                  myEcobnak = 0.0;
+                                  myEcobank = 0.0;
                                 });
                               } else {
                                 setState(() {
@@ -989,6 +1019,9 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
+                            onTap: (){
+                              gtbank.text = "";
+                            },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -1043,6 +1076,9 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
+                            onTap: (){
+                              calbank.text = "";
+                            },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -1087,6 +1123,9 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
+                            onTap: (){
+                              fidelity.text = "";
+                            },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -1140,6 +1179,9 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
+                            onTap: (){
+                              over.text = "";
+                            },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -1186,6 +1228,9 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
+                            onTap: (){
+                              shortage.text = "";
+                            },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -1234,65 +1279,65 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              if (value.isEmpty) {
-                                setState(() {
-                                  myDebit = 0.0;
-                                });
-                              } else {
-                                setState(() {
-                                  sumTotal = double.parse(mtn.text.trim()) +
-                                      double.parse(express.text.trim()) +
-                                      double.parse(ecobank.text.trim()) +
-                                      double.parse(gtbank.text.trim()) +
-                                      double.parse(calbank.text.trim()) +
-                                      double.parse(fidelity.text.trim()) +
-                                      double.parse(over.text.trim()) +
-                                      double.parse(shortage.text.trim()) -
-                                      double.parse(value);
-                                });
-                              }
-                            },
-                            controller: debit,
-                            cursorColor: primaryColor,
-                            cursorRadius: const Radius.elliptical(10, 10),
-                            cursorWidth: 10,
-                            decoration: InputDecoration(
-                                labelText: "Debit",
-                                labelStyle:
-                                    const TextStyle(color: secondaryColor),
-                                focusColor: primaryColor,
-                                fillColor: primaryColor,
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: primaryColor, width: 2),
-                                    borderRadius: BorderRadius.circular(12)),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12))),
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter amount";
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      const Expanded(
-                          child: Padding(
-                        padding: EdgeInsets.only(left: 18.0),
-                        child: Text("",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                      ))
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.only(bottom: 10.0),
+                  //         child: TextFormField(
+                  //           onChanged: (value) {
+                  //             if (value.isEmpty) {
+                  //               setState(() {
+                  //                 myDebit = 0.0;
+                  //               });
+                  //             } else {
+                  //               setState(() {
+                  //                 sumTotal = double.parse(mtn.text.trim()) +
+                  //                     double.parse(express.text.trim()) +
+                  //                     double.parse(ecobank.text.trim()) +
+                  //                     double.parse(gtbank.text.trim()) +
+                  //                     double.parse(calbank.text.trim()) +
+                  //                     double.parse(fidelity.text.trim()) +
+                  //                     double.parse(over.text.trim()) +
+                  //                     double.parse(shortage.text.trim()) -
+                  //                     double.parse(value);
+                  //               });
+                  //             }
+                  //           },
+                  //           controller: debit,
+                  //           cursorColor: primaryColor,
+                  //           cursorRadius: const Radius.elliptical(10, 10),
+                  //           cursorWidth: 10,
+                  //           decoration: InputDecoration(
+                  //               labelText: "Debit",
+                  //               labelStyle:
+                  //                   const TextStyle(color: secondaryColor),
+                  //               focusColor: primaryColor,
+                  //               fillColor: primaryColor,
+                  //               focusedBorder: OutlineInputBorder(
+                  //                   borderSide: const BorderSide(
+                  //                       color: primaryColor, width: 2),
+                  //                   borderRadius: BorderRadius.circular(12)),
+                  //               border: OutlineInputBorder(
+                  //                   borderRadius: BorderRadius.circular(12))),
+                  //           keyboardType: TextInputType.number,
+                  //           validator: (value) {
+                  //             if (value!.isEmpty) {
+                  //               return "Please enter amount";
+                  //             }
+                  //           },
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     const Expanded(
+                  //         child: Padding(
+                  //       padding: EdgeInsets.only(left: 18.0),
+                  //       child: Text("",
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold, fontSize: 16)),
+                  //     ))
+                  //   ],
+                  // ),
 
                   // check and add cash left at forms
                   addedForm1
@@ -1300,6 +1345,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Container(
@@ -1362,6 +1411,30 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
+                                  onTap: (){
+                                    cashLeftAtAmount1.text = "";
+                                  },
+                                  onChanged: (value) {
+
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myCashLeft1 = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                                mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   controller: cashLeftAtAmount1,
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
@@ -1388,6 +1461,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                onPressed: (){
+                                  setState(() {
+                                    addedForm1 = false;
+                                  });
+                                },
+                                icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -1397,6 +1478,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Container(
@@ -1459,6 +1544,31 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
+                                  onTap: (){
+                                    cashLeftAtAmount2.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                                mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   controller: cashLeftAtAmount2,
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
@@ -1485,6 +1595,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedForm2 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -1494,6 +1612,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Container(
@@ -1556,6 +1678,33 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
+                                  onTap: (){
+                                    cashLeftAtAmount3.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                                mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   controller: cashLeftAtAmount3,
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
@@ -1582,6 +1731,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedForm3 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -1591,6 +1748,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Container(
@@ -1654,6 +1815,35 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: cashLeftAtAmount4,
+                                  onTap: (){
+                                    cashLeftAtAmount4.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                                mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -1679,6 +1869,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedForm4 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -1688,6 +1886,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Container(
@@ -1750,6 +1952,37 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
+                                  onTap: (){
+                                    cashLeftAtAmount5.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                                mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   controller: cashLeftAtAmount5,
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
@@ -1776,6 +2009,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedForm5 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -1785,6 +2026,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Container(
@@ -1847,6 +2092,39 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
+                                  onTap: (){
+                                    cashLeftAtAmount6.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                                mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   controller: cashLeftAtAmount6,
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
@@ -1873,6 +2151,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedForm6 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -1882,6 +2168,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Container(
@@ -1944,7 +2234,42 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
+                                  onTap: (){
+                                    cashLeftAtAmount7.text = "";
+                                  },
                                   controller: cashLeftAtAmount7,
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                                mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -1970,6 +2295,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedForm7 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -1979,6 +2312,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Container(
@@ -2041,7 +2378,44 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
+                                  onTap: (){
+                                    cashLeftAtAmount8.text = "";
+                                  },
                                   controller: cashLeftAtAmount8,
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                                mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2067,6 +2441,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedForm8 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2076,6 +2458,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Container(
@@ -2138,7 +2524,46 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
+                                  onTap: (){
+                                    cashLeftAtAmount9.text = "";
+                                  },
                                   controller: cashLeftAtAmount9,
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                                mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2164,6 +2589,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedForm9 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2173,6 +2606,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Container(
@@ -2236,6 +2673,47 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: cashLeftAtAmount10,
+                                  onTap: (){
+                                    cashLeftAtAmount10.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                                mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount9.text.trim()) +
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2261,6 +2739,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedForm10 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2271,6 +2757,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
@@ -2304,6 +2794,47 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit1,
+                                  onTap: (){
+                                    amountToCredit1.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                            mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(cashLeftAtAmount9.text.trim()) +
+                                            double.parse(cashLeftAtAmount10.text.trim()) -
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2329,6 +2860,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedCredit1 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2338,6 +2877,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
@@ -2371,6 +2914,48 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit2,
+                                  onTap: (){
+                                    amountToCredit2.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                            mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(cashLeftAtAmount9.text.trim()) +
+                                            double.parse(cashLeftAtAmount10.text.trim()) -
+                                            double.parse(amountToCredit1.text.trim()) -
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2396,6 +2981,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedCredit2 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2405,6 +2998,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
@@ -2438,6 +3035,49 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit3,
+                                  onTap: (){
+                                    amountToCredit3.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                            mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(cashLeftAtAmount9.text.trim()) +
+                                            double.parse(cashLeftAtAmount10.text.trim()) -
+                                            double.parse(amountToCredit1.text.trim()) -
+                                            double.parse(amountToCredit2.text.trim()) -
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2463,6 +3103,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedCredit3 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2472,6 +3120,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
@@ -2505,6 +3157,50 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit4,
+                                  onTap: (){
+                                    amountToCredit4.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                            mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(cashLeftAtAmount9.text.trim()) +
+                                            double.parse(cashLeftAtAmount10.text.trim()) -
+                                            double.parse(amountToCredit1.text.trim()) -
+                                            double.parse(amountToCredit2.text.trim()) -
+                                            double.parse(amountToCredit3.text.trim()) -
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2530,6 +3226,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedCredit4 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2539,6 +3243,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
@@ -2572,6 +3280,51 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit5,
+                                  onTap: (){
+                                    amountToCredit5.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                            mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(cashLeftAtAmount9.text.trim()) +
+                                            double.parse(cashLeftAtAmount10.text.trim()) -
+                                            double.parse(amountToCredit1.text.trim()) -
+                                            double.parse(amountToCredit2.text.trim()) -
+                                            double.parse(amountToCredit3.text.trim()) -
+                                            double.parse(amountToCredit4.text.trim()) -
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2597,6 +3350,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedCredit5 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2606,6 +3367,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
@@ -2639,6 +3404,52 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit6,
+                                  onTap: (){
+                                    amountToCredit6.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                            mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(cashLeftAtAmount9.text.trim()) +
+                                            double.parse(cashLeftAtAmount10.text.trim()) -
+                                            double.parse(amountToCredit1.text.trim()) -
+                                            double.parse(amountToCredit2.text.trim()) -
+                                            double.parse(amountToCredit3.text.trim()) -
+                                            double.parse(amountToCredit4.text.trim()) -
+                                            double.parse(amountToCredit5.text.trim()) -
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2664,6 +3475,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedCredit6 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2673,6 +3492,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
@@ -2706,6 +3529,53 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit7,
+                                  onTap: (){
+                                    amountToCredit7.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                            mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(cashLeftAtAmount9.text.trim()) +
+                                            double.parse(cashLeftAtAmount10.text.trim()) -
+                                            double.parse(amountToCredit1.text.trim()) -
+                                            double.parse(amountToCredit2.text.trim()) -
+                                            double.parse(amountToCredit3.text.trim()) -
+                                            double.parse(amountToCredit4.text.trim()) -
+                                            double.parse(amountToCredit5.text.trim()) -
+                                            double.parse(amountToCredit6.text.trim()) -
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2731,6 +3601,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedCredit7 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2740,6 +3618,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
@@ -2773,6 +3655,54 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit8,
+                                  onTap: (){
+                                    amountToCredit8.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                            mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(cashLeftAtAmount9.text.trim()) +
+                                            double.parse(cashLeftAtAmount10.text.trim()) -
+                                            double.parse(amountToCredit1.text.trim()) -
+                                            double.parse(amountToCredit2.text.trim()) -
+                                            double.parse(amountToCredit3.text.trim()) -
+                                            double.parse(amountToCredit4.text.trim()) -
+                                            double.parse(amountToCredit5.text.trim()) -
+                                            double.parse(amountToCredit6.text.trim()) -
+                                            double.parse(amountToCredit7.text.trim()) -
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2798,6 +3728,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedCredit8 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2807,6 +3745,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
@@ -2840,6 +3782,55 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit9,
+                                  onTap: (){
+                                    amountToCredit9.text = "";
+                                  },
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                            mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(cashLeftAtAmount9.text.trim()) +
+                                            double.parse(cashLeftAtAmount10.text.trim()) -
+                                            double.parse(amountToCredit1.text.trim()) -
+                                            double.parse(amountToCredit2.text.trim()) -
+                                            double.parse(amountToCredit3.text.trim()) -
+                                            double.parse(amountToCredit4.text.trim()) -
+                                            double.parse(amountToCredit5.text.trim()) -
+                                            double.parse(amountToCredit6.text.trim()) -
+                                            double.parse(amountToCredit7.text.trim()) -
+                                            double.parse(amountToCredit8.text.trim()) -
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2865,6 +3856,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedCredit9 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
@@ -2874,6 +3873,10 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                           animate: true,
                           child: Column(
                             children: [
+                              const Padding(
+                                padding: EdgeInsets.only(bottom:8.0),
+                                child: Divider(color:Colors.black,thickness: 2),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
@@ -2906,7 +3909,57 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
+                                  onTap: (){
+                                    amountToCredit10.text = "";
+                                  },
                                   controller: amountToCredit10,
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      setState(() {
+                                        myDebit = 0.0;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        sumTotal = double.parse(
+                                            mtn.text.trim()) +
+                                            double.parse(express.text.trim()) +
+                                            double.parse(ecobank.text.trim()) +
+                                            double.parse(gtbank.text.trim()) +
+                                            double.parse(calbank.text.trim()) +
+                                            double.parse(fidelity.text.trim()) +
+                                            double.parse(over.text.trim()) +
+                                            double.parse(shortage.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount1.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount2.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount3.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount4.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount5.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount6.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount7.text.trim()) +
+                                            double.parse(
+                                                cashLeftAtAmount8.text.trim()) +
+                                            double.parse(cashLeftAtAmount9.text.trim()) +
+                                            double.parse(cashLeftAtAmount10.text.trim()) -
+                                            double.parse(amountToCredit1.text.trim()) -
+                                            double.parse(amountToCredit2.text.trim()) -
+                                            double.parse(amountToCredit3.text.trim()) -
+                                            double.parse(amountToCredit4.text.trim()) -
+                                            double.parse(amountToCredit5.text.trim()) -
+                                            double.parse(amountToCredit6.text.trim()) -
+                                            double.parse(amountToCredit7.text.trim()) -
+                                            double.parse(amountToCredit8.text.trim()) -
+                                            double.parse(amountToCredit9.text.trim()) -
+                                            double.parse(value);
+                                      });
+                                    }
+                                  },
                                   cursorColor: primaryColor,
                                   cursorRadius: const Radius.elliptical(10, 10),
                                   cursorWidth: 10,
@@ -2932,6 +3985,14 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   },
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      addedCredit10 = false;
+                                    });
+                                  },
+                                  icon:const Icon(Icons.delete,color:Colors.red)
+                              )
                             ],
                           ),
                         )
