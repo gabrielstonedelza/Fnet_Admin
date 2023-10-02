@@ -36,10 +36,14 @@ class AccountsController extends GetxController {
             agentUsernames.add(i['username']);
           }
         }
-        print(allMyAgents);
+        // if (kDebugMode) {
+        //   print(allMyAgents);
+        // }
         update();
       } else {
-        print(response.body);
+        if (kDebugMode) {
+          print(response.body);
+        }
       }
     } catch (e) {
       // Get.snackbar("Sorry",
@@ -74,7 +78,7 @@ class AccountsController extends GetxController {
   }
 
   addToBlockedList(String userId, String email, String username, String phone,
-      String fullName, String token) async {
+      String fullName, String token, String comName) async {
     final depositUrl = "https://fnetghana.xyz/update_blocked/$userId/";
     final myLink = Uri.parse(depositUrl);
     final res = await http.put(myLink, headers: {
@@ -86,6 +90,7 @@ class AccountsController extends GetxController {
       "username": username,
       "phone": phone,
       "full_name": fullName,
+      "company_name": comName,
     });
     if (res.statusCode == 201) {
       getAllMyAgents(token);
@@ -103,7 +108,7 @@ class AccountsController extends GetxController {
   }
 
   removeFromBlockedList(String userId, String email, String username,
-      String phone, String fullName, String token) async {
+      String phone, String fullName, String token, String comName) async {
     final depositUrl = "https://fnetghana.xyz/update_blocked/$userId/";
     final myLink = Uri.parse(depositUrl);
     final res = await http.put(myLink, headers: {
@@ -115,6 +120,7 @@ class AccountsController extends GetxController {
       "username": username,
       "phone": phone,
       "full_name": fullName,
+      "company_name": comName,
     });
     if (res.statusCode == 201) {
       getAllMyAgents(token);

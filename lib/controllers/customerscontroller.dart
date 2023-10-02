@@ -37,9 +37,9 @@ class CustomersController extends GetxController {
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         allCustomers.assignAll(jsonData);
-        if (kDebugMode) {
-          print(allCustomers);
-        }
+        // if (kDebugMode) {
+        //   print(allCustomers);
+        // }
         update();
       } else {
         if (kDebugMode) {

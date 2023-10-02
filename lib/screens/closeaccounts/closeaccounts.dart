@@ -142,26 +142,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
   double myDebit = 0.00;
   double myShortage = 0.00;
   double myOver = 0.00;
-  double myCashLeft1 = 0.00;
-  double myCashLeft2 = 0.00;
-  double myCashLeft3 = 0.00;
-  double myCashLeft4 = 0.00;
-  double myCashLeft5 = 0.00;
-  double myCashLeft6 = 0.00;
-  double myCashLeft7 = 0.00;
-  double myCashLeft8 = 0.00;
-  double myCashLeft9 = 0.00;
-  double myCashLeft10 = 0.00;
-  double myCreditAmount1 = 0.00;
-  double myCreditAmount2 = 0.00;
-  double myCreditAmount3 = 0.00;
-  double myCreditAmount4 = 0.00;
-  double myCreditAmount5 = 0.00;
-  double myCreditAmount6 = 0.00;
-  double myCreditAmount7 = 0.00;
-  double myCreditAmount8 = 0.00;
-  double myCreditAmount9 = 0.00;
-  double myCreditAmount10 = 0.00;
+
 
 
   void showAndEnterFormNumber() {
@@ -879,9 +860,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
-                            onTap: (){
-                              mtn.text = "";
-                            },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -923,9 +901,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
-                              onTap: (){
-                                express.text = "";
-                              },
+
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -974,9 +950,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
-                            onTap: (){
-                              ecobank.text = "";
-                            },
+
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -1019,9 +993,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
-                            onTap: (){
-                              gtbank.text = "";
-                            },
+
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -1076,9 +1048,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
-                            onTap: (){
-                              calbank.text = "";
-                            },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -1123,9 +1092,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
-                            onTap: (){
-                              fidelity.text = "";
-                            },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -1179,9 +1145,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
-                            onTap: (){
-                              over.text = "";
-                            },
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -1228,9 +1191,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TextFormField(
-                            onTap: (){
-                              shortage.text = "";
-                            },
+
                             onChanged: (value) {
                               if (value.isEmpty) {
                                 setState(() {
@@ -1279,67 +1240,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                   const SizedBox(
                     height: 10,
                   ),
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: Padding(
-                  //         padding: const EdgeInsets.only(bottom: 10.0),
-                  //         child: TextFormField(
-                  //           onChanged: (value) {
-                  //             if (value.isEmpty) {
-                  //               setState(() {
-                  //                 myDebit = 0.0;
-                  //               });
-                  //             } else {
-                  //               setState(() {
-                  //                 sumTotal = double.parse(mtn.text.trim()) +
-                  //                     double.parse(express.text.trim()) +
-                  //                     double.parse(ecobank.text.trim()) +
-                  //                     double.parse(gtbank.text.trim()) +
-                  //                     double.parse(calbank.text.trim()) +
-                  //                     double.parse(fidelity.text.trim()) +
-                  //                     double.parse(over.text.trim()) +
-                  //                     double.parse(shortage.text.trim()) -
-                  //                     double.parse(value);
-                  //               });
-                  //             }
-                  //           },
-                  //           controller: debit,
-                  //           cursorColor: primaryColor,
-                  //           cursorRadius: const Radius.elliptical(10, 10),
-                  //           cursorWidth: 10,
-                  //           decoration: InputDecoration(
-                  //               labelText: "Debit",
-                  //               labelStyle:
-                  //                   const TextStyle(color: secondaryColor),
-                  //               focusColor: primaryColor,
-                  //               fillColor: primaryColor,
-                  //               focusedBorder: OutlineInputBorder(
-                  //                   borderSide: const BorderSide(
-                  //                       color: primaryColor, width: 2),
-                  //                   borderRadius: BorderRadius.circular(12)),
-                  //               border: OutlineInputBorder(
-                  //                   borderRadius: BorderRadius.circular(12))),
-                  //           keyboardType: TextInputType.number,
-                  //           validator: (value) {
-                  //             if (value!.isEmpty) {
-                  //               return "Please enter amount";
-                  //             }
-                  //           },
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     const Expanded(
-                  //         child: Padding(
-                  //       padding: EdgeInsets.only(left: 18.0),
-                  //       child: Text("",
-                  //           style: TextStyle(
-                  //               fontWeight: FontWeight.bold, fontSize: 16)),
-                  //     ))
-                  //   ],
-                  // ),
-
-                  // check and add cash left at forms
                   addedForm1
                       ? SlideInUp(
                           animate: true,
@@ -1411,15 +1311,9 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
-                                  onTap: (){
-                                    cashLeftAtAmount1.text = "";
-                                  },
                                   onChanged: (value) {
-
                                     if (value.isEmpty) {
-                                      setState(() {
-                                        myCashLeft1 = 0.0;
-                                      });
+
                                     } else {
                                       setState(() {
                                         sumTotal = double.parse(
@@ -1465,6 +1359,8 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 onPressed: (){
                                   setState(() {
                                     addedForm1 = false;
+                                    sumTotal = sumTotal - double.parse(cashLeftAtAmount1.text.trim());
+                                    numOfFormsController.text = "";
                                   });
                                 },
                                 icon:const Icon(Icons.delete,color:Colors.red)
@@ -1544,9 +1440,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
-                                  onTap: (){
-                                    cashLeftAtAmount2.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -1599,6 +1492,8 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   onPressed: (){
                                     setState(() {
                                       addedForm2 = false;
+                                      sumTotal = sumTotal - double.parse(cashLeftAtAmount2.text.trim());
+                                      numOfFormsController.text = "";
                                     });
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
@@ -1678,9 +1573,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
-                                  onTap: (){
-                                    cashLeftAtAmount3.text = "";
-                                  },
+
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -1735,6 +1628,8 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   onPressed: (){
                                     setState(() {
                                       addedForm3 = false;
+                                      sumTotal = sumTotal - double.parse(cashLeftAtAmount3.text.trim());
+                                      numOfFormsController.text = "";
                                     });
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
@@ -1815,9 +1710,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: cashLeftAtAmount4,
-                                  onTap: (){
-                                    cashLeftAtAmount4.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -1873,6 +1765,8 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   onPressed: (){
                                     setState(() {
                                       addedForm4 = false;
+                                      sumTotal = sumTotal - double.parse(cashLeftAtAmount4.text.trim());
+                                      numOfFormsController.text = "";
                                     });
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
@@ -1952,9 +1846,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
-                                  onTap: (){
-                                    cashLeftAtAmount5.text = "";
-                                  },
+
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -2013,6 +1905,8 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   onPressed: (){
                                     setState(() {
                                       addedForm5 = false;
+                                      sumTotal = sumTotal - double.parse(cashLeftAtAmount5.text.trim());
+                                      numOfFormsController.text = "";
                                     });
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
@@ -2092,9 +1986,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
-                                  onTap: (){
-                                    cashLeftAtAmount6.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -2155,6 +2046,8 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   onPressed: (){
                                     setState(() {
                                       addedForm6 = false;
+                                      sumTotal = sumTotal - double.parse(cashLeftAtAmount6.text.trim());
+                                      numOfFormsController.text = "";
                                     });
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
@@ -2234,9 +2127,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
-                                  onTap: (){
-                                    cashLeftAtAmount7.text = "";
-                                  },
                                   controller: cashLeftAtAmount7,
                                   onChanged: (value) {
                                     if (value.isEmpty) {
@@ -2299,6 +2189,8 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   onPressed: (){
                                     setState(() {
                                       addedForm7 = false;
+                                      sumTotal = sumTotal - double.parse(cashLeftAtAmount7.text.trim());
+                                      numOfFormsController.text = "";
                                     });
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
@@ -2378,9 +2270,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
-                                  onTap: (){
-                                    cashLeftAtAmount8.text = "";
-                                  },
+
                                   controller: cashLeftAtAmount8,
                                   onChanged: (value) {
                                     if (value.isEmpty) {
@@ -2445,6 +2335,8 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   onPressed: (){
                                     setState(() {
                                       addedForm8 = false;
+                                      sumTotal = sumTotal - double.parse(cashLeftAtAmount8.text.trim());
+                                      numOfFormsController.text = "";
                                     });
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
@@ -2524,9 +2416,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
-                                  onTap: (){
-                                    cashLeftAtAmount9.text = "";
-                                  },
                                   controller: cashLeftAtAmount9,
                                   onChanged: (value) {
                                     if (value.isEmpty) {
@@ -2593,6 +2482,8 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   onPressed: (){
                                     setState(() {
                                       addedForm9 = false;
+                                      sumTotal = sumTotal - double.parse(cashLeftAtAmount9.text.trim());
+                                      numOfFormsController.text = "";
                                     });
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
@@ -2673,9 +2564,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: cashLeftAtAmount10,
-                                  onTap: (){
-                                    cashLeftAtAmount10.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -2743,6 +2631,8 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                   onPressed: (){
                                     setState(() {
                                       addedForm10 = false;
+                                      sumTotal = sumTotal - double.parse(cashLeftAtAmount10.text.trim());
+                                      numOfFormsController.text = "";
                                     });
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
@@ -2794,9 +2684,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit1,
-                                  onTap: (){
-                                    amountToCredit1.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -2862,9 +2749,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               ),
                               IconButton(
                                   onPressed: (){
-                                    setState(() {
-                                      addedCredit1 = false;
-                                    });
+                                    if(amountToCredit1.text != ""){
+                                      setState(() {
+                                        addedCredit1 = false;
+                                        sumTotal = sumTotal + double.parse(amountToCredit1.text.trim());
+                                        numOfCreditController.text = "";
+                                      });
+                                    }
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
                               )
@@ -2914,9 +2805,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit2,
-                                  onTap: (){
-                                    amountToCredit2.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -2983,9 +2871,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               ),
                               IconButton(
                                   onPressed: (){
-                                    setState(() {
-                                      addedCredit2 = false;
-                                    });
+                                    if(amountToCredit2.text != ""){
+                                      setState(() {
+                                        addedCredit2 = false;
+                                        sumTotal = sumTotal + double.parse(amountToCredit2.text.trim());
+                                        numOfCreditController.text = "";
+                                      });
+                                    }
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
                               )
@@ -3035,9 +2927,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit3,
-                                  onTap: (){
-                                    amountToCredit3.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -3105,9 +2994,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               ),
                               IconButton(
                                   onPressed: (){
-                                    setState(() {
-                                      addedCredit3 = false;
-                                    });
+                                    if(amountToCredit3.text != ""){
+                                      setState(() {
+                                        addedCredit3 = false;
+                                        sumTotal = sumTotal + double.parse(amountToCredit3.text.trim());
+                                        numOfCreditController.text = "";
+                                      });
+                                    }
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
                               )
@@ -3157,9 +3050,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit4,
-                                  onTap: (){
-                                    amountToCredit4.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -3228,9 +3118,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               ),
                               IconButton(
                                   onPressed: (){
-                                    setState(() {
-                                      addedCredit4 = false;
-                                    });
+                                    if(amountToCredit4.text != ""){
+                                      setState(() {
+                                        addedCredit4 = false;
+                                        sumTotal = sumTotal + double.parse(amountToCredit4.text.trim());
+                                        numOfCreditController.text = "";
+                                      });
+                                    }
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
                               )
@@ -3280,9 +3174,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit5,
-                                  onTap: (){
-                                    amountToCredit5.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -3352,9 +3243,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               ),
                               IconButton(
                                   onPressed: (){
-                                    setState(() {
-                                      addedCredit5 = false;
-                                    });
+                                    if(amountToCredit5.text != ""){
+                                      setState(() {
+                                        addedCredit5 = false;
+                                        sumTotal = sumTotal + double.parse(amountToCredit5.text.trim());
+                                        numOfCreditController.text = "";
+                                      });
+                                    }
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
                               )
@@ -3404,9 +3299,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit6,
-                                  onTap: (){
-                                    amountToCredit6.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -3477,9 +3369,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               ),
                               IconButton(
                                   onPressed: (){
-                                    setState(() {
-                                      addedCredit6 = false;
-                                    });
+                                    if(amountToCredit6.text != ""){
+                                      setState(() {
+                                        addedCredit6 = false;
+                                        sumTotal = sumTotal + double.parse(amountToCredit6.text.trim());
+                                        numOfCreditController.text = "";
+                                      });
+                                    }
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
                               )
@@ -3529,9 +3425,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit7,
-                                  onTap: (){
-                                    amountToCredit7.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -3603,9 +3496,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               ),
                               IconButton(
                                   onPressed: (){
-                                    setState(() {
-                                      addedCredit7 = false;
-                                    });
+                                    if(amountToCredit7.text != ""){
+                                      setState(() {
+                                        addedCredit7 = false;
+                                        sumTotal = sumTotal + double.parse(amountToCredit7.text.trim());
+                                        numOfCreditController.text = "";
+                                      });
+                                    }
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
                               )
@@ -3655,9 +3552,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit8,
-                                  onTap: (){
-                                    amountToCredit8.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -3730,9 +3624,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               ),
                               IconButton(
                                   onPressed: (){
-                                    setState(() {
-                                      addedCredit8 = false;
-                                    });
+                                    if(amountToCredit8.text != ""){
+                                      setState(() {
+                                        addedCredit8 = false;
+                                        sumTotal = sumTotal + double.parse(amountToCredit8.text.trim());
+                                        numOfCreditController.text = "";
+                                      });
+                                    }
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
                               )
@@ -3782,9 +3680,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
                                   controller: amountToCredit9,
-                                  onTap: (){
-                                    amountToCredit9.text = "";
-                                  },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       setState(() {
@@ -3858,9 +3753,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               ),
                               IconButton(
                                   onPressed: (){
-                                    setState(() {
-                                      addedCredit9 = false;
-                                    });
+                                    if(amountToCredit9.text != ""){
+                                      setState(() {
+                                        addedCredit9 = false;
+                                        sumTotal = sumTotal + double.parse(amountToCredit9.text.trim());
+                                        numOfCreditController.text = "";
+                                      });
+                                    }
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
                               )
@@ -3909,9 +3808,6 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: TextFormField(
-                                  onTap: (){
-                                    amountToCredit10.text = "";
-                                  },
                                   controller: amountToCredit10,
                                   onChanged: (value) {
                                     if (value.isEmpty) {
@@ -3987,9 +3883,13 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
                               ),
                               IconButton(
                                   onPressed: (){
-                                    setState(() {
-                                      addedCredit10 = false;
-                                    });
+                                    if(amountToCredit10.text != ""){
+                                      setState(() {
+                                        addedCredit10 = false;
+                                        sumTotal = sumTotal + double.parse(amountToCredit10.text.trim());
+                                        numOfCreditController.text = "";
+                                      });
+                                    }
                                   },
                                   icon:const Icon(Icons.delete,color:Colors.red)
                               )

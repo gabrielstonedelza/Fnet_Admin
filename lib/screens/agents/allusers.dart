@@ -105,6 +105,7 @@ class _MyAgentsState extends State<MyAgents> {
                                   controller.allMyAgents[i]['username'],
                                   controller.allMyAgents[i]['phone'],
                                   controller.allMyAgents[i]['full_name'],
+                                  controller.allMyAgents[i]['company_name'],
                                   uToken);
                               await Future.delayed(const Duration(seconds: 3));
                               controller.getAllMyAgents(uToken);
@@ -124,6 +125,7 @@ class _MyAgentsState extends State<MyAgents> {
                                   controller.allMyAgents[i]['username'],
                                   controller.allMyAgents[i]['phone'],
                                   controller.allMyAgents[i]['full_name'],
+                                  controller.allMyAgents[i]['company_name'],
                                   uToken);
                               await Future.delayed(const Duration(seconds: 3));
                               controller.getAllMyAgents(uToken);

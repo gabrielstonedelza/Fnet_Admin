@@ -42,22 +42,6 @@ class RequestController extends GetxController {
     }
   }
 
-  Future<void> getAllUnpaidDepositRequests() async {
-    const url = "https://fnetghana.xyz/get_agents_unpaid_deposits/";
-    var myLink = Uri.parse(url);
-    final response = await http.get(myLink);
-    if (response.statusCode == 200) {
-      final codeUnits = response.body.codeUnits;
-      var jsonData = const Utf8Decoder().convert(codeUnits);
-      var deData = json.decode(jsonData);
-      unPaidDepositRequests.assignAll(deData);
-    } else {
-      if (kDebugMode) {
-        print(response.body);
-      }
-    }
-  }
-
   Future<void> getAllPendingRequestDeposits() async {
     const profileLink =
         "https://fnetghana.xyz/admin_get_all_pending_bank_deposits/";
@@ -71,6 +55,23 @@ class RequestController extends GetxController {
       var jsonData = jsonDecode(response.body);
       allPendingRequests.assignAll(jsonData);
       isLoading = false;
+      update();
+    } else {
+      if (kDebugMode) {
+        print(response.body);
+      }
+    }
+  }
+
+  Future<void> getAllUnpaidDepositRequests() async {
+    const url = "https://fnetghana.xyz/get_agents_unpaid_deposits/";
+    var myLink = Uri.parse(url);
+    final response = await http.get(myLink);
+    if (response.statusCode == 200) {
+      final codeUnits = response.body.codeUnits;
+      var jsonData = const Utf8Decoder().convert(codeUnits);
+      var deData = json.decode(jsonData);
+      unPaidDepositRequests.assignAll(deData);
       update();
     } else {
       if (kDebugMode) {

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fnet_admin/screens/customers/searchcustomers.dart';
+import 'package:fnet_admin/screens/customers/updatecustomer.dart';
 import 'package:fnet_admin/widgets/loadingui.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -31,7 +32,7 @@ class _AllCustomersState extends State<AllCustomers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Customers"),
+        title: Text("Customers (${controller.allCustomers.length})"),
       ),
       body: GetBuilder<CustomersController>(
         builder: (cController) {
@@ -48,6 +49,21 @@ class _AllCustomersState extends State<AllCustomers> {
                       borderRadius: BorderRadius.circular(10)),
                   child: ListTile(
                     // leading: const Icon(Icons.person),
+                    onTap: () {
+                      Get.to(() => UpdateCustomer(
+                            id: cController.allCustomers[index]['id']
+                                .toString(),
+                            customerName: cController.allCustomers[index]
+                                ['name'],
+                            phone: cController.allCustomers[index]['phone'],
+                            customerLocation: cController.allCustomers[index]
+                                ['location'],
+                            digitAddress: cController.allCustomers[index]
+                                ['digital_address'],
+                            customerDob: cController.allCustomers[index]
+                                ['date_of_birth'],
+                          ));
+                    },
                     title: Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 8),
                       child: Row(
@@ -68,6 +84,7 @@ class _AllCustomersState extends State<AllCustomers> {
                       ),
                     ),
                     subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
@@ -132,6 +149,10 @@ class _AllCustomersState extends State<AllCustomers> {
                                   fontWeight: FontWeight.bold),
                             ),
                           ],
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 18.0, bottom: 8),
+                          child: Text("Tap to edit customer"),
                         ),
                         const SizedBox(
                           height: 10,
