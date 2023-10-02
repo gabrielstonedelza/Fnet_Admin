@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../static/app_colors.dart';
 import '../widgets/loadingui.dart';
-
+import 'newhomepage.dart';
 
 class AddNewUser extends StatefulWidget {
   const AddNewUser({Key? key}) : super(key: key);
@@ -15,7 +15,6 @@ class AddNewUser extends StatefulWidget {
 }
 
 class _AddNewUserState extends State<AddNewUser> {
-
   late final TextEditingController _usernameController;
   late final TextEditingController _companyController;
   late final TextEditingController _emailController;
@@ -40,8 +39,8 @@ class _AddNewUserState extends State<AddNewUser> {
   late String userCode = "";
   bool isPosting = false;
 
-
-  addAgent(String company,String email,String username,String fullName,String phoneNum,String password1,String password2)async{
+  addAgent(String company, String email, String username, String fullName,
+      String phoneNum, String password1, String password2) async {
     const requestUrl = "https://fnetghana.xyz/auth/users/";
     final myLink = Uri.parse(requestUrl);
     final response = await http.post(myLink, headers: {
@@ -56,7 +55,6 @@ class _AddNewUserState extends State<AddNewUser> {
       "phone": phoneNum,
       "password": password1,
       "re_password": password2,
-
     });
     if (response.statusCode == 201) {
       setState(() {
@@ -67,18 +65,17 @@ class _AddNewUserState extends State<AddNewUser> {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: snackBackground,
           duration: const Duration(seconds: 5));
-      Get.offAll(() => const HomePage());
-
-    }
-    else{
-      Get.snackbar("Agent Error", "Agent with same details already exists or check your internet connection",
-        duration: const Duration(seconds:5),
+      Get.offAll(() => const NewHomePage());
+    } else {
+      Get.snackbar(
+        "Agent Error",
+        "Agent with same details already exists or check your internet connection",
+        duration: const Duration(seconds: 5),
         colorText: defaultTextColor1,
         backgroundColor: warning,
       );
     }
   }
-
 
   @override
   void initState() {
@@ -108,6 +105,7 @@ class _AddNewUserState extends State<AddNewUser> {
     _rePasswordController.dispose();
     _phoneNumberController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +113,7 @@ class _AddNewUserState extends State<AddNewUser> {
         title: const Text("Add New User"),
         elevation: 0,
       ),
-      body:  ListView(
+      body: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.all(18.0),
@@ -138,8 +136,9 @@ class _AddNewUserState extends State<AddNewUser> {
                         if (value!.isEmpty) {
                           return "Please enter username";
                         }
-                        if(value.length == 4){
-                          Get.snackbar("Username error", "should be greater than 4",
+                        if (value.length == 4) {
+                          Get.snackbar(
+                              "Username error", "should be greater than 4",
                               colorText: defaultTextColor1,
                               snackPosition: SnackPosition.TOP,
                               backgroundColor: warning,
@@ -237,9 +236,11 @@ class _AddNewUserState extends State<AddNewUser> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: TextFormField(
-                      onChanged: (value){
-                        if(value.length == _passwordController.text.length && value != _passwordController.text){
-                          Get.snackbar("Password error", "your password don't match",
+                      onChanged: (value) {
+                        if (value.length == _passwordController.text.length &&
+                            value != _passwordController.text) {
+                          Get.snackbar(
+                              "Password error", "your password don't match",
                               colorText: defaultTextColor1,
                               snackPosition: SnackPosition.TOP,
                               backgroundColor: warning,
@@ -262,33 +263,42 @@ class _AddNewUserState extends State<AddNewUser> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 30,),
-                  isPosting  ? const LoadingUi() :
-                  RawMaterialButton(
-                    onPressed: () {
-                      setState(() {
-                        isPosting = true;
-                      });
-                      if (!_formKey.currentState!.validate()) {
-                        return;
-                      } else {
-                        addAgent(_companyController.text.trim(),_emailController.text.trim(), _usernameController.text.trim(), _fullNameController.text.trim(), _phoneNumberController.text.trim(), _passwordController.text.trim(), _rePasswordController.text.trim());
-                      }
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    elevation: 8,
-                    fillColor: secondaryColor,
-                    splashColor: defaultTextColor1,
-                    child: const Text(
-                      "Save",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.white),
-                    ),
-                  )
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  isPosting
+                      ? const LoadingUi()
+                      : RawMaterialButton(
+                          onPressed: () {
+                            setState(() {
+                              isPosting = true;
+                            });
+                            if (!_formKey.currentState!.validate()) {
+                              return;
+                            } else {
+                              addAgent(
+                                  _companyController.text.trim(),
+                                  _emailController.text.trim(),
+                                  _usernameController.text.trim(),
+                                  _fullNameController.text.trim(),
+                                  _phoneNumberController.text.trim(),
+                                  _passwordController.text.trim(),
+                                  _rePasswordController.text.trim());
+                            }
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          elevation: 8,
+                          fillColor: secondaryColor,
+                          splashColor: defaultTextColor1,
+                          child: const Text(
+                            "Save",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white),
+                          ),
+                        )
                 ],
               ),
             ),

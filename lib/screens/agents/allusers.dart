@@ -3,15 +3,35 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fnet_admin/static/app_colors.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../controllers/accountscontroller.dart';
 import 'agentsdetail.dart';
 
-class MyAgents extends StatelessWidget {
+class MyAgents extends StatefulWidget {
   MyAgents({super.key});
+
+  @override
+  State<MyAgents> createState() => _MyAgentsState();
+}
+
+class _MyAgentsState extends State<MyAgents> {
   var items;
 
   final AccountsController controller = Get.find();
+
+  final storage = GetStorage();
+
+  late String uToken = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    if (storage.read("token") != null) {
+      uToken = storage.read("token");
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +42,7 @@ class MyAgents extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              controller.getAllMyAgents();
+              controller.getAllMyAgents(uToken);
             },
             icon: const Icon(
               Icons.refresh,
@@ -82,9 +102,10 @@ class MyAgents extends StatelessWidget {
                                   controller.allMyAgents[i]['email'],
                                   controller.allMyAgents[i]['username'],
                                   controller.allMyAgents[i]['phone'],
-                                  controller.allMyAgents[i]['full_name']);
+                                  controller.allMyAgents[i]['full_name'],
+                                  uToken);
                               await Future.delayed(const Duration(seconds: 3));
-                              controller.getAllMyAgents();
+                              controller.getAllMyAgents(uToken);
                             },
                             icon: Image.asset("assets/images/blocked.png",
                                 width: 100, height: 100))
@@ -100,9 +121,10 @@ class MyAgents extends StatelessWidget {
                                   controller.allMyAgents[i]['email'],
                                   controller.allMyAgents[i]['username'],
                                   controller.allMyAgents[i]['phone'],
-                                  controller.allMyAgents[i]['full_name']);
+                                  controller.allMyAgents[i]['full_name'],
+                                  uToken);
                               await Future.delayed(const Duration(seconds: 3));
-                              controller.getAllMyAgents();
+                              controller.getAllMyAgents(uToken);
                             },
                             icon: Image.asset("assets/images/user-blocked.png",
                                 width: 100, height: 100)),

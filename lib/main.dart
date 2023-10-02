@@ -1,19 +1,23 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fnet_admin/screens/homepage.dart';
 import 'package:fnet_admin/screens/loginview.dart';
+import 'package:fnet_admin/screens/newhomepage.dart';
 import 'package:fnet_admin/static/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:telephony/telephony.dart';
-import 'package:http/http.dart' as http;
 import 'controllers/accountscontroller.dart';
+import 'controllers/bankaccountscontroller.dart';
 import 'controllers/closeaccountcontroller.dart';
+import 'controllers/customerscontroller.dart';
 import 'controllers/logincontroller.dart';
+import 'controllers/misccontroller.dart';
+import 'controllers/notificationcontroller.dart';
+import 'controllers/paymentscontroller.dart';
+import 'controllers/pointscontroller.dart';
 import 'controllers/profilecontroller.dart';
+import 'controllers/reportscontroller.dart';
+import 'controllers/requestcontroller.dart';
 
 onBackgroundMessage(SmsMessage message) {
   debugPrint("onBackgroundMessage called");
@@ -25,6 +29,14 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await GetStorage.init();
   Get.put(LoginController());
+  Get.put(BankAccountsController());
+  Get.put(PointsController());
+  Get.put(ReportController());
+  Get.put(NotificationController());
+  Get.put(PaymentController());
+  Get.put(CustomersController());
+  Get.put(MiscController());
+  Get.put(RequestController());
   Get.put(ProfileController());
   Get.put(AccountsController());
   Get.put(CloseAccountsController());
@@ -112,7 +124,7 @@ class _MyAppState extends State<MyApp> {
             elevation: 0,
             backgroundColor: defaultColor,
           )),
-      home: hasToken ? const HomePage() : const LoginView(),
+      home: hasToken ? const NewHomePage() : const LoginView(),
     );
   }
 }

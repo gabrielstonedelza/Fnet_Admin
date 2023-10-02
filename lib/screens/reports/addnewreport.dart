@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../homepage.dart';
+import '../newhomepage.dart';
 
 class AddNewReport extends StatefulWidget {
   const AddNewReport({Key? key}) : super(key: key);
@@ -49,7 +50,7 @@ class _AddNewReportState extends State<AddNewReport> {
           colorText: defaultTextColor1,
           snackPosition: SnackPosition.TOP,
           backgroundColor: snackColor);
-      Get.offAll(() => const HomePage());
+      Get.offAll(() => const NewHomePage());
     } else {
       if (kDebugMode) {
         print(res.body);

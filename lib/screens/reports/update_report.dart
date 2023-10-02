@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../homepage.dart';
+import '../newhomepage.dart';
 
 class UpdateReport extends StatefulWidget {
   final report;
@@ -61,7 +62,7 @@ class _UpdateReportState extends State<UpdateReport> {
           colorText: defaultTextColor1,
           snackPosition: SnackPosition.TOP,
           backgroundColor: snackColor);
-      Get.offAll(() => const HomePage());
+      Get.offAll(() => const NewHomePage());
     } else {
       if (kDebugMode) {
         print(res.body);

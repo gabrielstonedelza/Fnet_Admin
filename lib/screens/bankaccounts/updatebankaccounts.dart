@@ -7,13 +7,11 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
-
 import '../../controllers/profilecontroller.dart';
 import '../../sendsms.dart';
 import '../../static/app_colors.dart';
 import '../../widgets/loadingui.dart';
-
-
+import '../newhomepage.dart';
 
 class UpdateMyAccount extends StatefulWidget {
   final id;
@@ -22,10 +20,24 @@ class UpdateMyAccount extends StatefulWidget {
   final bank;
   final phone_num;
   final linkedNum;
-  const UpdateMyAccount({Key? key,required this.id,required this.acc_num,required this.acc_name,required this.bank,required this.phone_num,required this.linkedNum}) : super(key: key);
+  const UpdateMyAccount(
+      {Key? key,
+      required this.id,
+      required this.acc_num,
+      required this.acc_name,
+      required this.bank,
+      required this.phone_num,
+      required this.linkedNum})
+      : super(key: key);
 
   @override
-  _AddToUserAccount createState() => _AddToUserAccount(id:this.id,acc_num: this.acc_num,acc_name: this.acc_name,bank:this.bank,phone_num: this.phone_num,linkedNum: this.linkedNum);
+  _AddToUserAccount createState() => _AddToUserAccount(
+      id: this.id,
+      acc_num: this.acc_num,
+      acc_name: this.acc_name,
+      bank: this.bank,
+      phone_num: this.phone_num,
+      linkedNum: this.linkedNum);
 }
 
 class _AddToUserAccount extends State<UpdateMyAccount> {
@@ -35,9 +47,15 @@ class _AddToUserAccount extends State<UpdateMyAccount> {
   final bank;
   final phone_num;
   final linkedNum;
-  _AddToUserAccount({required this.id,required this.acc_num,required this.acc_name,required this.bank,required this.phone_num,required this.linkedNum});
+  _AddToUserAccount(
+      {required this.id,
+      required this.acc_num,
+      required this.acc_name,
+      required this.bank,
+      required this.phone_num,
+      required this.linkedNum});
   final _formKey = GlobalKey<FormState>();
-  void _startPosting()async{
+  void _startPosting() async {
     setState(() {
       isPosting = true;
     });
@@ -85,7 +103,7 @@ class _AddToUserAccount extends State<UpdateMyAccount> {
 
   var _currentSelectedBank = "Select bank";
 
-  Future<void>fetchMyAccounts() async {
+  Future<void> fetchMyAccounts() async {
     const url = "https://fnetghana.xyz/get_my_user_accounts/";
     var myLink = Uri.parse(url);
     final response = await http.get(myLink);
@@ -103,6 +121,7 @@ class _AddToUserAccount extends State<UpdateMyAccount> {
     //   isLoading = false;
     // });
   }
+
   final ProfileController controller = Get.find();
 
   late final TextEditingController _accountNumberController;
@@ -114,8 +133,7 @@ class _AddToUserAccount extends State<UpdateMyAccount> {
   late String ownerId = "";
   late String ownerUsername = "";
 
-
-  updateAccount()async{
+  updateAccount() async {
     final registerUrl = "https://fnetghana.xyz/update_my_accounts_detail/$id/";
     final myLink = Uri.parse(registerUrl);
     final res = await http.put(myLink, headers: {
@@ -128,15 +146,14 @@ class _AddToUserAccount extends State<UpdateMyAccount> {
       "phone": phone.text,
       "mtn_linked_number": mtnLinkedNum.text,
     });
-    if(res.statusCode == 200){
+    if (res.statusCode == 200) {
       Get.snackbar("Congratulations", "Your account was updated",
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
           duration: const Duration(seconds: 10),
           backgroundColor: snackBackground);
-      Get.offAll(() => const HomePage());
-    }
-    else{
+      Get.offAll(() => const NewHomePage());
+    } else {
       if (kDebugMode) {
         print(res.body);
       }
@@ -152,7 +169,7 @@ class _AddToUserAccount extends State<UpdateMyAccount> {
     // TODO: implement initState
     super.initState();
     fetchMyAccounts();
-    if(storage.read("token") != null){
+    if (storage.read("token") != null) {
       setState(() {
         uToken = storage.read("token");
       });
@@ -163,7 +180,6 @@ class _AddToUserAccount extends State<UpdateMyAccount> {
     mtnLinkedNum = TextEditingController(text: linkedNum);
     _currentSelectedBank = bank;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -273,7 +289,6 @@ class _AddToUserAccount extends State<UpdateMyAccount> {
                           hint: const Text("Select bank type"),
                           isExpanded: true,
                           underline: const SizedBox(),
-
                           items: newBanks.map((dropDownStringItem) {
                             return DropdownMenuItem(
                               value: dropDownStringItem,
@@ -314,30 +329,30 @@ class _AddToUserAccount extends State<UpdateMyAccount> {
                       },
                     ),
                   ),
-
-                  isPosting ? const LoadingUi() : RawMaterialButton(
-                    onPressed: () {
-                      _startPosting();
-                      if (!_formKey.currentState!.validate()) {
-                        return;
-                      } else {
-                        updateAccount();
-                      }
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    elevation: 8,
-                    fillColor: secondaryColor,
-                    splashColor: defaultTextColor1,
-                    child: const Text(
-                      "Update",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.white),
-                    ),
-                  ),
+                  isPosting
+                      ? const LoadingUi()
+                      : RawMaterialButton(
+                          onPressed: () {
+                            _startPosting();
+                            if (!_formKey.currentState!.validate()) {
+                              return;
+                            } else {
+                              updateAccount();
+                            }
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          elevation: 8,
+                          fillColor: secondaryColor,
+                          splashColor: defaultTextColor1,
+                          child: const Text(
+                            "Update",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white),
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -346,10 +361,10 @@ class _AddToUserAccount extends State<UpdateMyAccount> {
       ),
     );
   }
+
   void _onDropDownItemSelectedBank(newValueSelected) {
     setState(() {
       _currentSelectedBank = newValueSelected;
     });
   }
-
 }

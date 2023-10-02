@@ -14,6 +14,7 @@ import '../../controllers/profilecontroller.dart';
 import '../../sendsms.dart';
 import '../../static/app_colors.dart';
 import '../../widgets/loadingui.dart';
+import '../newhomepage.dart';
 
 class GetMyAccountsAndPull extends StatefulWidget {
   const GetMyAccountsAndPull({Key? key}) : super(key: key);
@@ -536,7 +537,7 @@ class _GetMyAccountsAndPullState extends State<GetMyAccountsAndPull> {
                             if (!_formKey.currentState!.validate()) {
                               return;
                             } else {
-                              Get.offAll(() => const HomePage());
+                              Get.offAll(() => const NewHomePage());
                               switch (_currentSelectedBank) {
                                 case "Zenith Bank":
                                   openOwnerFinancialServicesPullFromBank(

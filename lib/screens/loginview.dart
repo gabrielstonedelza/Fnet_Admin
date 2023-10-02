@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:provider/provider.dart';
 import '../controllers/logincontroller.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +15,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final LoginController controller = Get.find();
+  // final LoginController controller = Get.find();
   bool isObscured = true;
 
   final _formKey = GlobalKey<FormState>();
@@ -26,7 +26,6 @@ class _LoginViewState extends State<LoginView> {
 
   final Uri _url = Uri.parse('https://fnetagents.xyz/password-reset/');
 
-
   Future<void> _launchInBrowser() async {
     if (!await launchUrl(_url)) {
       throw 'Could not launch $_url';
@@ -35,7 +34,7 @@ class _LoginViewState extends State<LoginView> {
 
   bool isPosting = false;
 
-  void _startPosting()async{
+  void _startPosting() async {
     setState(() {
       isPosting = true;
     });
@@ -62,17 +61,9 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      // ),
-      body: ListView(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 60,),
-          Image.asset(
-            "assets/images/logo.png",
-            width: 100,
-            height: 100,
-          ),
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Form(
@@ -101,7 +92,6 @@ class _LoginViewState extends State<LoginView> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: TextFormField(
-
                       controller: _passwordController,
                       focusNode: passwordFocusNode,
                       cursorRadius: const Radius.elliptical(10, 10),
@@ -142,31 +132,42 @@ class _LoginViewState extends State<LoginView> {
                   const SizedBox(
                     height: 30,
                   ),
-                  isPosting  ? const LoadingUi() :
+                  isPosting
+                      ? const LoadingUi()
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RawMaterialButton(
+                            fillColor: secondaryColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            onPressed: () {
+                              _startPosting();
+                              FocusScopeNode currentFocus =
+                                  FocusScope.of(context);
 
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RawMaterialButton(
-                      fillColor: secondaryColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)
-                      ),
-                      onPressed: (){
-                        _startPosting();
-                        FocusScopeNode currentFocus = FocusScope.of(context);
-
-                        if (!currentFocus.hasPrimaryFocus) {
-                          currentFocus.unfocus();
-                        }
-                        if (!_formKey.currentState!.validate()) {
-                          return;
-                        } else {
-                          controller.loginUser(usernameController.text.trim(),
-                            _passwordController.text.trim(),);
-                        }
-                      },child: const Text("Login",style: TextStyle(color: defaultTextColor1,fontWeight: FontWeight.bold,fontSize: 20),),
-                    ),
-                  )
+                              if (!currentFocus.hasPrimaryFocus) {
+                                currentFocus.unfocus();
+                              }
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              } else {
+                                Provider.of<LoginController>(context,
+                                        listen: false)
+                                    .loginUser(
+                                  usernameController.text.trim(),
+                                  _passwordController.text.trim(),
+                                );
+                              }
+                            },
+                            child: const Text(
+                              "Login",
+                              style: TextStyle(
+                                  color: defaultTextColor1,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            ),
+                          ),
+                        )
                 ],
               ),
             ),
@@ -175,14 +176,16 @@ class _LoginViewState extends State<LoginView> {
             height: 20,
           ),
           TextButton(
-              onPressed: () async{
+              onPressed: () async {
                 await _launchInBrowser();
               },
               child: const Text(
                 "Forgot Password?",
-                style: TextStyle(color: secondaryColor,fontSize: 18,fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: secondaryColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
               )),
-
         ],
       ),
     );
@@ -198,5 +201,4 @@ class _LoginViewState extends State<LoginView> {
           borderRadius: BorderRadius.circular(12)),
     );
   }
-
 }

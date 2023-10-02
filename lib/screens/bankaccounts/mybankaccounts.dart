@@ -7,10 +7,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
+import '../../controllers/bankaccountscontroller.dart';
 import '../../static/app_colors.dart';
 import '../../widgets/loadingui.dart';
-
-
 
 class MyBankAccounts extends StatefulWidget {
   const MyBankAccounts({Key? key}) : super(key: key);
@@ -20,12 +19,12 @@ class MyBankAccounts extends StatefulWidget {
 }
 
 class _MyBankAccountsState extends State<MyBankAccounts> {
+  final BankAccountsController controller = Get.find();
   late String uToken = "";
   final storage = GetStorage();
   var items;
-  bool isLoading = true;
-  late List allMyAccounts = [];
-  void _startPosting()async{
+
+  void _startPosting() async {
     setState(() {
       isPosting = true;
     });
@@ -37,27 +36,6 @@ class _MyBankAccountsState extends State<MyBankAccounts> {
 
   bool isPosting = false;
 
-  Future<void> getAllMyBankAccounts() async {
-    const url = "https://fnetghana.xyz/get_my_user_accounts/";
-    var link = Uri.parse(url);
-    http.Response response = await http.get(link, headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Authorization": "Token $uToken"
-    });
-    if (response.statusCode == 200) {
-      var jsonData = jsonDecode(response.body);
-      allMyAccounts.assignAll(jsonData);
-      setState(() {
-        isLoading = false;
-      });
-    }
-    else{
-      if (kDebugMode) {
-        print(response.body);
-      }
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -66,7 +44,7 @@ class _MyBankAccountsState extends State<MyBankAccounts> {
         uToken = storage.read("token");
       });
     }
-    getAllMyBankAccounts();
+    controller.getAllMyBankAccounts(uToken);
   }
 
   deleteBankAccount(String id) async {
@@ -78,7 +56,7 @@ class _MyBankAccountsState extends State<MyBankAccounts> {
     });
 
     if (response.statusCode == 204) {
-      getAllMyBankAccounts();
+      controller.getAllMyBankAccounts(uToken);
     } else {}
   }
 
@@ -90,81 +68,103 @@ class _MyBankAccountsState extends State<MyBankAccounts> {
         // backgroundColor: secondaryColor,
         actions: [
           IconButton(
-            onPressed: (){
-              getAllMyBankAccounts();
+            onPressed: () {
+              controller.getAllMyBankAccounts(uToken);
             },
             icon: const Icon(Icons.refresh),
           )
         ],
       ),
-      body: isLoading
-          ? const LoadingUi()
-          : ListView.builder(
-          itemCount: allMyAccounts != null ? allMyAccounts.length : 0,
-          itemBuilder: (context, index) {
-            items = allMyAccounts[index];
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                color: secondaryColor,
-                elevation: 12,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                child: ListTile(
-                  onTap: (){
-                    Get.to(()=> UpdateMyAccount(id:allMyAccounts[index]['id'].toString(),acc_num:allMyAccounts[index]['account_number'],acc_name:allMyAccounts[index]['account_name'],bank:allMyAccounts[index]['bank'],phone_num:allMyAccounts[index]['phone'],linkedNum:allMyAccounts[index]['mtn_linked_number']));
-                  },
-                  title: buildRow("Bank: ", "bank"),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildRow("ACC No : ", "account_number"),
-                      buildRow("Acc Name : ", "account_name"),
-                      buildRow("Phone: ", "phone"),
-                      buildRow("Linked Num : ", "mtn_linked_number"),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0, top: 2),
-                        child: Row(
-                          children: [
-                            const Text(
-                              "Date: ",
+      body: GetBuilder<BankAccountsController>(builder: (bController) {
+        return ListView.builder(
+            itemCount: bController.myBankAccounts != null
+                ? bController.myBankAccounts.length
+                : 0,
+            itemBuilder: (context, index) {
+              items = bController.myBankAccounts[index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  color: secondaryColor,
+                  elevation: 12,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  child: ListTile(
+                    onTap: () {
+                      Get.to(() => UpdateMyAccount(
+                          id: bController.myBankAccounts[index]['id']
+                              .toString(),
+                          acc_num: bController.myBankAccounts[index]
+                              ['account_number'],
+                          acc_name: bController.myBankAccounts[index]
+                              ['account_name'],
+                          bank: bController.myBankAccounts[index]['bank'],
+                          phone_num: bController.myBankAccounts[index]['phone'],
+                          linkedNum: bController.myBankAccounts[index]
+                              ['mtn_linked_number']));
+                    },
+                    title: buildRow("Bank: ", "bank"),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildRow("ACC No : ", "account_number"),
+                        buildRow("Acc Name : ", "account_name"),
+                        buildRow("Phone: ", "phone"),
+                        buildRow("Linked Num : ", "mtn_linked_number"),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, top: 2),
+                          child: Row(
+                            children: [
+                              const Text(
+                                "Date: ",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              Text(
+                                items['date_added'].toString().split("T").first,
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text("Tap to update accounts",
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                                  color: Colors.blueAccent)),
+                        )
+                      ],
+                    ),
+                    trailing: isPosting
+                        ? const CircularProgressIndicator()
+                        : IconButton(
+                            onPressed: () {
+                              _startPosting();
+                              deleteBankAccount(bController
+                                  .myBankAccounts[index]['id']
+                                  .toString());
+                            },
+                            icon: const Icon(
+                              Icons.delete_forever,
+                              color: warning,
+                              size: 30,
                             ),
-                            Text(
-                              items['date_added']
-                                  .toString()
-                                  .split("T")
-                                  .first,
-                              style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10,),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text("Tap to update accounts",style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueAccent)),
-                      )
-                    ],
-                  ),
-                  trailing: isPosting ? const CircularProgressIndicator() :IconButton(
-                    onPressed: (){
-                      _startPosting();
-                      deleteBankAccount(allMyAccounts[index]['id'].toString());
-                    },
-                    icon: const Icon(Icons.delete_forever,color:warning,size: 30,),
+                          ),
                   ),
                 ),
-              ),
-            );
-          }),
+              );
+            });
+      }),
     );
   }
 

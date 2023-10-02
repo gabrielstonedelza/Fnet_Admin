@@ -9,6 +9,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../static/app_colors.dart';
 import '../../widgets/loadingui.dart';
 import '../homepage.dart';
+import '../newhomepage.dart';
 
 class AddCloseAccount extends StatefulWidget {
   const AddCloseAccount({super.key});
@@ -684,7 +685,7 @@ class _AddCloseAccountState extends State<AddCloseAccount> {
           snackPosition: SnackPosition.TOP,
           duration: const Duration(seconds: 10),
           backgroundColor: snackBackground);
-      Get.offAll(() => const HomePage());
+      Get.offAll(() => const NewHomePage());
     } else {
       if (kDebugMode) {
         print(res.body);

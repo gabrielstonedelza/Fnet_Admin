@@ -11,9 +11,6 @@ class CustomersController extends GetxController {
   late List allCustomers = [];
   bool isLoading = true;
   final storage = GetStorage();
-  var username = "";
-  String uToken = "";
-  late Timer _timer;
   bool hasAlreadySent = false;
   late List sentBirthdays = [];
   String smsSent = "No";
@@ -26,21 +23,6 @@ class CustomersController extends GetxController {
   bool isFetching = true;
   late DateDuration duration;
   final SendSmsController sendSms = SendSmsController();
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-    if (storage.read("token") != null) {
-      uToken = storage.read("token");
-    }
-    if (storage.read("username") != null) {
-      username = storage.read("username");
-    }
-
-    getAllCustomers();
-    fetchCustomersWithBirthDays();
-  }
 
   Future<void> getAllCustomers() async {
     try {
@@ -78,7 +60,6 @@ class CustomersController extends GetxController {
     var myLink = Uri.parse(url);
     final response = await http.get(myLink, headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      // "Authorization": "Token $uToken"
     });
 
     if (response.statusCode == 200) {

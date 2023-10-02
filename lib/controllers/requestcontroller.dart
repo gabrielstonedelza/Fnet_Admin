@@ -9,56 +9,7 @@ class RequestController extends GetxController {
   late List allRequests = [];
   late List allPendingRequests = [];
   bool isLoading = true;
-  final storage = GetStorage();
-  var username = "";
-  String uToken = "";
-  late Timer _timer;
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-    if (storage.read("token") != null) {
-      uToken = storage.read("token");
-    }
-    if (storage.read("username") != null) {
-      username = storage.read("username");
-    }
-    getAllPendingRequestDeposits();
-    getAllPendingDeposits();
-  }
-
-  Future<void> getAllPendingRequestDeposits() async {
-    try {
-      isLoading = true;
-      const profileLink =
-          "https://fnetghana.xyz/admin_get_all_pending_bank_deposits/";
-      var link = Uri.parse(profileLink);
-      http.Response response = await http.get(link, headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        // "Authorization": "Token $uToken"
-      });
-
-      if (response.statusCode == 200) {
-        var jsonData = jsonDecode(response.body);
-        allPendingRequests.assignAll(jsonData);
-        if (kDebugMode) {
-          print(allPendingRequests);
-        }
-        update();
-      } else {
-        if (kDebugMode) {
-          print(response.body);
-        }
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-    } finally {
-      isLoading = false;
-    }
-  }
+  late List unPaidDepositRequests = [];
 
   Future<void> getAllPendingDeposits() async {
     try {
@@ -88,6 +39,43 @@ class RequestController extends GetxController {
       }
     } finally {
       isLoading = false;
+    }
+  }
+
+  Future<void> getAllUnpaidDepositRequests() async {
+    const url = "https://fnetghana.xyz/get_agents_unpaid_deposits/";
+    var myLink = Uri.parse(url);
+    final response = await http.get(myLink);
+    if (response.statusCode == 200) {
+      final codeUnits = response.body.codeUnits;
+      var jsonData = const Utf8Decoder().convert(codeUnits);
+      var deData = json.decode(jsonData);
+      unPaidDepositRequests.assignAll(deData);
+    } else {
+      if (kDebugMode) {
+        print(response.body);
+      }
+    }
+  }
+
+  Future<void> getAllPendingRequestDeposits() async {
+    const profileLink =
+        "https://fnetghana.xyz/admin_get_all_pending_bank_deposits/";
+    var link = Uri.parse(profileLink);
+    http.Response response = await http.get(link, headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      // "Authorization": "Token $uToken"
+    });
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      allPendingRequests.assignAll(jsonData);
+      isLoading = false;
+      update();
+    } else {
+      if (kDebugMode) {
+        print(response.body);
+      }
     }
   }
 }

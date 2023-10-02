@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../static/app_colors.dart';
 import '../../widgets/loadingui.dart';
 import '../homepage.dart';
+import '../newhomepage.dart';
 
 class UpdateCloseAccount extends StatefulWidget {
   final mtn_cash;
@@ -464,7 +465,7 @@ class _UpdateCloseAccountState extends State<UpdateCloseAccount> {
           snackPosition: SnackPosition.TOP,
           duration: const Duration(seconds: 10),
           backgroundColor: snackBackground);
-      Get.offAll(() => const HomePage());
+      Get.offAll(() => const NewHomePage());
     } else {
       if (kDebugMode) {
         print(res.body);

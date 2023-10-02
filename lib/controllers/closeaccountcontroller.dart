@@ -10,28 +10,14 @@ class CloseAccountsController extends GetxController {
   late List allClosedAccounts = [];
   late List allClosedAccountsDates = [];
 
-  final storage = GetStorage();
-  String uToken = "";
-  late Timer _timer;
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-    if (storage.read("token") != null) {
-      uToken = storage.read("token");
-    }
-    getAllMyClosedAccounts();
-  }
-
-  Future<void> getAllMyClosedAccounts() async {
+  Future<void> getAllMyClosedAccounts(String token) async {
     try {
       isLoading = true;
       const profileLink = "https://fnetghana.xyz/get_my_closed_accounts/";
       var link = Uri.parse(profileLink);
       http.Response response = await http.get(link, headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": "Token $uToken"
+        "Authorization": "Token $token"
       });
 
       if (response.statusCode == 200) {

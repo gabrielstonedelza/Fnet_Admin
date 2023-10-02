@@ -7,6 +7,7 @@ import 'package:fnet_admin/static/app_colors.dart';
 import 'package:get/get.dart';
 
 import '../homepage.dart';
+import '../newhomepage.dart';
 import 'allpoints.dart';
 
 class Points extends StatelessWidget {

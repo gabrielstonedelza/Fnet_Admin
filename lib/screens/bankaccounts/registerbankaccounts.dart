@@ -12,9 +12,8 @@ import '../../sendsms.dart';
 import '../../static/app_colors.dart';
 import '../../widgets/loadingui.dart';
 
+import '../newhomepage.dart';
 import 'mybankaccounts.dart';
-
-
 
 class AddToMyAccount extends StatefulWidget {
   const AddToMyAccount({Key? key}) : super(key: key);
@@ -25,7 +24,7 @@ class AddToMyAccount extends StatefulWidget {
 
 class _AddToUserAccount extends State<AddToMyAccount> {
   final _formKey = GlobalKey<FormState>();
-  void _startPosting()async{
+  void _startPosting() async {
     setState(() {
       isPosting = true;
     });
@@ -72,8 +71,7 @@ class _AddToUserAccount extends State<AddToMyAccount> {
 
   var _currentSelectedBank = "Select bank";
 
-
-  Future<void>fetchMyAccounts() async {
+  Future<void> fetchMyAccounts() async {
     const url = "https://fnetghana.xyz/get_my_user_accounts/";
     var myLink = Uri.parse(url);
     final response = await http.get(myLink);
@@ -91,18 +89,19 @@ class _AddToUserAccount extends State<AddToMyAccount> {
     //   isLoading = false;
     // });
   }
+
   final ProfileController controller = Get.find();
   late List ownerDetails = [];
   late String ownerId = "";
   late String ownerUsername = "";
 
-  late final TextEditingController _accountNumberController = TextEditingController();
+  late final TextEditingController _accountNumberController =
+      TextEditingController();
   late final TextEditingController phone = TextEditingController();
   late final TextEditingController accountName = TextEditingController();
   late final TextEditingController mtnLinkedNum = TextEditingController();
 
-
-  addToAccount()async{
+  addToAccount() async {
     const registerUrl = "https://fnetghana.xyz/add_to_user_accounts/";
     final myLink = Uri.parse(registerUrl);
     final res = await http.post(myLink, headers: {
@@ -115,15 +114,14 @@ class _AddToUserAccount extends State<AddToMyAccount> {
       "phone": phone.text,
       "mtn_linked_number": mtnLinkedNum.text,
     });
-    if(res.statusCode == 201){
+    if (res.statusCode == 201) {
       Get.snackbar("Congratulations", "Account was added successfully",
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
           duration: const Duration(seconds: 10),
           backgroundColor: snackBackground);
-      Get.offAll(() => const HomePage());
-    }
-    else{
+      Get.offAll(() => const NewHomePage());
+    } else {
       if (kDebugMode) {
         print(res.body);
       }
@@ -139,14 +137,13 @@ class _AddToUserAccount extends State<AddToMyAccount> {
     // TODO: implement initState
     super.initState();
 
-    if(storage.read("token") != null){
+    if (storage.read("token") != null) {
       setState(() {
         uToken = storage.read("token");
       });
     }
     fetchMyAccounts();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -256,7 +253,6 @@ class _AddToUserAccount extends State<AddToMyAccount> {
                           hint: const Text("Select bank"),
                           isExpanded: true,
                           underline: const SizedBox(),
-
                           items: newBanks.map((dropDownStringItem) {
                             return DropdownMenuItem(
                               value: dropDownStringItem,
@@ -297,29 +293,30 @@ class _AddToUserAccount extends State<AddToMyAccount> {
                       },
                     ),
                   ),
-                  isPosting ? const LoadingUi() : RawMaterialButton(
-                    onPressed: () {
-                      _startPosting();
-                      if (!_formKey.currentState!.validate()) {
-                        return;
-                      } else {
-                        addToAccount();
-                      }
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    elevation: 8,
-                    fillColor: secondaryColor,
-                    splashColor: defaultTextColor1,
-                    child: const Text(
-                      "Save",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.white),
-                    ),
-                  ),
+                  isPosting
+                      ? const LoadingUi()
+                      : RawMaterialButton(
+                          onPressed: () {
+                            _startPosting();
+                            if (!_formKey.currentState!.validate()) {
+                              return;
+                            } else {
+                              addToAccount();
+                            }
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          elevation: 8,
+                          fillColor: secondaryColor,
+                          splashColor: defaultTextColor1,
+                          child: const Text(
+                            "Save",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white),
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -327,7 +324,7 @@ class _AddToUserAccount extends State<AddToMyAccount> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           Get.to(() => const MyBankAccounts());
         },
         child: const Text("Accs",
@@ -338,10 +335,10 @@ class _AddToUserAccount extends State<AddToMyAccount> {
       ),
     );
   }
+
   void _onDropDownItemSelectedBank(newValueSelected) {
     setState(() {
       _currentSelectedBank = newValueSelected;
     });
   }
-
 }

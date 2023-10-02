@@ -11,6 +11,7 @@ import '../../static/app_colors.dart';
 import '../bankaccounts/getaccountsandpull.dart';
 import '../bankaccounts/getaccountsandpush.dart';
 import '../homepage.dart';
+import '../newhomepage.dart';
 
 class ApproveDepositRequestDetail extends StatefulWidget {
   final id;
@@ -29,8 +30,7 @@ class ApproveDepositRequestDetail extends StatefulWidget {
       required this.bank,
       required this.accnum,
       required this.userLoc,
-      required this.userLocDist
-      });
+      required this.userLocDist});
 
   @override
   State<ApproveDepositRequestDetail> createState() =>
@@ -63,15 +63,15 @@ class _ApproveDepositRequestDetailState
     await UssdAdvanced.multisessionUssd(code: "*171*6*1*2#", subscriptionId: 1);
   }
 
-  _ApproveDepositRequestDetailState(
-      {required this.agent,
-      required this.id,
-      required this.amount,
-      required this.bank,
-      required this.accnum,
-      required this.userLoc,
-      required this.userLocDist,
-      });
+  _ApproveDepositRequestDetailState({
+    required this.agent,
+    required this.id,
+    required this.amount,
+    required this.bank,
+    required this.accnum,
+    required this.userLoc,
+    required this.userLocDist,
+  });
 
   Future<void> fetchAllInstalled() async {
     List<Application> apps = await DeviceApps.getInstalledApplications(
@@ -354,7 +354,7 @@ class _ApproveDepositRequestDetailState
         isPosting = false;
       });
       // showInstalled();
-      Get.offAll(() => const HomePage());
+      Get.offAll(() => const NewHomePage());
       showInstalled();
     } else {
       if (kDebugMode) {
@@ -378,7 +378,7 @@ class _ApproveDepositRequestDetailState
       setState(() {
         isPosting = false;
       });
-      Get.offAll(() => const HomePage());
+      Get.offAll(() => const NewHomePage());
     } else {}
   }
 

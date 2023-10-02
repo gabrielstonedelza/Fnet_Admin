@@ -1,20 +1,33 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:fnet_admin/screens/homepage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
+import '../screens/loginview.dart';
+import '../screens/newhomepage.dart';
 import '../static/app_colors.dart';
 
-class LoginController extends GetxController{
+class LoginController extends GetxController {
   final client = http.Client();
   final storage = GetStorage();
   bool isLoggingIn = false;
   bool isUser = false;
-  late int oTP = 0;
   late String myToken = "";
   late String agentUsername = "";
+
+  String get getToken => myToken;
+  String get getUsername => agentUsername;
+
+  void setToken(String token) {
+    myToken = token;
+  }
+
+  void setUsername(String username) {
+    agentUsername = username;
+  }
 
   String errorMessage = "";
   bool isLoading = false;
@@ -30,12 +43,14 @@ class LoginController extends GetxController{
       final resBody = response.body;
       var jsonData = jsonDecode(resBody);
       var userToken = jsonData['auth_token'];
-      agentUsername = username;
+      setUsername(username);
+      setToken(userToken);
       storage.write("token", userToken);
       storage.write("username", username);
       isLoggingIn = false;
       isUser = true;
-      Get.offAll(() => const HomePage());
+      update();
+      Get.offAll(() => const NewHomePage());
     } else {
       Get.snackbar("Sorry 😢", "invalid details",
           duration: const Duration(seconds: 5),
@@ -49,4 +64,26 @@ class LoginController extends GetxController{
     }
   }
 
+  logoutUser(String token) async {
+    storage.remove("token");
+    storage.remove("username");
+
+    Get.offAll(() => const LoginView());
+    const logoutUrl = "https://www.fnetghana.xyz/auth/token/logout";
+    final myLink = Uri.parse(logoutUrl);
+    http.Response response = await http.post(myLink, headers: {
+      'Accept': 'application/json',
+      "Authorization": "Token $token"
+    });
+
+    if (response.statusCode == 200) {
+      Get.snackbar("Success", "You were logged out",
+          colorText: defaultTextColor1,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: snackBackground);
+      storage.remove("token");
+      storage.remove("username");
+      Get.offAll(() => const LoginView());
+    }
+  }
 }

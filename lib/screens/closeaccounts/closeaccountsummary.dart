@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../controllers/closeaccountcontroller.dart';
 import '../../static/app_colors.dart';
-import 'addcloseaccounts.dart';
+import 'closeaccounts.dart';
 import 'closedaccount.dart';
 
 class CloseAccountSummary extends StatefulWidget {
@@ -16,11 +17,16 @@ class CloseAccountSummary extends StatefulWidget {
 class _CloseAccountSummaryState extends State<CloseAccountSummary> {
   final CloseAccountsController controller = Get.find();
   var items;
+  final storage = GetStorage();
+  late String uToken = "";
 
   @override
   void initState() {
     // TODO: implement initState
-    controller.getAllMyClosedAccounts();
+    if (storage.read("token") != null) {
+      uToken = storage.read("token");
+    }
+    controller.getAllMyClosedAccounts(uToken);
     super.initState();
   }
 
@@ -32,7 +38,7 @@ class _CloseAccountSummaryState extends State<CloseAccountSummary> {
         actions: [
           IconButton(
             onPressed: () {
-              controller.getAllMyClosedAccounts();
+              controller.getAllMyClosedAccounts(uToken);
             },
             icon: const Icon(Icons.refresh),
           )

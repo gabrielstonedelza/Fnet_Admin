@@ -9,6 +9,7 @@ import 'package:ussd_advanced/ussd_advanced.dart';
 
 import '../../static/app_colors.dart';
 import '../homepage.dart';
+import '../newhomepage.dart';
 
 class ApprovePaymentDetail extends StatefulWidget {
   final id;
@@ -360,7 +361,7 @@ class _ApprovePaymentDetailState extends State<ApprovePaymentDetail> {
         isPosting = false;
       });
       // showInstalled();
-      Get.offAll(() => const HomePage());
+      Get.offAll(() => const NewHomePage());
       // showInstalled();
     } else {
       if (kDebugMode) {
@@ -386,7 +387,7 @@ class _ApprovePaymentDetailState extends State<ApprovePaymentDetail> {
       setState(() {
         isPosting = false;
       });
-      Get.offAll(() => const HomePage());
+      Get.offAll(() => const NewHomePage());
     } else {}
   }
 

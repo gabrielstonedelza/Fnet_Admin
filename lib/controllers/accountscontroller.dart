@@ -18,34 +18,15 @@ class AccountsController extends GetxController {
   late List agentUsernames = [];
   late List allBlockedUsers = [];
   bool isLoading = true;
-  final storage = GetStorage();
-  var username = "";
-  String uToken = "";
-  late Timer _timer;
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-    if (storage.read("token") != null) {
-      uToken = storage.read("token");
-    }
-    if (storage.read("username") != null) {
-      username = storage.read("username");
-    }
-
-    getAllMyAgents();
-    fetchBlockedAgents();
-  }
-
-  Future<void> getAllMyAgents() async {
+  Future<void> getAllMyAgents(String token) async {
     try {
       isLoading = true;
       const allUsers = "https://fnetghana.xyz/all_agents/";
       var link = Uri.parse(allUsers);
       http.Response response = await http.get(link, headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": "Token $uToken"
+        "Authorization": "Token $token"
       });
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
@@ -90,7 +71,7 @@ class AccountsController extends GetxController {
   }
 
   addToBlockedList(String userId, String email, String username, String phone,
-      String fullName) async {
+      String fullName, String token) async {
     final depositUrl = "https://fnetghana.xyz/update_blocked/$userId/";
     final myLink = Uri.parse(depositUrl);
     final res = await http.put(myLink, headers: {
@@ -104,7 +85,8 @@ class AccountsController extends GetxController {
       "full_name": fullName,
     });
     if (res.statusCode == 201) {
-      getAllMyAgents();
+      getAllMyAgents(token);
+      update();
       Get.snackbar("Success", "blocking agent",
           colorText: defaultTextColor1,
           snackPosition: SnackPosition.BOTTOM,
@@ -118,7 +100,7 @@ class AccountsController extends GetxController {
   }
 
   removeFromBlockedList(String userId, String email, String username,
-      String phone, String fullName) async {
+      String phone, String fullName, String token) async {
     final depositUrl = "https://fnetghana.xyz/update_blocked/$userId/";
     final myLink = Uri.parse(depositUrl);
     final res = await http.put(myLink, headers: {
@@ -132,7 +114,8 @@ class AccountsController extends GetxController {
       "full_name": fullName,
     });
     if (res.statusCode == 201) {
-      getAllMyAgents();
+      getAllMyAgents(token);
+      update();
       Get.snackbar("Success", "agent is removed from block lists",
           colorText: defaultTextColor1,
           snackPosition: SnackPosition.BOTTOM,
