@@ -36,7 +36,10 @@ class AccountsController extends GetxController {
             agentUsernames.add(i['username']);
           }
         }
+        print(allMyAgents);
         update();
+      } else {
+        print(response.body);
       }
     } catch (e) {
       // Get.snackbar("Sorry",

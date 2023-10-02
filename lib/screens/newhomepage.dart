@@ -26,6 +26,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:ussd_advanced/ussd_advanced.dart';
 
+import '../controllers/accountscontroller.dart';
 import '../controllers/bankaccountscontroller.dart';
 import '../controllers/closeaccountcontroller.dart';
 import '../controllers/misccontroller.dart';
@@ -63,6 +64,7 @@ class _NewHomePageState extends State<NewHomePage> {
   final PointsController pointsController = Get.find();
   final CloseAccountsController closeAccountsController = Get.find();
   final BankAccountsController bankAccountController = Get.find();
+  final AccountsController accountsController = Get.find();
   final storage = GetStorage();
   late String uToken = "";
   late String username = "";
@@ -102,6 +104,8 @@ class _NewHomePageState extends State<NewHomePage> {
       paymentController.getAllPayments();
       closeAccountsController.getAllMyClosedAccounts(uToken);
       bankAccountController.getAllMyBankAccounts(uToken);
+      accountsController.getAllMyAgents(uToken);
+      accountsController.fetchBlockedAgents();
     });
 
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) {

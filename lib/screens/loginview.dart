@@ -15,7 +15,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  // final LoginController controller = Get.find();
+  final LoginController controller = Get.find();
   bool isObscured = true;
 
   final _formKey = GlobalKey<FormState>();
@@ -151,9 +151,7 @@ class _LoginViewState extends State<LoginView> {
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               } else {
-                                Provider.of<LoginController>(context,
-                                        listen: false)
-                                    .loginUser(
+                                controller.loginUser(
                                   usernameController.text.trim(),
                                   _passwordController.text.trim(),
                                 );

@@ -18,17 +18,6 @@ class LoginController extends GetxController {
   late String myToken = "";
   late String agentUsername = "";
 
-  String get getToken => myToken;
-  String get getUsername => agentUsername;
-
-  void setToken(String token) {
-    myToken = token;
-  }
-
-  void setUsername(String username) {
-    agentUsername = username;
-  }
-
   String errorMessage = "";
   bool isLoading = false;
 
@@ -43,8 +32,7 @@ class LoginController extends GetxController {
       final resBody = response.body;
       var jsonData = jsonDecode(resBody);
       var userToken = jsonData['auth_token'];
-      setUsername(username);
-      setToken(userToken);
+      agentUsername = username;
       storage.write("token", userToken);
       storage.write("username", username);
       isLoggingIn = false;

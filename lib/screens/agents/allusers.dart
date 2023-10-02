@@ -30,6 +30,8 @@ class _MyAgentsState extends State<MyAgents> {
     if (storage.read("token") != null) {
       uToken = storage.read("token");
     }
+    controller.getAllMyAgents(uToken);
+    controller.fetchBlockedAgents();
     super.initState();
   }
 
